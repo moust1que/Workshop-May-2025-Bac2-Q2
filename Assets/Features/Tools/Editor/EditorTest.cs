@@ -4,8 +4,13 @@ using UnityEditor;
 namespace Tools.Editor {
     public class EditorTest : EditorWindow {
         private int tabs = 3;
-        private string[] tabOptions = new string[] { "Tab 1", "Tab 2", "Tab 3" };
-        private Vector3 charcterPosition = Vector3.zero;
+        private string[] tabOptions = new string[] { "Main Character", "Tab 2", "Tab 3" };
+
+        #region MainCharacter
+            private Texture2D profilePicture;
+            private Vector3 charcterPosition = Vector3.zero;
+            private float characterSpeed = 1.0f;
+        #endregion
 
         [MenuItem("Window/Tabs/Test")]
         public static void ShowWindow() {
@@ -31,8 +36,14 @@ namespace Tools.Editor {
         }
 
         private void firstTab() {
-            GUILayout.Label("Tab 1");
+            profilePicture = Resources.Load<Texture2D>("ProfilePicture");
+            if(profilePicture == null) {
+                Debug.LogError("Failed to load profile picture. Path: Assets/Features/Tools/Editor/ProfilePicture");
+            }
+            Rect textureRect = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(100.0f), GUILayout.MaxHeight(100.0f));
+            GUI.DrawTexture(textureRect, profilePicture);
             charcterPosition = EditorGUILayout.Vector3Field("Position", charcterPosition);
+            characterSpeed = EditorGUILayout.Slider("Speed", characterSpeed, 0.0f, 10.0f);
         }
 
         private void secondTab() {
