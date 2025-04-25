@@ -1,0 +1,22 @@
+0:Drop in ambient temperature
+1:Increase in ambient temperature
+2:Disorientation/Discomfort
+3:Strongly flickering flame
+4:Male cries
+5:Female cries
+6:Animal cries
+7:Male laughter
+8:Female laughter
+9:Animal laughter
+10:Shaking objects
+11:Floating objects
+12:Doors, windows, and compartments close gently by themselves
+13:Doors, windows, and compartments close violently by themselves
+14:Reaction to Music#1
+15:Reaction to Music#2
+16:Reaction to Music#3
+17:Presence of red marks and footprints in the light of a special lantern
+18:Visions of green particles through a special lens
+19:Visions of blue particles through a special lens
+20:Visions of red particles through a special lens
+21:Visions of purple particles through a special lens
