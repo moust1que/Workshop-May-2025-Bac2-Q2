@@ -1,0 +1,88 @@
+{
+    "Yokais": [
+        {
+            "Name": "Oni",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [1, 17, 13, 4]
+        },
+        {
+            "Name": "Tengu",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [10, 21, 3, 2]
+        },
+        {
+            "Name": "Yurei",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [0, 14, 12, 8]
+        },
+        {
+            "Name": "Kappa",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [2, 19, 7, 11]
+        },
+        {
+            "Name": "Tanuki",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [11, 15, 12, 9]
+        },
+        {
+            "Name": "Kitsune",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [1, 22, 3, 12]
+        },
+        {
+            "Name": "Akaname",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [0, 22, 13, 10]
+        },
+        {
+            "Name": "Ashiarai",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [2, 20, 3, 10]
+        },
+        {
+            "Name": "Bakeneko",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [1, 22, 12, 10]
+        },
+        {
+            "Name": "Kasa Obake",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [10, 21, 12, 7]
+        },
+        {
+            "Name": "Yama Uba",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [2, 20, 6, 11]
+        },
+        {
+            "Name": "Rokurokubi",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [0, 16, 12, 8]
+        },
+        {
+            "Name": "Fukurō",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [1, 19, 3, 12]
+        },
+        {
+            "Name": "Kubikajiri",
+            "Vignette": "Ressources/",
+            "Description": "",
+            "Hints": [1, 22, 13, 10]
+        }
+    ]
+}
