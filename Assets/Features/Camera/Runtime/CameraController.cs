@@ -6,11 +6,17 @@ namespace BBehaviour.Runtime {
         [Header("Movement settings")]
         [SerializeField] private float moveSpeed = 3f;
         [SerializeField] private float rotateSpeed = 360f;
-        [SerializeField] private bool  autoFaceDestination = true;
+        [SerializeField] private bool  autoFaceDestination = true; 
 
         [Header("Manual yaw (smooth)")]
         [SerializeField] private float yawStep = 90f;
         [SerializeField] private float yawDuration = 0.4f;
+
+        [Header("Recenter settings")]
+        [SerializeField] private KeyCode recenterKey = KeyCode.Space;
+        [SerializeField] private float searchRadius = 35f;
+
+        private Transform currentRoomCenter;
 
         private Camera cam;
         private Coroutine moveRoutine;
@@ -23,7 +29,8 @@ namespace BBehaviour.Runtime {
 
         private void Update(){
             HandleYawInput();           
-            HandleClickNavigation();    
+            HandleClickNavigation(); 
+            RecenterToRoom();   
         }
 
         private void HandleYawInput(){
@@ -77,5 +84,41 @@ namespace BBehaviour.Runtime {
             }
             moveRoutine = null;
         }
+
+        private void HandleRecenterInput(){
+            if (Input.GetKeyDown(recenterKey)){
+                Transform target = GetCurrentRoomCenter();
+                if (target && moveRoutine == null)          // on évite d’interrompre un déplacement manuel
+                    moveRoutine = StartCoroutine(MoveTo(target, 0.1f));
+            }
+        }
+
+        private Transform GetCurrentRoomCenter(){
+            // 1 Si  mémorisé et qu’il existe encore on le renvoie
+            if (currentRoomCenter) return currentRoomCenter;
+
+            // 2  Sinon on cherche le plus proche objet taggé "RoomCenter"
+            Collider[] hits = Physics.OverlapSphere(transform.position, searchRadius);
+            float bestDist = float.MaxValue;
+            Transform best = null;
+            foreach (var c in hits){
+                if (c.CompareTag("RoomCenter")){
+                    float d = (c.transform.position - transform.position).sqrMagnitude;
+                    if (d < bestDist) { bestDist = d; best = c.transform; }
+                }
+            }
+            return best;
+        }
+
+        private void OnTriggerEnter(Collider other){
+            if (other.CompareTag("RoomCenter"))
+                currentRoomCenter = other.transform;
+        }
+
+        private void OnTriggerExit(Collider other){
+            if (other.transform == currentRoomCenter)
+                currentRoomCenter = null;   // on sort de la pièce on oublie son centre
+        }
+        private void RecenterToRoom() => HandleRecenterInput();
     }
 }
