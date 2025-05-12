@@ -23,7 +23,6 @@ namespace Goals.Runtime {
 
             var wrapper = JsonUtility.FromJson<GoalFileWrapper>(jsonFile.text);
 
-            // 2) crée les facts
             foreach(var factJson in wrapper.facts) {
                 IFact fact = factJson.type switch {
                     "int" => new Fact<int>(factJson.id, int.Parse(factJson.initial)),
@@ -49,7 +48,7 @@ namespace Goals.Runtime {
                         continue;
                     }
 
-                    Goal goal = new Goal {
+                    Goal goal = new() {
                         Id = goalJson.id,
                         Name = goalJson.name,
                         ParentId = goalJson.parentId,

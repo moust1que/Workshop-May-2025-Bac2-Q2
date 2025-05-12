@@ -1,23 +1,23 @@
 {
     "facts": [
+        { "id": "ACT1",          "type": "int",  "initial": 0 },
         { "id": "PickupL",       "type": "bool", "initial": false },
-        { "id": "Dialog1",       "type": "int",  "initial": 0 },
+        { "id": "Dialog1",       "type": "bool", "initial": false },
         { "id": "GrabB",         "type": "bool", "initial": false },
-        { "id": "Dialog2",       "type": "int",  "initial": 0 },
-        { "id": "LeaveFD",       "type": "bool", "initial": false },
-        { "id": "Dialog3",       "type": "bool", "initial": false },
+        { "id": "LeaveRoom",     "type": "bool", "initial": false },
+        { "id": "Dialog2",       "type": "bool", "initial": false },
         { "id": "EDoorClosed",   "type": "bool", "initial": false },
         { "id": "SE1",           "type": "bool", "initial": false },
         { "id": "IE1",           "type": "int",  "initial": 0 },
         { "id": "STR1",          "type": "int",  "initial": 0 },
+        { "id": "Dialog3",       "type": "bool", "initial": false },
         { "id": "PickupI1",      "type": "bool", "initial": false },
         { "id": "Dialog4",       "type": "bool", "initial": false },
-        { "id": "KeyFound",      "type": "bool", "initial": false },
+        { "id": "LeaveD",        "type": "bool", "initial": false },
         
-        { "id": "ACT1",          "type": "int",  "initial": 0 },
         { "id": "ACT2",          "type": "int",  "initial": 0 },
         { "id": "ClimbL",        "type": "bool", "initial": false },
-        { "id": "Dialog5",       "type": "int",  "initial": 0 },
+        { "id": "Dialog5",       "type": "bool", "initial": false },
         { "id": "SE2",           "type": "bool", "initial": false },
         { "id": "IE2",           "type": "int",  "initial": 0 },
         { "id": "STR2",          "type": "int",  "initial": 0 },
@@ -28,7 +28,7 @@
         
         { "id": "ACT3",          "type": "int",  "initial": 0 },
         { "id": "AIM",           "type": "bool", "initial": false },
-        { "id": "Dialog7",       "type": "int",  "initial": 0 },
+        { "id": "Dialog7",       "type": "bool", "initial": false },
         { "id": "SE3",           "type": "bool", "initial": false },
         { "id": "IE3",           "type": "int",  "initial": 0 },
         { "id": "STR3",          "type": "int",  "initial": 0 },
@@ -43,14 +43,14 @@
             "Name": "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",
             "goals": [
                 {
-                    "id": "ACT1",
-                    "name": "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",
-                    "parentId": "",
-                    "show": true,
-                    "progress": "ACT1",
-                    "comparison": "==",
-                    "target": "13",
-                    "prereq": [""]
+                    "id":           "ACT1",
+                    "name":         "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",
+                    "parentId":     "",
+                    "show":         true,
+                    "progress":     "ACT1",
+                    "comparison":   "==",
+                    "target":       "13",
+                    "prereq":       [""]
                 },
                 {
                     "id":           "PickupLetter",
@@ -70,7 +70,7 @@
                     "alwaysHidden": true,
                     "progress":     "Dialog1",
                     "comparison":   "==",
-                    "target":       "1",
+                    "target":       "true",
                     "prereq":       ["PickupLetter"]
                 },
                 {
@@ -84,11 +84,11 @@
                     "prereq":       ["Dialog1"]
                 },
                 {
-                    "id":           "LeaveForDungeon",
-                    "name":         "Leave for the dungeon",
+                    "id":           "LeaveTheRoom",
+                    "name":         "Leave the room",
                     "parentId":     "ACT1",
                     "show":         false,
-                    "progress":     "LeaveFD",
+                    "progress":     "LeaveRoom",
                     "comparison":   "==",
                     "target":       "true",
                     "prereq":       ["GrabBook"]
@@ -101,8 +101,8 @@
                     "alwaysHidden": true,
                     "progress":     "Dialog2",
                     "comparison":   "==",
-                    "target":       "1",
-                    "prereq":       ["LeaveForDungeon"]
+                    "target":       "true",
+                    "prereq":       ["LeaveTheRoom"]
                 },
                 {
                     "id":           "ExitDoorClosed",
@@ -178,11 +178,11 @@
                     "prereq":       ["PickupIngredient"]
                 },
                 {
-                    "id":           "LeaveForDungeon",
-                    "name":         "Leave for the dungeon",
+                    "id":           "LeaveDungeon",
+                    "name":         "Leave the dungeon",
                     "parentId":     "ACT1",
                     "show":         false,
-                    "progress":     "KeyFound",
+                    "progress":     "LeaveD",
                     "comparison":   "==",
                     "target":       "true",
                     "prereq":       ["Dialog4"]
@@ -200,7 +200,7 @@
                     "progress":     "ACT2",
                     "comparison":   "==",
                     "target":       "9",
-                    "prereq":       [""]
+                    "prereq":       ["LeaveDungeon"]
                 },
                 {
                     "id":           "ClimbTheLadder",
@@ -210,7 +210,7 @@
                     "progress":     "ClimbL",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       [""]
+                    "prereq":       ["LeaveDungeon"]
                 },
                 {
                     "id":           "Dialog5",
@@ -220,13 +220,13 @@
                     "alwaysHidden": true,
                     "progress":     "Dialog5",
                     "comparison":   "==",
-                    "target":       "1",
+                    "target":       "true",
                     "prereq":       ["ClimbTheLadder"]
                 },
                 {
                     "id":           "SolveEnigma2",
                     "name":         "Solve the enigma and identify the Yōkai :",
-                    "parentId":     "ACT 2",
+                    "parentId":     "ACT2",
                     "show":         false,
                     "progress":     "SE2",
                     "comparison":   "==",
@@ -309,7 +309,7 @@
                     "progress":     "ACT3",
                     "comparison":   "==",
                     "target":       "10",
-                    "prereq":       [""]
+                    "prereq":       ["FukuroDespawn"]
                 },
                 {
                     "id":           "AppearInMausoleum",
@@ -320,7 +320,7 @@
                     "progress":     "AIM",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       [""]
+                    "prereq":       ["FukuroDespawn"]
                 },
                 {
                     "id":           "Dialog7",
@@ -330,7 +330,7 @@
                     "alwaysHidden": true,
                     "progress":     "Dialog7",
                     "comparison":   "==",
-                    "target":       "1",
+                    "target":       "true",
                     "prereq":       ["AppearInMausoleum"]
                 },
                 {
@@ -382,7 +382,7 @@
                     "progress":     "PutIn",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["PutIngredients"]
+                    "prereq":       ["Dialog8"]
                 },
                 {
                     "id":           "BoxOpening",

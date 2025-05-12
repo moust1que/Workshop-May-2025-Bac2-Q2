@@ -1,33 +1,28 @@
 using UnityEngine;
-using Goals.Runtime;
-using ScriptableObjectArchitecture.Runtime;
 
-namespace Goals.Runtime
-{
+namespace Goals.Runtime {
+    using BBehaviour.Runtime;
+
     [AddComponentMenu("Goals/Goal Window (demo)")]
-    public class GoalWindow : MonoBehaviour{
+    public class GoalWindow : BBehaviour {
         private GoalManager manager;
-        private IFact killFact;     // référence facultative (affiche le bouton “Kill +1”)
 
-        // /*======  Initialisation depuis GoalSetup  ======*/
-        public void Initialize(GoalManager mgr, IFact kFact = null){
+        public void Initialize(GoalManager mgr){
             manager  = mgr;
-            // killFact = kFact;
         }
 
-        /*======  GUI  ======*/
-        private void OnGUI(){
-            if (manager == null) return;      // rien n’a été branché → on sort
+        private void OnGUI() {
+            if(manager == null) return;
 
-            /* ----- affichage hiérarchique ----- */
             GUILayout.BeginArea(new Rect(Screen.width - 220, 10, 210, Screen.height - 20));
             DrawRecursive("", 0);
             GUILayout.EndArea();
         }
 
-        private void DrawRecursive(string parentId, int indent){
-            foreach (Goal g in manager.ChildrenOf(parentId)){
-                if (!g.Show) continue;
+        private void DrawRecursive(string parentId, int indent) {
+            foreach(Goal g in manager.ChildrenOf(parentId)) {
+                Verbose("GoalWindow : affiche " + g.Show, VerboseType.Log);
+                if(!g.Show) continue;
 
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(indent * 15);
