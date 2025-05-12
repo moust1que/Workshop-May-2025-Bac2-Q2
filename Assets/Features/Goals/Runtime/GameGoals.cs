@@ -1,9 +1,7 @@
 using System;
 using ScriptableObjectArchitecture.Runtime;
 
-namespace Goals.Runtime
-{
-    /// <summary>Décrit un objectif générique : la valeur courante est dans Progress.</summary>
+namespace Goals.Runtime {
     [Serializable]
     public class Goal{
         public string Id;
@@ -12,6 +10,7 @@ namespace Goals.Runtime
         public bool Show = true;
         public bool Completed = false;
         public bool Discarded = false;
+        public bool AlwaysHidden = false;
 
         public string ParentId  = "";          // chaîne vide = racine
         public IFact Progress;                // Fact<int>, Fact<bool>, Fact<float>, etc.

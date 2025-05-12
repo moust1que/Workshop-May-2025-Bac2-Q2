@@ -1,0 +1,423 @@
+{
+    "facts": [
+        { "id": "PickupL",       "type": "bool", "initial": false },
+        { "id": "Dialog1",       "type": "int",  "initial": 0 },
+        { "id": "GrabB",         "type": "bool", "initial": false },
+        { "id": "Dialog2",       "type": "int",  "initial": 0 },
+        { "id": "LeaveFD",       "type": "bool", "initial": false },
+        { "id": "Dialog3",       "type": "bool", "initial": false },
+        { "id": "EDoorClosed",   "type": "bool", "initial": false },
+        { "id": "SE1",           "type": "bool", "initial": false },
+        { "id": "IE1",           "type": "int",  "initial": 0 },
+        { "id": "STR1",          "type": "int",  "initial": 0 },
+        { "id": "PickupI1",      "type": "bool", "initial": false },
+        { "id": "Dialog4",       "type": "bool", "initial": false },
+        { "id": "KeyFound",      "type": "bool", "initial": false },
+        
+        { "id": "ACT1",          "type": "int",  "initial": 0 },
+        { "id": "ACT2",          "type": "int",  "initial": 0 },
+        { "id": "ClimbL",        "type": "bool", "initial": false },
+        { "id": "Dialog5",       "type": "int",  "initial": 0 },
+        { "id": "SE2",           "type": "bool", "initial": false },
+        { "id": "IE2",           "type": "int",  "initial": 0 },
+        { "id": "STR2",          "type": "int",  "initial": 0 },
+        { "id": "FukuroSpawn",   "type": "bool", "initial": false },
+        { "id": "TalkTY",        "type": "bool", "initial": false },
+        { "id": "Dialog6",       "type": "bool", "initial": false },
+        { "id": "FukuroDespawn", "type": "bool", "initial": false },
+        
+        { "id": "ACT3",          "type": "int",  "initial": 0 },
+        { "id": "AIM",           "type": "bool", "initial": false },
+        { "id": "Dialog7",       "type": "int",  "initial": 0 },
+        { "id": "SE3",           "type": "bool", "initial": false },
+        { "id": "IE3",           "type": "int",  "initial": 0 },
+        { "id": "STR3",          "type": "int",  "initial": 0 },
+        { "id": "Dialog8",       "type": "bool", "initial": false },
+        { "id": "PutIn",         "type": "bool", "initial": false },
+        { "id": "BoxOpening",    "type": "bool", "initial": false },
+        { "id": "RecipeOnScreen","type": "bool", "initial": false },
+        { "id": "Dialog9",       "type": "bool", "initial": false }
+    ],
+    "rooms": [
+        {
+            "Name": "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",
+            "goals": [
+                {
+                    "id": "ACT1",
+                    "name": "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",
+                    "parentId": "",
+                    "show": true,
+                    "progress": "ACT1",
+                    "comparison": "==",
+                    "target": "13",
+                    "prereq": [""]
+                },
+                {
+                    "id":           "PickupLetter",
+                    "name":         "Pick up the letter on the floor",
+                    "parentId":     "ACT1",
+                    "show":         true,
+                    "progress":     "PickupL",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       [""]
+                },
+                {
+                    "id":           "Dialog1",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog1",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["PickupLetter"]
+                },
+                {
+                    "id":           "GrabBook",
+                    "name":         "Grab the book laying on the coffee table",
+                    "parentId":     "ACT1",
+                    "show":         false,
+                    "progress":     "GrabB",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog1"]
+                },
+                {
+                    "id":           "LeaveForDungeon",
+                    "name":         "Leave for the dungeon",
+                    "parentId":     "ACT1",
+                    "show":         false,
+                    "progress":     "LeaveFD",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["GrabBook"]
+                },
+                {
+                    "id":           "Dialog2",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog2",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["LeaveForDungeon"]
+                },
+                {
+                    "id":           "ExitDoorClosed",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "EDoorClosed",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog2"]
+                },
+                {
+                    "id":           "SolveEnigma",
+                    "name":         "Solve the enigma and identify the Yōkai :",
+                    "parentId":     "ACT1",
+                    "show":         false,
+                    "progress":     "SE1",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["ExitDoorClosed"]
+                },
+                {
+                    "id":           "IdentifyEffects",
+                    "name":         "Identify the 3 Yōkai effects with your book",
+                    "parentId":     "SolveEnigma",
+                    "show":         false,
+                    "progress":     "IE1",
+                    "comparison":   "==",
+                    "target":       "3",
+                    "prereq":       ["ExitDoorClosed"]
+                },
+                {
+                    "id":           "SearchTheRoom",
+                    "name":         "Search the room for clues",
+                    "parentId":     "SolveEnigma",
+                    "show":         false,
+                    "progress":     "STR1",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["ExitDoorClosed"]
+                },
+                {
+                    "id":           "Dialog3",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog3",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["SolveEnigma"]
+                },
+                {
+                    "id":           "PickupIngredient",
+                    "name":         "Pick up the first ingredient : ashes of a Yōkai",
+                    "parentId":     "ACT1",
+                    "show":         false,
+                    "progress":     "PickupI1",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog3"]
+                },
+                {
+                    "id":           "Dialog4",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog4",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["PickupIngredient"]
+                },
+                {
+                    "id":           "LeaveForDungeon",
+                    "name":         "Leave for the dungeon",
+                    "parentId":     "ACT1",
+                    "show":         false,
+                    "progress":     "KeyFound",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog4"]
+                }
+            ]
+        },
+        {
+            "Name": "ACT 2 フクロウ - THE GUARDIAN OF SECRETS",
+            "goals": [
+                {
+                    "id":           "ACT2",
+                    "name":         "ACT 2 フクロウ - THE GUARDIAN OF SECRETS",
+                    "parentId":     "",
+                    "show":         false,
+                    "progress":     "ACT2",
+                    "comparison":   "==",
+                    "target":       "9",
+                    "prereq":       [""]
+                },
+                {
+                    "id":           "ClimbTheLadder",
+                    "name":         "Climb the ladder",
+                    "parentId":     "ACT2",
+                    "show":         false,
+                    "progress":     "ClimbL",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       [""]
+                },
+                {
+                    "id":           "Dialog5",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog5",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["ClimbTheLadder"]
+                },
+                {
+                    "id":           "SolveEnigma2",
+                    "name":         "Solve the enigma and identify the Yōkai :",
+                    "parentId":     "ACT 2",
+                    "show":         false,
+                    "progress":     "SE2",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog5"]
+                },
+                {
+                    "id":           "IdentifyEffects",
+                    "name":         "Identify the 3 Yōkai effects with your book",
+                    "parentId":     "SolveEnigma2",
+                    "show":         false,
+                    "progress":     "IE2",
+                    "comparison":   "==",
+                    "target":       "3",
+                    "prereq":       ["Dialog5"]
+                },
+                {
+                    "id":           "SearchTheRoom",
+                    "name":         "Search the room for clues",
+                    "parentId":     "SolveEnigma2",
+                    "show":         false,
+                    "progress":     "STR2",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["Dialog5"]
+                },
+                {
+                    "id":           "FukuroSpawn",
+                    "name":         "Fukuro appears",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "FukuroSpawn",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["SolveEnigma2"]
+                },
+                {
+                    "id":           "TalkToYokai",
+                    "name":         "Talk to the Yōkai",
+                    "parentId":     "ACT2",
+                    "show":         false,
+                    "progress":     "TalkTY",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["FukuroSpawn"]
+                },
+                {
+                    "id":           "Dialog6",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog6",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["TalkToYokai"]
+                },
+                {
+                    "id":           "FukuroDespawn",
+                    "name":         "Fukuro disappears",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "FukuroDespawn",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog6"]
+                }
+            ]
+        },
+        {
+            "Name": "ACT 3: 蓮の魂 - THE SOUL OF A LOTUS",
+            "goals": [
+                {
+                    "id":           "ACT3",
+                    "name":         "ACT 3: 蓮の魂 - THE SOUL OF A LOTUS",
+                    "parentId":     "",
+                    "show":         false,
+                    "progress":     "ACT3",
+                    "comparison":   "==",
+                    "target":       "10",
+                    "prereq":       [""]
+                },
+                {
+                    "id":           "AppearInMausoleum",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "AIM",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       [""]
+                },
+                {
+                    "id":           "Dialog7",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog7",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["AppearInMausoleum"]
+                },
+                {
+                    "id":           "SolveEnigma3",
+                    "name":         "Solve the enigma and identify the Yōkai :",
+                    "parentId":     "ACT3",
+                    "show":         false,
+                    "progress":     "SE3",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog7"]
+                },
+                {
+                    "id":           "IdentifyEffects",
+                    "name":         "Identify the 3 Yōkai effects with your book",
+                    "parentId":     "SolveEnigma3",
+                    "show":         false,
+                    "progress":     "IE3",
+                    "comparison":   "==",
+                    "target":       "3",
+                    "prereq":       ["Dialog7"]
+                },
+                {
+                    "id":           "SearchTheRoom",
+                    "name":         "Search the room for clues",
+                    "parentId":     "SolveEnigma3",
+                    "show":         false,
+                    "progress":     "STR3",
+                    "comparison":   "==",
+                    "target":       "1",
+                    "prereq":       ["Dialog7"]
+                },
+                {
+                    "id":           "Dialog8",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog8",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["SolveEnigma3"]
+                },
+                {
+                    "id":           "PutIngredients",
+                    "name":         "Put the two ingredients on their altars",
+                    "parentId":     "ACT3",
+                    "show":         false,
+                    "progress":     "PutIn",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["PutIngredients"]
+                },
+                {
+                    "id":           "BoxOpening",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "BoxOpening",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["PutIngredients"]
+                },
+                {
+                    "id":           "RecipeOnScreen",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "RecipeOnScreen",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["BoxOpening"]
+                },
+                {
+                    "id":           "Dialog9",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog9",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["RecipeOnScreen"]
+                }
+            ]
+        }
+    ]
+}

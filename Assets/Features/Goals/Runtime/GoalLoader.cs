@@ -1,87 +1,83 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System;         
-// using System.Linq;     
+using System;  
 using ScriptableObjectArchitecture.Runtime;
 
-namespace Goals.Runtime
-{
+namespace Goals.Runtime {
+    using BBehaviour.Runtime;
+
     [AddComponentMenu("Goals/Goal Loader")]
-    public class GoalLoader : MonoBehaviour
-    {
-        [SerializeField] private TextAsset jsonFile;      // glisse goals.json
-        [SerializeField] private GoalWindow windowPrefab;  // prefab ou GO avec GoalWindow
-        [SerializeField] private Dictionary dictionary;    // asset partagé (vide)
+    public class GoalLoader : BBehaviour {
+        [SerializeField] private TextAsset jsonFile;
+        [SerializeField] private GoalWindow windowPrefab;
+        [SerializeField] private Dictionary dictionary;
 
         private GoalManager manager;
         private readonly Dictionary<string, IFact> factTable = new();
 
-        private void Awake(){
-            if (jsonFile == null || dictionary == null){
-                Debug.LogError("GoalLoader : références manquantes !");
+        private void Awake() {
+            if(jsonFile == null || dictionary == null) {
+                Verbose("GoalLoader : références manquantes !", VerboseType.Error);
                 return;
             }
 
-            // 1) lit le JSON
             var wrapper = JsonUtility.FromJson<GoalFileWrapper>(jsonFile.text);
 
             // 2) crée les facts
-            foreach (var fj in wrapper.facts){
-                IFact fact = fj.type switch{
-                    "int"  => new Fact<int>   (fj.id, int.Parse   (fj.initial)),
-                    "float"=> new Fact<float> (fj.id, float.Parse (fj.initial)),
-                    "bool" => new Fact<bool>  (fj.id, bool.Parse  (fj.initial)),
-                    _      => null
+            foreach(var factJson in wrapper.facts) {
+                IFact fact = factJson.type switch {
+                    "int" => new Fact<int>(factJson.id, int.Parse(factJson.initial)),
+                    "float" => new Fact<float>(factJson.id, float.Parse(factJson.initial)),
+                    "bool" => new Fact<bool>(factJson.id, bool.Parse(factJson.initial)),
+                    _ => null
                 };
-                if (fact == null){
-                    Debug.LogWarning($"Type inconnu : {fj.type}");
+                if(fact == null) {
+                    Verbose($"GoalLoader : type inconnu : {factJson.type}", VerboseType.Warning);
                     continue;
                 }
-                factTable[fj.id] = fact;
+                factTable[factJson.id] = fact;
             }
 
-            // 3) instancie le GoalManager & l'UI
             manager = new GoalManager();
             GoalWindow window = Instantiate(windowPrefab);
-            // window.Initialize(manager);             // pas besoin de killFact ici
 
-            // 4) crée les goals
-            foreach (var gj in wrapper.goals){
-                if (!factTable.TryGetValue(gj.progress, out var prog)){
-                    Debug.LogWarning($"Fact {gj.progress} non trouvé pour goal {gj.id}");
-                    continue;
+            foreach(var roomJson in wrapper.rooms) {
+                Verbose("GoalLoader : chargement de la salle " + roomJson.name, VerboseType.Log);
+                foreach(var goalJson in roomJson.goals) {
+                    if(!factTable.TryGetValue(goalJson.progress, out var prog)) {
+                        Verbose($"GoalLoader : fact {goalJson.progress} non trouvé pour goal {goalJson.id}", VerboseType.Warning);
+                        continue;
+                    }
+
+                    Goal goal = new Goal {
+                        Id = goalJson.id,
+                        Name = goalJson.name,
+                        ParentId = goalJson.parentId,
+                        Show = goalJson.show,
+                        AlwaysHidden = goalJson.alwaysHidden,
+                        Discarded = goalJson.discarded,
+                        Progress = prog,
+                        Comparison = goalJson.comparison,
+                        Target = goalJson.target,
+                        Prereq = goalJson.prereq?.ToArray() ?? Array.Empty<string>()
+                    };
+                    manager.AddGoal(goal);
                 }
-
-                Goal g = new Goal {
-                Id = gj.id,
-                Name = gj.name,
-                ParentId = gj.parentId,
-                Show = gj.show,
-                Discarded = gj.discarded,
-                Progress = prog,
-                Comparison = gj.comparison,
-                Target = gj.target,
-                Prereq = gj.prereq?.ToArray() ?? Array.Empty<string>()   // ← NOUVEAU
-                };
-                manager.AddGoal(g);
             }
 
             manager.EvaluateAndPropagate();
-            window.Initialize(manager);             // (re)branche le manager
+            window.Initialize(manager);
         }
-
-        /* ---------------------------------------------------------------
-         *  Exemples pour mettre à jour les facts depuis n'importe où
-         * ------------------------------------------------------------- */
-        public void Increment(string factId, int delta = 1){
-            if (factTable.TryGetValue(factId, out var f) && f is Fact<int> fi){
+        
+        public void Increment(string factId, int delta = 1) {
+            if(factTable.TryGetValue(factId, out var f) && f is Fact<int> fi) {
                 fi.TypedValue += delta;
                 manager.EvaluateAndPropagate();
             }
         }
 
-        public void SetBool(string factId, bool value){
-            if (factTable.TryGetValue(factId, out var f) && f is Fact<bool> fb){
+        public void SetBool(string factId, bool value) {
+            if(factTable.TryGetValue(factId, out var f) && f is Fact<bool> fb) {
                 fb.TypedValue = value;
                 manager.EvaluateAndPropagate();
             }
