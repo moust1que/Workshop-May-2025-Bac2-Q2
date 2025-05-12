@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace BBehaviour.Runtime {
+namespace CameraManager.Runtime {
     public class CameraController : MonoBehaviour{
         [Header("Movement settings")]
         [SerializeField] private float moveSpeed = 3f;
@@ -21,6 +21,8 @@ namespace BBehaviour.Runtime {
         private Camera cam;
         private Coroutine moveRoutine;
         private Coroutine yawRoutine;
+
+        
 
         private void Awake(){
             cam = GetComponentInChildren<Camera>();
@@ -61,7 +63,7 @@ namespace BBehaviour.Runtime {
             if (Input.GetMouseButtonDown(0)){
                 if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)){
                     var nav = hit.collider.GetComponent<NavigationPoint>();
-                    if (nav && nav.destination){
+                    if (nav/* && nav.destination*/){
                         if (moveRoutine != null) StopCoroutine(moveRoutine);
                         // moveRoutine = StartCoroutine(MoveTo(nav.destination, nav.stoppingDistance));
                     }
@@ -120,5 +122,7 @@ namespace BBehaviour.Runtime {
                 currentRoomCenter = null;   // on sort de la pièce on oublie son centre
         }
         private void RecenterToRoom() => HandleRecenterInput();
+
+
     }
 }

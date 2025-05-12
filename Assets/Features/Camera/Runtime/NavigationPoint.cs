@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BBehaviour.Runtime {
+namespace CameraManager.Runtime {
     public class NavigationPoint : MonoBehaviour{
-        [Header("Destination transform for the camera rig / player.")]
-        public Transform destination;
-        [Tooltip("Minimal distance before we snap to final position.")]
-        // public List<Transform> relatedDestinations = new();
-        public Dictionary<Directions, Transform> directions = new();
+        [System.Serializable]
+        public class NavEntry {
+            public Directions key;
+            public Transform value;
+        }
+
+        public List<NavEntry> navigationData = new();
     }
 
     public enum Directions { Forward, Backward, Left, Right }

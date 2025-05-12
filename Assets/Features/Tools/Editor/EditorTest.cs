@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
+using CameraManager.Runtime;
 
 namespace Tools.Editor {
     public class EditorTest : EditorWindow {
@@ -7,6 +9,12 @@ namespace Tools.Editor {
         private string[] tabOptions = new string[] { "Rooms", "Tab 2", "Tab 3" };
         private int roomsTab = 3;
         private string[] roomsTabOptions = new string[] { "Room 1", "Room 2", "Room 3" };
+
+        #region Room1
+            private GameObject room1Root;
+            private GameObject room2Root;
+            private GameObject room3Root;
+        #endregion
 
         #region MainCharacter
             private Texture2D profilePicture;
@@ -26,34 +34,100 @@ namespace Tools.Editor {
 
             switch(tabs) {
                 case 0:
-                    firstTab();
+                    FirstTab();
                     break;
                 case 1:
-                    secondTab();
+                    SecondTab();
                     break;
                 case 2:
-                    thirdTab();
+                    ThirdTab();
                     break;
             }
         }
 
-        private void firstTab() {
+        private void FirstTab() {
             roomsTab = GUILayout.Toolbar(roomsTab, roomsTabOptions);
 
             switch(roomsTab) {
                 case 0:
-                    GUILayout.Label("Room 1");
+                    Room1();
                     break;
                 case 1:
-                    GUILayout.Label("Room 2");
+                    Room2();
                     break;
                 case 2:
-                    GUILayout.Label("Room 3");
+                    Room3();
                     break;
             }
         }
 
-        private void secondTab() {
+        private void Room1() {
+            room1Root = (GameObject)EditorGUILayout.ObjectField("Room 1 Root", room1Root, typeof(GameObject), true);
+
+            if(room1Root == null) return;
+
+            DisplayNavigationData(room1Root);
+        }
+
+        private void Room2() {
+            room2Root = (GameObject)EditorGUILayout.ObjectField("Room 2 Root", room2Root, typeof(GameObject), true);
+
+            if(room2Root == null) return;
+
+            DisplayNavigationData(room2Root);
+        }
+
+        private void Room3() {
+            room3Root = (GameObject)EditorGUILayout.ObjectField("Room 3 Root", room3Root, typeof(GameObject), true);
+
+            if(room3Root == null) return;
+
+            DisplayNavigationData(room3Root);
+        }
+
+        private void DisplayNavigationData(GameObject room) {
+            int childCount = room.transform.childCount;
+            for(int i = 0; i < childCount; i++) {
+                GameObject child = room.transform.GetChild(i).gameObject;
+                    
+                NavigationPoint navPoint = child.GetComponent<NavigationPoint>();
+                if(navPoint) {
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField($"Navigation Data: {child.name}", EditorStyles.boldLabel);
+
+                    SerializedObject serializedNavPoint = new SerializedObject(navPoint);
+                    SerializedProperty navigationDataProperty = serializedNavPoint.FindProperty("navigationData");
+
+                    serializedNavPoint.Update();
+
+                    for(int j = 0; j < navigationDataProperty.arraySize; j++) {
+                        SerializedProperty entryProperty = navigationDataProperty.GetArrayElementAtIndex(j);
+                        SerializedProperty keyProp = entryProperty.FindPropertyRelative("key");
+                        SerializedProperty valueProp = entryProperty.FindPropertyRelative("value");
+                        
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(keyProp, GUIContent.none);
+                        EditorGUILayout.PropertyField(valueProp, GUIContent.none);
+
+                        if(GUILayout.Button("X", GUILayout.Width(20.0f))) {
+                            navigationDataProperty.DeleteArrayElementAtIndex(j);
+                        }
+
+                        EditorGUILayout.EndHorizontal();
+                    }
+
+                    if(GUILayout.Button($"Add Entry to {child.name}")) {
+                        navigationDataProperty.InsertArrayElementAtIndex(navigationDataProperty.arraySize);
+
+                        SerializedProperty newElement = navigationDataProperty.GetArrayElementAtIndex(navigationDataProperty.arraySize - 1);
+                    }
+
+                    serializedNavPoint.ApplyModifiedProperties();
+                }
+            }
+        }
+
+        private void SecondTab() {
             profilePicture = Resources.Load<Texture2D>("ProfilePicture");
             if(profilePicture == null) {
                 Debug.LogError("Failed to load profile picture. Path: Assets/Features/Tools/Editor/ProfilePicture");
@@ -64,7 +138,7 @@ namespace Tools.Editor {
             characterSpeed = EditorGUILayout.Slider("Speed", characterSpeed, 0.0f, 10.0f);
         }
 
-        private void thirdTab() {
+        private void ThirdTab() {
             GUILayout.Label("Tab 3");
         }
     }
