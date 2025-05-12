@@ -7,7 +7,7 @@ namespace ScriptableObjectArchitecture.Runtime {
         public object Value { get; set; }
         public bool IsPersistent { get; set; }
 
-        public Fact(string name, T value, bool isPersistent) {
+        public Fact(string name, T value, bool isPersistent = false) {
             Name = name;
             Value = value;
             IsPersistent = isPersistent;
