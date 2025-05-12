@@ -3,7 +3,7 @@ using System;
 namespace ScriptableObjectArchitecture.Runtime {
     public class Fact<T> : IFact {
         public string Name { get; set; }
-        public Type ValueType => typeof(T);
+        public Type type => typeof(T);
         public object Value { get; set; }
         public bool IsPersistent { get; set; }
 
