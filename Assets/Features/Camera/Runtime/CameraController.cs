@@ -63,7 +63,7 @@ namespace BBehaviour.Runtime {
                     var nav = hit.collider.GetComponent<NavigationPoint>();
                     if (nav && nav.destination){
                         if (moveRoutine != null) StopCoroutine(moveRoutine);
-                        moveRoutine = StartCoroutine(MoveTo(nav.destination, nav.stoppingDistance));
+                        // moveRoutine = StartCoroutine(MoveTo(nav.destination, nav.stoppingDistance));
                     }
                 }
             }

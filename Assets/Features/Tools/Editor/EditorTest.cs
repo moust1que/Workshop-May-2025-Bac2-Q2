@@ -4,7 +4,9 @@ using UnityEditor;
 namespace Tools.Editor {
     public class EditorTest : EditorWindow {
         private int tabs = 3;
-        private string[] tabOptions = new string[] { "Main Character", "Tab 2", "Tab 3" };
+        private string[] tabOptions = new string[] { "Rooms", "Tab 2", "Tab 3" };
+        private int roomsTab = 3;
+        private string[] roomsTabOptions = new string[] { "Room 1", "Room 2", "Room 3" };
 
         #region MainCharacter
             private Texture2D profilePicture;
@@ -22,7 +24,7 @@ namespace Tools.Editor {
         private void OnGUI() {
             tabs = GUILayout.Toolbar(tabs, tabOptions);
 
-            switch (tabs) {
+            switch(tabs) {
                 case 0:
                     firstTab();
                     break;
@@ -36,6 +38,22 @@ namespace Tools.Editor {
         }
 
         private void firstTab() {
+            roomsTab = GUILayout.Toolbar(roomsTab, roomsTabOptions);
+
+            switch(roomsTab) {
+                case 0:
+                    GUILayout.Label("Room 1");
+                    break;
+                case 1:
+                    GUILayout.Label("Room 2");
+                    break;
+                case 2:
+                    GUILayout.Label("Room 3");
+                    break;
+            }
+        }
+
+        private void secondTab() {
             profilePicture = Resources.Load<Texture2D>("ProfilePicture");
             if(profilePicture == null) {
                 Debug.LogError("Failed to load profile picture. Path: Assets/Features/Tools/Editor/ProfilePicture");
@@ -44,10 +62,6 @@ namespace Tools.Editor {
             GUI.DrawTexture(textureRect, profilePicture);
             charcterPosition = EditorGUILayout.Vector3Field("Position", charcterPosition);
             characterSpeed = EditorGUILayout.Slider("Speed", characterSpeed, 0.0f, 10.0f);
-        }
-
-        private void secondTab() {
-            GUILayout.Label("Tab 2");
         }
 
         private void thirdTab() {
