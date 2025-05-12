@@ -1,7 +1,9 @@
 {
     "name": "Tools.Editor",
     "rootNamespace": "Tools.Editor",
-    "references": [],
+    "references": [
+        "GUID:646c0f88b5e95224bb5fd184384c89a9"
+    ],
     "includePlatforms": [
         "Editor"
     ],
