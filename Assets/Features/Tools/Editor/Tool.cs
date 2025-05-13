@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using CameraManager.Runtime;
 
 namespace Tools.Editor {
-    public class EditorTest : EditorWindow {
+    public class Tool : EditorWindow {
         private int tabs = 3;
         private string[] tabOptions = new string[] { "Rooms", "Tab 2", "Tab 3" };
         private int roomsTab = 3;
@@ -22,9 +22,9 @@ namespace Tools.Editor {
             private float characterSpeed = 1.0f;
         #endregion
 
-        [MenuItem("Window/Tabs/Test")]
+        [MenuItem("Tools/Workshop/Tool")]
         public static void ShowWindow() {
-            EditorTest test = (EditorTest)GetWindow(typeof(EditorTest));
+            Tool test = (Tool)GetWindow(typeof(Tool));
             test.minSize = new Vector2(300, 200);
             test.maxSize = new Vector2(500, 1000);
         }
@@ -62,7 +62,7 @@ namespace Tools.Editor {
         }
 
         private void Room1() {
-            room1Root = (GameObject)EditorGUILayout.ObjectField("Room 1 Root", room1Root, typeof(GameObject), true);
+            room1Root = (GameObject)EditorGUILayout.ObjectField("Room 1 Root", GameObject.Find("Room1Destination"), typeof(GameObject), true);
 
             if(room1Root == null) return;
 
@@ -70,7 +70,7 @@ namespace Tools.Editor {
         }
 
         private void Room2() {
-            room2Root = (GameObject)EditorGUILayout.ObjectField("Room 2 Root", room2Root, typeof(GameObject), true);
+            room2Root = (GameObject)EditorGUILayout.ObjectField("Room 2 Root", GameObject.Find("Room2Destination"), typeof(GameObject), true);
 
             if(room2Root == null) return;
 
@@ -78,7 +78,7 @@ namespace Tools.Editor {
         }
 
         private void Room3() {
-            room3Root = (GameObject)EditorGUILayout.ObjectField("Room 3 Root", room3Root, typeof(GameObject), true);
+            room3Root = (GameObject)EditorGUILayout.ObjectField("Room 3 Root", GameObject.Find("Room3Destination"), typeof(GameObject), true);
 
             if(room3Root == null) return;
 
