@@ -14,7 +14,7 @@ namespace UI.Runtime {
         public VerticalLayoutGroup layoutGroup;
 
         private void OnEnable() {
-            foreach (Transform child in layoutGroup.transform) {
+            foreach(Transform child in layoutGroup.transform) {
                 Destroy(child.gameObject);
             }
 

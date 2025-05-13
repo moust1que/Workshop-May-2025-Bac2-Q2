@@ -14,7 +14,7 @@ namespace PlayerData.Runtime
         {
             playerData.Add(type);
 
-            var inv = FindFirstObjectByType<InventoryCanvas>();
+            var inv = FindFirstObjectByType<InventoryCanvasManager>();
             if (inv) inv.AddItem(type);  
 
             Destroy(gameObject);
