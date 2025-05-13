@@ -21,10 +21,6 @@ namespace Tools.Editor {
             private bool showGoals = false;
             private string status = "Player Goals";
             private Dictionary<string, bool> goalFoldoutStates = new();
-
-            private Texture2D profilePicture;
-            private Vector3 charcterPosition = Vector3.zero;
-            private float characterSpeed = 1.0f;
         #endregion
 
         [MenuItem("Tools/Workshop/Tool")]
