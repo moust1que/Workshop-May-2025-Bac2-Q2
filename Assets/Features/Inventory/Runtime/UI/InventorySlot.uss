@@ -1,0 +1,16 @@
+.slot {
+    width: 64px;
+    height: 64px;
+    background-color: #444444CC;
+    border: 1px solid #999;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot:hover { border-color: white; }
+
+.slot.empty { border-color: #999; background-color: transparent; }
+
+.active { outline: 3px solid yellow; }
+
+#Icon { width: 60%; height: 60%; }

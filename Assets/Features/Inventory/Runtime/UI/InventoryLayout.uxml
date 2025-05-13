@@ -1,0 +1,22 @@
+<ui:UXML xmlns="UnityEngine.UIElements" xmlns:ui="UnityEngine.UIElements" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Features/Inventory/Runtime/UI/InventoryLayout.uss?fileID=7433441132597879392&amp;guid=ddd2ad78ffff27c449c7d2dfd51349a0&amp;type=3#InventoryLayout" />
+    <ui:VisualElement name="InventoryWrapper" class="wrapper">
+        <ui:Button name="BtnToggle">►</ui:Button>
+        <ui:VisualElement name="SpecialRow" class="row-special">
+            <ui:VisualElement class="slot special empty">
+                <ui:Image name="Icon"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="slot special empty">
+                <ui:Image name="Icon"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="slot special empty">
+                <ui:Image name="Icon"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:ScrollView name="ScrollArea" class="scroll">
+            <ui:VisualElement name="Grid" class="grid" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
