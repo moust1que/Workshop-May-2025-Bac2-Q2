@@ -1,9 +1,0 @@
-<ui:UXML xmlns="UnityEngine.UIElements"
-         xmlns:ui="UnityEngine.UIElements"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd">
-         <Style src="project://database/Assets/Script/Inventory/UI/slot.uss" />
-  <ui:VisualElement class="slot">
-    <ui:Image name="Icon"/>
-  </ui:VisualElement>
-</ui:UXML>
