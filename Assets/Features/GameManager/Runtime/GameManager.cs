@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace GameManager.Runtime {
+    using System.Collections.Generic;
     using BBehaviour.Runtime;
 
     public class GameManager : BBehaviour {
@@ -15,9 +16,10 @@ namespace GameManager.Runtime {
 
             public Transform spawnPoint;
 
-            public GameObject mainMenuUI;
-            public GameObject gameplayUI;
-            public GameObject pauseUI;
+            public List<GameObject> listUI;
+            // public GameObject gameplayUI;
+            // public GameObject pauseUI;
+            // public GameObject saveMenuUI;
         #endregion
 
         void Start() {
@@ -41,9 +43,13 @@ namespace GameManager.Runtime {
         }
 
         public void ShowUI(GameObject ui) {
-            mainMenuUI.SetActive(false);
-            gameplayUI.SetActive(false);
-            pauseUI.SetActive(false);
+            foreach(GameObject menu in listUI) {
+                menu.SetActive(false);
+            }
+            // mainMenuUI.SetActive(false);
+            // gameplayUI.SetActive(false);
+            // pauseUI.SetActive(false);
+            // saveMenuUI.SetActive(false);
             
             if(ui != null)
                 ui.SetActive(true);

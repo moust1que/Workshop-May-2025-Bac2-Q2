@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 namespace Goals.Runtime {
-    [Serializable] public class FactJson { public string id; public string type; public string initial; }
+    [Serializable] public class FactJson { public string id; public string type; public string initial; public string persistent; }
 
     [Serializable] public class RoomJson { public string name; public GoalJson[] goals; }
 

@@ -52,7 +52,7 @@ namespace UI.Runtime {
         }
 
         void OpenSaveMenu() {
-            Verbose("Open Save Menu", VerboseType.Log);
+            GameManager.instance.ChangeState(new SaveMenuState());
         }
 
         void OpenSettingsMenu() {

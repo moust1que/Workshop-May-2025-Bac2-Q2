@@ -1,14 +1,20 @@
-using System.IO;
-using ScriptableObjectArchitecture.Runtime;
 using UnityEngine;
+using ScriptableObjectArchitecture.Runtime;
+using UnityEngine.UI;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Save.Runtime {
     public class Save {
-        private static string fileName = "Save.txt";
-        public static Dictionary factDictionary;
+        public static DictionaryVariable factDictionary;
+        public static List<Button> buttons = new();
 
-        public static void SaveToFile() {
+        private static string directoryPath = Path.Combine(Application.dataPath, "saves");
+
+        public static void SaveToFile(string slotName) {
+            if(!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+            string fileName = Path.Combine(directoryPath, slotName);
+
             if(File.Exists(fileName)) File.Delete(fileName);
 
             List<StringFact> serializableFacts = factDictionary.ToSerializableList();
@@ -17,6 +23,8 @@ namespace Save.Runtime {
             StreamWriter writer = new StreamWriter(stream);
             
             foreach(StringFact pair in serializableFacts) {
+                if(pair.isPersistent == false) continue;
+
                 writer.WriteLine($"{pair.key}:{pair.factType},{pair.value},{pair.isPersistent}");
             }
 
@@ -24,10 +32,11 @@ namespace Save.Runtime {
             stream.Close();
 
             factDictionary.Clear();
-            Debug.Log(factDictionary.facts.Count);
         }
 
-        public static void LoadFromFile() {
+        public static void LoadFromFile(string slotName) {
+            string fileName = Path.Combine(directoryPath, slotName);
+
             if(!File.Exists(fileName)) return;
 
             StreamReader reader = new StreamReader(fileName);
@@ -53,9 +62,23 @@ namespace Save.Runtime {
             }
         }
 
-        public static bool Exists() {
+        public static bool ExistInSlot(string slotName) {
+            if(!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+            string fileName = Path.Combine(directoryPath, slotName);
+
             if(!File.Exists(fileName)) return false;
             else return true;
+        }
+
+        public static bool Exists() {
+            if(!Directory.Exists(directoryPath)) Directory.CreateDirectory(directoryPath);
+
+            foreach(Button button in buttons) {
+                string fileName = Path.Combine(directoryPath, button.name);
+                if(File.Exists(fileName)) return true;
+            }
+
+            return false;
         }
     }
 }

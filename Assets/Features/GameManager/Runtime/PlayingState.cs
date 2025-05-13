@@ -6,7 +6,7 @@ namespace GameManager.Runtime {
         private Button toggleInventoryButton;
 
         public void Enter(GameManager game) {
-            game.ShowUI(game.gameplayUI);
+            game.ShowUI(game.listUI[1]);
             Time.timeScale = 1.0f;
         }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace GameManager.Runtime {
     public class PauseState : IGameState {
         public void Enter(GameManager game) {
-            game.ShowUI(game.pauseUI);
+            game.ShowUI(game.listUI[2]);
             Time.timeScale = 0.0f;
         }
 

@@ -23,7 +23,7 @@ namespace UI.Runtime {
 
             CreateButton("New Game", Color.white, () => CreateNewGame());
             if(Save.Exists())
-                CreateButton("Load Game", Color.white, () => Verbose("Load Game", VerboseType.Log));
+                CreateButton("Load Game", Color.white, () => LoadGame());
 
             CreateButton("Settings", Color.white, () => Verbose("Open Settings", VerboseType.Log));
             CreateButton("Exit", Color.white, () => Exit());
@@ -64,6 +64,10 @@ namespace UI.Runtime {
 
         void CreateNewGame() {
             GameManager.instance.ChangeState(new PlayingState());
+        }
+
+        void LoadGame() {
+            GameManager.instance.ChangeState(new LoadSaveMenuState());
         }
     }
 }
