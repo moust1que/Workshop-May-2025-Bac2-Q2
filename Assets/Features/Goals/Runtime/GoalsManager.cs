@@ -11,6 +11,7 @@ namespace Goals.Runtime {
 
         private void Awake() {
             instance = this;
+            Verbose("GoalsManager : initialisation", VerboseType.Log);
         }
 
         public void AddGoal(Goal g) {

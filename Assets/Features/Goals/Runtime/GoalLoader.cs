@@ -14,7 +14,7 @@ namespace Goals.Runtime {
 
         private readonly Dictionary<string, IFact> factTable = new();
 
-        private void Awake() {
+        private void Start() {
             if(jsonFile == null || dictionary == null) {
                 Verbose("GoalLoader : références manquantes !", VerboseType.Error);
                 return;
@@ -58,6 +58,7 @@ namespace Goals.Runtime {
                         Target = goalJson.target,
                         Prereq = goalJson.prereq?.ToArray() ?? Array.Empty<string>()
                     };
+
                     GoalsManager.instance.AddGoal(goal);
                 }
             }
