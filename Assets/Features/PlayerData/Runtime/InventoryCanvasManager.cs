@@ -26,7 +26,10 @@ namespace PlayerData.Runtime
             closedPos = panel.anchoredPosition;               // ( 230, 0 )
             openPos   = closedPos + Vector2.left * slideDist; // (   0, 0 )
 
-            toggleBtn.onClick.AddListener(() => isOpen = !isOpen);
+            toggleBtn.onClick.AddListener(() => {
+                isOpen = !isOpen;
+                toggleBtn.transform.rotation = Quaternion.Euler(0, 0, isOpen ? 0f : 180f);
+            });
 
             // enregistrer les 3 slots spéciaux pour le highlight
             allSlots.AddRange(specialSlots);
