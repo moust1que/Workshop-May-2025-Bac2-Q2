@@ -21,6 +21,8 @@ namespace PlayerData.Runtime
         bool isOpen;
         Vector2 closedPos, openPos;
 
+        public ItemData SelectedItem { get; private set; }
+
         void Awake()
         {
             closedPos = panel.anchoredPosition;               // ( 230, 0 )
@@ -65,13 +67,28 @@ namespace PlayerData.Runtime
         }
 
         /*============  PRIVÉ  ============*/
+        
         void ClickSlot(SlotUi uiSlot)
         {
             if (uiSlot.isEmpty) return;
 
+            // highlight
             foreach (SlotUi s in allSlots) s.ClearHighlight();
             uiSlot.Highlight(true);
+
+            // mémorise l'objet sélectionné
+            SelectedItem = uiSlot.currentItem;
+            selectedSlot = uiSlot;            // (stocke le Slot pour le vider plus tard)
         }
+        SlotUi selectedSlot; 
+
+        public void ConsumeSelected()
+        {
+            if (selectedSlot == null) return;
+            selectedSlot.Clear();             // visuel
+            SelectedItem = null;
+            selectedSlot = null;
+        }  
 
         void Update()
         {

@@ -10,6 +10,8 @@ namespace PlayerData.Runtime
         [HideInInspector] public bool isEmpty = true;
         Image back;
 
+        public ItemData currentItem { get; private set; }  
+
         void Awake() => back = GetComponent<Image>();
 
         public void SetItem(Sprite spr) {
@@ -23,10 +25,19 @@ namespace PlayerData.Runtime
                             : new Color(1f, 1f, 1f, .35f);
         }
 
-        public void SetItem(ItemData type) {
-            icon.sprite  = type.icon;
+        public void SetItem(ItemData type)
+        {
+            currentItem = type;              // mémorise
+            icon.sprite = type.icon;
             icon.enabled = true;
-            isEmpty      = false;
+            isEmpty = false;
+        }
+        public void Clear()
+        {
+            currentItem = null;
+            icon.enabled = false;
+            isEmpty = true;
+            ClearHighlight();
         }
 
         public void ClearHighlight() => GetComponent<Image>().color = Color.white;

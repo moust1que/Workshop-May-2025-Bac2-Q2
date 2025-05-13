@@ -16,6 +16,6 @@ MonoBehaviour:
   description: 
   isSpecial: 0
   icon: {fileID: -758973064, guid: 024b4ebd6c74ce24d8fb89c720f469df, type: 3}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 8312904105999577042, guid: 789957ec8fe44f743a8750c1e887bd53, type: 3}
   maxStack: 1
   consumable: 1
