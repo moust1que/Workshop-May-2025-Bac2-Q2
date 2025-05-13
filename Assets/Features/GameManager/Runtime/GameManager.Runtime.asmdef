@@ -1,7 +1,9 @@
 {
     "name": "GameManager.Runtime",
     "rootNamespace": "GameManager.Runtime",
-    "references": [],
+    "references": [
+        "GUID:1f7b531d2ce7e1d4d83340b843df5215"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

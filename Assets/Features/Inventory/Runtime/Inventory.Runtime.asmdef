@@ -1,7 +1,10 @@
 {
     "name": "Inventory.Runtime",
     "rootNamespace": "Inventory.Runtime",
-    "references": [],
+    "references": [
+        "GUID:1f7b531d2ce7e1d4d83340b843df5215",
+        "GUID:9b7858327556c774a8937cc266429ac4"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

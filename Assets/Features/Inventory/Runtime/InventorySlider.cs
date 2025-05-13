@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using GameManager.Runtime;
 
-namespace Inventory.Runtime
-{
-    public class InventorySlider : MonoBehaviour
-    {
+namespace Inventory.Runtime {
+    using BBehaviour.Runtime;
+
+    public class InventorySlider : BBehaviour {
         [SerializeField] UIDocument uiDoc;
 
         const float Width = 220f;
@@ -14,16 +15,25 @@ namespace Inventory.Runtime
 
         void Start() {
             wrapper = uiDoc.rootVisualElement.Q<VisualElement>("InventoryWrapper");
-            toggle  = wrapper.Q<Button>("BtnToggle");      // si le bouton est à l’intérieur
-            if (toggle != null)  toggle.clicked += Toggle;
-            else                 Debug.LogWarning("BtnToggle introuvable");
+            toggle  = wrapper.Q<Button>("BtnToggle"); // si le bouton est à l’intérieur
+            if (toggle != null) toggle.clicked += Toggle;
+            else Debug.LogWarning("BtnToggle introuvable");
 
             // démarrer fermé
             wrapper.style.right = -Width;
         }
 
-        void Toggle() {
+        private void OnEnable() {
+            UIEvents.OnInventoryToggle += Toggle;
+        }
+
+        private void OnDisable() {
+            UIEvents.OnInventoryToggle -= Toggle;
+        }
+
+        public void Toggle() {
             isOpen = !isOpen;
+            wrapper = uiDoc.rootVisualElement.Q<VisualElement>("InventoryWrapper");
             wrapper.style.right = isOpen ? 0 : -Width;
 
             // (facultatif) faire pivoter le chevron

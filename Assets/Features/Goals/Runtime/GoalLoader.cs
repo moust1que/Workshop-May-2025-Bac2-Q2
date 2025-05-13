@@ -12,7 +12,6 @@ namespace Goals.Runtime {
         [SerializeField] private GoalWindow windowPrefab;
         [SerializeField] private Dictionary dictionary;
 
-        private GoalManager manager;
         private readonly Dictionary<string, IFact> factTable = new();
 
         private void Awake() {
@@ -37,7 +36,6 @@ namespace Goals.Runtime {
                 factTable[factJson.id] = fact;
             }
 
-            manager = new GoalManager();
             GoalWindow window = Instantiate(windowPrefab);
 
             foreach(var roomJson in wrapper.rooms) {
@@ -60,25 +58,24 @@ namespace Goals.Runtime {
                         Target = goalJson.target,
                         Prereq = goalJson.prereq?.ToArray() ?? Array.Empty<string>()
                     };
-                    manager.AddGoal(goal);
+                    GoalsManager.instance.AddGoal(goal);
                 }
             }
 
-            manager.EvaluateAndPropagate();
-            window.Initialize(manager);
+            GoalsManager.instance.EvaluateAndPropagate();
         }
         
         public void Increment(string factId, int delta = 1) {
             if(factTable.TryGetValue(factId, out var f) && f is Fact<int> fi) {
                 fi.TypedValue += delta;
-                manager.EvaluateAndPropagate();
+                GoalsManager.instance.EvaluateAndPropagate();
             }
         }
 
         public void SetBool(string factId, bool value) {
             if(factTable.TryGetValue(factId, out var f) && f is Fact<bool> fb) {
                 fb.TypedValue = value;
-                manager.EvaluateAndPropagate();
+                GoalsManager.instance.EvaluateAndPropagate();
             }
         }
     }

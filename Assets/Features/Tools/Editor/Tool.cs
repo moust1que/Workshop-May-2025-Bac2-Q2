@@ -1,22 +1,27 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using CameraManager.Runtime;
+using Goals.Runtime;
+using System.Collections.Generic;
 
 namespace Tools.Editor {
     public class Tool : EditorWindow {
         private int tabs = 3;
-        private string[] tabOptions = new string[] { "Rooms", "Tab 2", "Tab 3" };
+        private string[] tabOptions = new string[] { "Rooms", "PlayerData", "Tab 3" };
         private int roomsTab = 3;
         private string[] roomsTabOptions = new string[] { "Room 1", "Room 2", "Room 3" };
 
-        #region Room1
+        #region Rooms
             private GameObject room1Root;
             private GameObject room2Root;
             private GameObject room3Root;
         #endregion
 
-        #region MainCharacter
+        #region PlayerData
+            private bool showGoals = false;
+            private string status = "Player Goals";
+            private Dictionary<string, bool> goalFoldoutStates = new();
+
             private Texture2D profilePicture;
             private Vector3 charcterPosition = Vector3.zero;
             private float characterSpeed = 1.0f;
@@ -128,14 +133,78 @@ namespace Tools.Editor {
         }
 
         private void SecondTab() {
-            profilePicture = Resources.Load<Texture2D>("ProfilePicture");
-            if(profilePicture == null) {
-                Debug.LogError("Failed to load profile picture. Path: Assets/Features/Tools/Editor/ProfilePicture");
+            showGoals = EditorGUILayout.BeginFoldoutHeaderGroup(showGoals, status);
+            if(showGoals) {
+                EditorGUI.indentLevel++;
+                if(GoalsManager.instance == null) {
+                    EditorGUILayout.LabelField("Enter Play Mode to load Goals.");
+                }else {
+                    foreach(Goal goal in GoalsManager.instance.goals.Values) {
+                        string goalKey = goal.Id;
+
+                        if(!goalFoldoutStates.ContainsKey(goalKey)) 
+                            goalFoldoutStates[goalKey] = false;
+
+                        goalFoldoutStates[goalKey] = EditorGUILayout.Foldout(goalFoldoutStates[goalKey], "Goal: " + goal.Id);
+
+                        if(goalFoldoutStates[goalKey]) {
+                            EditorGUI.indentLevel++;
+
+                            GUILayout.BeginVertical("box");
+
+                            EditorGUILayout.LabelField("ID", goal.Id);
+                            EditorGUILayout.LabelField("Name", goal.Name);
+
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField("Completed", goal.Completed.ToString());
+                            EditorGUILayout.LabelField("Discarded", goal.Discarded.ToString());
+                            EditorGUILayout.LabelField("Always Hidden", goal.AlwaysHidden.ToString());
+                            EditorGUILayout.EndHorizontal();
+
+                            if (!string.IsNullOrEmpty(goal.ParentId))
+                                EditorGUILayout.LabelField("Parent ID", goal.ParentId);
+
+                            EditorGUILayout.Space(3);
+                            EditorGUILayout.LabelField("Evaluation");
+                            EditorGUI.indentLevel++;
+                            EditorGUILayout.LabelField("Comparison", goal.Comparison);
+                            EditorGUILayout.LabelField("Target", goal.Target);
+                            EditorGUILayout.LabelField("Progress Type", goal.Progress?.type?.Name ?? "null");
+                            EditorGUILayout.LabelField("Progress Value", goal.Progress?.Value?.ToString() ?? "null");
+                            EditorGUILayout.LabelField("Evaluates To", goal.Evaluate().ToString());
+                            EditorGUI.indentLevel--;
+
+                            if (goal.Prereq != null && goal.Prereq.Length > 0) {
+                                EditorGUILayout.Space(3);
+                                EditorGUILayout.LabelField("Prerequisites");
+                                EditorGUI.indentLevel++;
+                                foreach (string prereq in goal.Prereq) {
+                                    EditorGUILayout.LabelField("- " + prereq);
+                                }
+                                EditorGUI.indentLevel--;
+                            }
+
+                            GUILayout.EndVertical();
+
+                            EditorGUI.indentLevel--;
+                        }
+                    }
+                }
+                EditorGUI.indentLevel--;
             }
-            Rect textureRect = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(100.0f), GUILayout.MaxHeight(100.0f));
-            GUI.DrawTexture(textureRect, profilePicture);
-            charcterPosition = EditorGUILayout.Vector3Field("Position", charcterPosition);
-            characterSpeed = EditorGUILayout.Slider("Speed", characterSpeed, 0.0f, 10.0f);
+            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            EditorGUILayout.Space();
+
+
+            // profilePicture = Resources.Load<Texture2D>("ProfilePicture");
+            // if(profilePicture == null) {
+            //     Debug.LogError("Failed to load profile picture. Path: Assets/Features/Tools/Editor/ProfilePicture");
+            // }
+            // Rect textureRect = EditorGUILayout.GetControlRect(GUILayout.MaxWidth(100.0f), GUILayout.MaxHeight(100.0f));
+            // GUI.DrawTexture(textureRect, profilePicture);
+            // charcterPosition = EditorGUILayout.Vector3Field("Position", charcterPosition);
+            // characterSpeed = EditorGUILayout.Slider("Speed", characterSpeed, 0.0f, 10.0f);
         }
 
         private void ThirdTab() {

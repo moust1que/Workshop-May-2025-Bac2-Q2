@@ -1,9 +1,17 @@
 using System.Collections.Generic;
 
 namespace Goals.Runtime {
-    public class GoalManager {
-        private readonly Dictionary<string, Goal> goals = new();
+    using BBehaviour.Runtime;
+
+    public class GoalsManager : BBehaviour {
+        public readonly Dictionary<string, Goal> goals = new();
         private readonly Dictionary<string, List<Goal>> children = new();
+
+        public static GoalsManager instance { get; private set; }
+
+        private void Awake() {
+            instance = this;
+        }
 
         public void AddGoal(Goal g) {
             goals[g.Id] = g;
