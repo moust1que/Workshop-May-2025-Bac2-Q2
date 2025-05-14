@@ -35,7 +35,8 @@ namespace Goals.Runtime {
                 bool wasCompleted = g.Completed;
                 g.Completed = g.Evaluate();
 
-                if(wasCompleted && g.Completed) {
+                if(!wasCompleted && g.Completed) {
+                    Verbose($"Goal {g.Id} completed !", VerboseType.Log);
                     OnGoalCompleted?.Invoke(g);
                 }
 

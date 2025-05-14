@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Katana
   description: 
-  isSpecial: 0
   icon: {fileID: -941725138, guid: a85af6091095b2045b80700eec929d55, type: 3}
   worldPrefab: {fileID: 716805229721699266, guid: 7eea8bfdb2e307e4d8b0b3bb3185cd38, type: 3}
   maxStack: 1
-  consumable: 1
+  type: 1

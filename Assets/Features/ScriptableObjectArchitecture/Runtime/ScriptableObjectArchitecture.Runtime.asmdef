@@ -1,7 +1,9 @@
 {
     "name": "ScriptableObjectArchitecture.Runtime",
     "rootNamespace": "ScriptableObjectArchitecture.Runtime",
-    "references": [],
+    "references": [
+        "GUID:957f314ce2439d24eb8ae2f2fea36ca3"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

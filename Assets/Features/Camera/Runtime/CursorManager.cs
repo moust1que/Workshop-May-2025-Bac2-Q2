@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CameraManager.Runtime {
     public class CursorManager : MonoBehaviour {
-        
         [Header("Textures")]
         public Texture2D defaultCursor;
         public Texture2D hoverCursor;
@@ -22,38 +22,38 @@ namespace CameraManager.Runtime {
         }
 
         void Update() {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
             bool hoverNow = false;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f, hoverMask)) {
-                if (hit.collider.CompareTag("Hoverable"))
-                    hoverNow = true;
-            }
-
-            if (!hoverNow && EventSystem.current != null) {
-                var pointer = new PointerEventData(EventSystem.current){
+            if(EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) {
+                PointerEventData pointer = new PointerEventData(EventSystem.current) {
                     position = Input.mousePosition
                 };
-                var results = new System.Collections.Generic.List<RaycastResult>();
+                List<RaycastResult> results = new();
                 EventSystem.current.RaycastAll(pointer, results);
-
-                foreach (var res in results) {
-                    if (res.gameObject.CompareTag("Hoverable")) {
+                
+                foreach(RaycastResult res in results) {
+                    if(res.gameObject.CompareTag("Hoverable")) {
                         hoverNow = true;
                         break;
                     }
                 }
+
+                SetCursor(hoverNow);
+                return;
             }
 
-            if (hoverNow != isHovering) {
-                isHovering = hoverNow;
-                Cursor.SetCursor(isHovering ? hoverCursor : defaultCursor, hotspot, cursorMode);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if(Physics.Raycast(ray, out RaycastHit hit, 100f, hoverMask)) {
+                if(hit.collider.CompareTag("Hoverable"))
+                    hoverNow = true;
             }
+
+            SetCursor(hoverNow);
         }
 
         void SetCursor(bool hover) {
-            if (hover == isHovering) return;
+            if(hover == isHovering) return;
             isHovering = hover;
             Cursor.SetCursor(hover ? hoverCursor : defaultCursor, hotspot, cursorMode);
         }

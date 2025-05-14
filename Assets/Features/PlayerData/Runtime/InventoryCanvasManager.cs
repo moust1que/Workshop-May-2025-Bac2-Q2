@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace PlayerData.Runtime {
+    using BBehaviour.Runtime;
     using Goals.Runtime;
 
-    public class InventoryCanvasManager : MonoBehaviour {
+    public class InventoryCanvasManager : BBehaviour {
         public RectTransform panel;        // InventoryPanel
         public Button        toggleBtn;    // ToggleBtn
         public SlotUi[]      specialSlots; // 3 slots du haut
@@ -50,18 +51,26 @@ namespace PlayerData.Runtime {
         }
 
         /*============  API appelée par PickableItem  ============*/
-        public void AddItem(ItemData type) {
+        public void AddItem(ItemData datas) {
             // 1) slots spéciaux déjà pleins ?
-            var pool = type.isSpecial ? specialSlots : gridParent.GetComponentsInChildren<SlotUi>();
+            var pool = datas.type == ItemType.special ? specialSlots : gridParent.GetComponentsInChildren<SlotUi>();
+
+            if(datas.type == ItemType.displayable && datas.uiPrefab != null && datas.DisplayOnPickup) {
+                GameObject parentCanvas = GameObject.Find("UIInGame");
+                for(int i = 0; i < parentCanvas.transform.childCount; i++) {
+                    parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                Instantiate(datas.uiPrefab, parentCanvas.transform);
+            }
 
             foreach(SlotUi ui in pool) {
-                if(ui.isEmpty) { ui.SetItem(type); return; }
+                if(ui.isEmpty) { ui.SetItem(datas); return; }
             }
 
             // 2) instancier une nouvelle case normale si besoin
-            if(!type.isSpecial) {
+            if(!(datas.type == ItemType.special)) {
                 SlotUi newSlot = Instantiate(slotPrefab, gridParent);
-                newSlot.SetItem(type);
+                newSlot.SetItem(datas);
                 allSlots.Add(newSlot);
                 newSlot.GetComponent<Button>().onClick.AddListener(() => ClickSlot(newSlot));
             }
@@ -79,6 +88,14 @@ namespace PlayerData.Runtime {
             // mémorise l'objet sélectionné
             SelectedItem = uiSlot.currentItem;
             selectedSlot = uiSlot;            // (stocke le Slot pour le vider plus tard)
+
+            if(SelectedItem.type == ItemType.displayable) {
+                GameObject parentCanvas = GameObject.Find("UIInGame");
+                for(int i = 0; i < parentCanvas.transform.childCount; i++) {
+                    parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
+                }
+                Instantiate(SelectedItem.uiPrefab, parentCanvas.transform);
+            }
         } 
 
         public void ConsumeSelected() {
