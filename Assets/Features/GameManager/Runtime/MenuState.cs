@@ -3,7 +3,7 @@ using UnityEngine;
 namespace GameManager.Runtime {
     public class MenuState : IGameState {
         public void Enter(GameManager game) {
-            game.ShowUI(game.mainMenuUI);
+            game.ShowUI(game.listUI[0]);
             Time.timeScale = 0.0f;
         }
 
@@ -12,8 +12,7 @@ namespace GameManager.Runtime {
         }
 
         public void Update(GameManager game) {
-            // if(Input.GetKeyDown(KeyCode.Space))
-            //     game.ChangeState(new PlayingState());
+            
         }
     }
 }

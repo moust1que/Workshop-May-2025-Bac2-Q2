@@ -9,8 +9,8 @@ namespace Goals.Runtime {
     [AddComponentMenu("Goals/Goal Loader")]
     public class GoalLoader : BBehaviour {
         [SerializeField] private TextAsset jsonFile;
-        [SerializeField] private GoalWindow windowPrefab;
-        [SerializeField] private Dictionary dictionary;
+        // [SerializeField] private GoalWindow windowPrefab;
+        [SerializeField] private DictionaryVariable dictionary;
 
         private readonly Dictionary<string, IFact> factTable = new();
 
@@ -24,19 +24,20 @@ namespace Goals.Runtime {
 
             foreach(var factJson in wrapper.facts) {
                 IFact fact = factJson.type switch {
-                    "int" => new Fact<int>(factJson.id, int.Parse(factJson.initial)),
-                    "float" => new Fact<float>(factJson.id, float.Parse(factJson.initial)),
-                    "bool" => new Fact<bool>(factJson.id, bool.Parse(factJson.initial)),
+                    "int" => new Fact<int>(factJson.id, int.Parse(factJson.initial), bool.Parse(factJson.persistent)),
+                    "float" => new Fact<float>(factJson.id, float.Parse(factJson.initial), bool.Parse(factJson.persistent)),
+                    "bool" => new Fact<bool>(factJson.id, bool.Parse(factJson.initial), bool.Parse(factJson.persistent)),
                     _ => null
                 };
                 if(fact == null) {
                     Verbose($"GoalLoader : type inconnu : {factJson.type}", VerboseType.Warning);
                     continue;
                 }
+                dictionary.SetFact(factJson.id, fact);
                 factTable[factJson.id] = fact;
             }
 
-            GoalWindow window = Instantiate(windowPrefab);
+            // GoalWindow window = Instantiate(windowPrefab);
 
             foreach(var roomJson in wrapper.rooms) {
                 Verbose("GoalLoader : chargement de la salle " + roomJson.name, VerboseType.Log);

@@ -17,8 +17,9 @@ namespace Goals.Runtime {
         public void AddGoal(Goal g) {
             goals[g.Id] = g;
 
-            if(!children.TryGetValue(g.ParentId, out var list))
+            if(!children.TryGetValue(g.ParentId, out var list)) {
                 children[g.ParentId] = list = new List<Goal>();
+            }
 
             list.Add(g);
         }
@@ -29,13 +30,13 @@ namespace Goals.Runtime {
             Propagate("");
 
             foreach(Goal g in goals.Values) {
-                if(g.AlwaysHidden) {
+                g.Completed = g.Evaluate();
+                if(g.Completed) {
                     g.Show = false;
                     continue;
                 }
 
-                g.Completed = g.Evaluate();
-                if(g.Completed) {
+                if(g.AlwaysHidden) {
                     g.Show = false;
                     continue;
                 }
@@ -44,6 +45,7 @@ namespace Goals.Runtime {
                 foreach(string id in g.Prereq) {
                     if(goals.TryGetValue(id, out var pre)) {
                         if(!pre.Completed) {
+                            Verbose($"Prerequisite not meeted for {g.Id} prerequisite is {g.Prereq[0]}!", VerboseType.Warning);
                             ready = false;
                         }
                     }
