@@ -2,11 +2,10 @@ using UnityEngine;
 using ScriptableObjectArchitecture.Runtime;
 using UnityEngine.UI;
 
-namespace PlayerData.Runtime
-{
-    public class SlotUi : MonoBehaviour
-    {
+namespace PlayerData.Runtime {
+    public class SlotUi : MonoBehaviour {
         public Image icon;
+        public Sprite defaultIcon;
         [HideInInspector] public bool isEmpty = true;
         Image back;
 
@@ -25,17 +24,16 @@ namespace PlayerData.Runtime
                             : new Color(1f, 1f, 1f, .35f);
         }
 
-        public void SetItem(ItemData type)
-        {
+        public void SetItem(ItemData type) {
             currentItem = type;              // mémorise
             icon.sprite = type.icon;
             icon.enabled = true;
             isEmpty = false;
         }
-        public void Clear()
-        {
+
+        public void Clear() {
             currentItem = null;
-            icon.enabled = false;
+            icon.sprite = defaultIcon;
             isEmpty = true;
             ClearHighlight();
         }

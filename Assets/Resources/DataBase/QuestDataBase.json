@@ -126,7 +126,7 @@
                     "prereq":       ["ExitDoorClosed"]
                 },
                 {
-                    "id":           "IdentifyEffects",
+                    "id":           "IdentifyEffects1",
                     "name":         "Identify the 3 Yōkai effects with your book",
                     "parentId":     "SolveEnigma",
                     "show":         false,
@@ -136,7 +136,7 @@
                     "prereq":       ["ExitDoorClosed"]
                 },
                 {
-                    "id":           "SearchTheRoom",
+                    "id":           "SearchTheRoom1",
                     "name":         "Search the room for clues",
                     "parentId":     "SolveEnigma",
                     "show":         false,
@@ -234,7 +234,7 @@
                     "prereq":       ["Dialog5"]
                 },
                 {
-                    "id":           "IdentifyEffects",
+                    "id":           "IdentifyEffects2",
                     "name":         "Identify the 3 Yōkai effects with your book",
                     "parentId":     "SolveEnigma2",
                     "show":         false,
@@ -244,7 +244,7 @@
                     "prereq":       ["Dialog5"]
                 },
                 {
-                    "id":           "SearchTheRoom",
+                    "id":           "SearchTheRoom2",
                     "name":         "Search the room for clues",
                     "parentId":     "SolveEnigma2",
                     "show":         false,
@@ -344,7 +344,7 @@
                     "prereq":       ["Dialog7"]
                 },
                 {
-                    "id":           "IdentifyEffects",
+                    "id":           "IdentifyEffects3",
                     "name":         "Identify the 3 Yōkai effects with your book",
                     "parentId":     "SolveEnigma3",
                     "show":         false,
@@ -354,7 +354,7 @@
                     "prereq":       ["Dialog7"]
                 },
                 {
-                    "id":           "SearchTheRoom",
+                    "id":           "SearchTheRoom3",
                     "name":         "Search the room for clues",
                     "parentId":     "SolveEnigma3",
                     "show":         false,

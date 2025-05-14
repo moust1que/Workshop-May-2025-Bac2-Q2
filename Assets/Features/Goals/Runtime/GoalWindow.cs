@@ -1,19 +1,23 @@
 using UnityEngine;
 
 namespace Goals.Runtime {
+    using System.Linq;
     using BBehaviour.Runtime;
 
     [AddComponentMenu("Goals/Goal Window (demo)")]
     public class GoalWindow : BBehaviour {
+        public float xPos = Screen.width;
+
         private void OnGUI() {
             if(GoalsManager.instance == null) return;
 
-            GUILayout.BeginArea(new Rect(Screen.width - 220, 10, 210, Screen.height - 20));
+            GUILayout.BeginArea(new Rect(xPos, 10, 240, Screen.height - 20));
             DrawRecursive("", 0);
             GUILayout.EndArea();
         }
 
         private void DrawRecursive(string parentId, int indent) {
+            Verbose($"{GoalsManager.instance.ChildrenOf(parentId).Count()} enfants", VerboseType.Log);
             foreach(Goal g in GoalsManager.instance.ChildrenOf(parentId)) {
                 Verbose("GoalWindow : affiche " + g.Show, VerboseType.Log);
                 if(!g.Show) continue;

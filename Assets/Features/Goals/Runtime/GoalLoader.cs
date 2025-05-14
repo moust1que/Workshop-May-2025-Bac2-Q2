@@ -9,7 +9,7 @@ namespace Goals.Runtime {
     [AddComponentMenu("Goals/Goal Loader")]
     public class GoalLoader : BBehaviour {
         [SerializeField] private TextAsset jsonFile;
-        [SerializeField] private GoalWindow windowPrefab;
+        // [SerializeField] private GoalWindow windowPrefab;
         [SerializeField] private DictionaryVariable dictionary;
 
         private readonly Dictionary<string, IFact> factTable = new();
@@ -34,10 +34,10 @@ namespace Goals.Runtime {
                     continue;
                 }
                 dictionary.SetFact(factJson.id, fact);
-                // factTable[factJson.id] = fact;
+                factTable[factJson.id] = fact;
             }
 
-            GoalWindow window = Instantiate(windowPrefab);
+            // GoalWindow window = Instantiate(windowPrefab);
 
             foreach(var roomJson in wrapper.rooms) {
                 Verbose("GoalLoader : chargement de la salle " + roomJson.name, VerboseType.Log);
