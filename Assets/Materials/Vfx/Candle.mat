@@ -138,7 +138,7 @@ Material:
     - _Surface: 0
     - _TempMax: 8000
     - _TempMin: 1900
-    - _WindStrength: 1.57
+    - _WindStrength: 0.5
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
