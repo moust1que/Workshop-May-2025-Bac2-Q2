@@ -6,6 +6,7 @@ namespace UI.Runtime {
     using BBehaviour.Runtime;
     using Save.Runtime;
     using GameManager.Runtime;
+    using Goals.Runtime;
 
     public class MainMenuManager : BBehaviour {
         [Header("UI References")]
@@ -66,6 +67,7 @@ namespace UI.Runtime {
 
         void CreateNewGame() {
             GameManager.instance.ChangeState(new PlayingState());
+            GameplayOrchestrator.instance.TriggerInitialState();
         }
 
         void LoadGame() {

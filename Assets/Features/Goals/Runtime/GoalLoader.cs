@@ -20,9 +20,9 @@ namespace Goals.Runtime {
                 return;
             }
 
-            var wrapper = JsonUtility.FromJson<GoalFileWrapper>(jsonFile.text);
+            GoalFileWrapper wrapper = JsonUtility.FromJson<GoalFileWrapper>(jsonFile.text);
 
-            foreach(var factJson in wrapper.facts) {
+            foreach(FactJson factJson in wrapper.facts) {
                 IFact fact = factJson.type switch {
                     "int" => new Fact<int>(factJson.id, int.Parse(factJson.initial), bool.Parse(factJson.persistent)),
                     "float" => new Fact<float>(factJson.id, float.Parse(factJson.initial), bool.Parse(factJson.persistent)),
@@ -37,12 +37,10 @@ namespace Goals.Runtime {
                 factTable[factJson.id] = fact;
             }
 
-            // GoalWindow window = Instantiate(windowPrefab);
-
-            foreach(var roomJson in wrapper.rooms) {
+            foreach(RoomJson roomJson in wrapper.rooms) {
                 Verbose("GoalLoader : chargement de la salle " + roomJson.name, VerboseType.Log);
-                foreach(var goalJson in roomJson.goals) {
-                    if(!factTable.TryGetValue(goalJson.progress, out var prog)) {
+                foreach(GoalJson goalJson in roomJson.goals) {
+                    if(!factTable.TryGetValue(goalJson.progress, out IFact prog)) {
                         Verbose($"GoalLoader : fact {goalJson.progress} non trouvé pour goal {goalJson.id}", VerboseType.Warning);
                         continue;
                     }
@@ -68,14 +66,14 @@ namespace Goals.Runtime {
         }
         
         public void Increment(string factId, int delta = 1) {
-            if(factTable.TryGetValue(factId, out var f) && f is Fact<int> fi) {
+            if(factTable.TryGetValue(factId, out IFact f) && f is Fact<int> fi) {
                 fi.TypedValue += delta;
                 GoalsManager.instance.EvaluateAndPropagate();
             }
         }
 
         public void SetBool(string factId, bool value) {
-            if(factTable.TryGetValue(factId, out var f) && f is Fact<bool> fb) {
+            if(factTable.TryGetValue(factId, out IFact f) && f is Fact<bool> fb) {
                 fb.TypedValue = value;
                 GoalsManager.instance.EvaluateAndPropagate();
             }

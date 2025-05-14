@@ -9,6 +9,8 @@ namespace Goals.Runtime {
 
         public static GoalsManager instance { get; private set; }
 
+        public event System.Action<Goal> OnGoalCompleted;
+
         private void Awake() {
             instance = this;
             Verbose("GoalsManager : initialisation", VerboseType.Log);
@@ -26,11 +28,17 @@ namespace Goals.Runtime {
 
         public IEnumerable<Goal> ChildrenOf(string parentId) => children.TryGetValue(parentId, out var list) ? list : System.Array.Empty<Goal>();
 
-        public void EvaluateAndPropagate(){
+        public void EvaluateAndPropagate() {
             Propagate("");
 
             foreach(Goal g in goals.Values) {
+                bool wasCompleted = g.Completed;
                 g.Completed = g.Evaluate();
+
+                if(wasCompleted && g.Completed) {
+                    OnGoalCompleted?.Invoke(g);
+                }
+
                 if(g.Completed) {
                     g.Show = false;
                     continue;

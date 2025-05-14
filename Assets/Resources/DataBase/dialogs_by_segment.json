@@ -1,0 +1,237 @@
+{
+  "dialogs": [
+    {
+      "id": "dialog1",
+      "dialog": [
+        {
+          "speaker": "Yukiko",
+          "text": "Kotaro... What happened to you..? I need to find him. I'm going to the dungeon. But first I need to take this book with me. Who knows, it could be helpful."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "I'm scared... I need to stay with you! There are monsters everywhere..."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Shhh, calm down, I'm here now. Nothing will happen to you. Where are your parents?"
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Not here... I'm here on a visit to see uncle Tadanari-san. He told me to wait here for his return. Said he had to take care of something important."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "I see. You talked about monsters earlier. Where are they? I don't see any..."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "You just received a letter, right? A big monster slipped it under your door and then left."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Did you see where it was headed towards?"
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "I think it was flying towards uncle Tadanari-san's dungeon..."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Let's head there then. I will get you back to safety and ask him some questions about my brother."
+        }
+      ]
+    },
+    {
+      "id": "dialog2",
+      "dialog": [
+        {
+          "speaker": "Yukiko",
+          "text": "Are you ok Renjiro-chan?"
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Yes Yuki-nee. Did we kill the monster? Will it come back to hurt us?"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "It won't be able to hurt us anymore, don't worry."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "What’s in the bag, nee-chan?"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "I need it to make a weapon that could protect us against those monsters. The Powder of sacred Flames. Two ingredients are left to find. Let's go now, I need to finish what my brother started."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "So much blood..."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Yes, Ren-chan. I really hope it's not Tadanari-sama's."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Stay close to me. I think it's observing us."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Did you hear-"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Yes. It's above us. The atmosphere changes."
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "You come seeking truth. But are you ready for it's weight?"
+        }
+      ]
+    },
+    {
+      "id": "dialog3",
+      "dialog": [
+        {
+          "speaker": "Fukurō",
+          "text": "At last, you succeeded truth seeker. Two questions you may ask."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Truth seeker? You aren't going to fight us?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "No, I don't hurt those who seek wisdom."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "What is the second ingredient for the Powder of flames?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "The Powder of sacred flames, you seek? I see. A yokai's body part is what you are looking for."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "A yokai's body part..? How?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "Don't you worry, here take a feather of mine, you deserve it."
+        }
+      ]
+    },
+    {
+      "id": "dialog4",
+      "dialog": [
+        {
+          "speaker": "Renjiro",
+          "text": "Thank you mister owl, did it hurt?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "\"Sighs\" Proud would Kotaro be, for his task to be perpetuated..."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "You know my brother?! Where is he? What happened to him?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "Kotaro refused the flame. He chose morals. To my greatest sadness, your lord chose punishment through the blade."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "My brother... he was executed?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "Do not worry, for Fukurō chose vengeance."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Did he harm my uncle nee-san?"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "I am afraid he did Ren-chan... He got punished for his sins towards my brother."
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "Sister of my friend, I grant you one more question. In honor of Kotaro."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Thank you owl-san... What can I do to finish what my brother started?"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "Heading towards the mausoleum you must. The last ingredient there will be discovered. But be aware, the price to pay may not be worth it..."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Thank you mister owl. Even if you hurt my uncle, you are a kind monster!"
+        },
+        {
+          "speaker": "Fukurō",
+          "text": "May the winds of destiny cover your feathers young-lings."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Maybe we could become friends with them Yuki-nee? He was really nice!"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "Maybe..."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Where are we exactly Yuki-nee?"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "We are in a mausoleum Ren-chan. When you lose someone, you come here to honor them and pray for them."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Then we should pray for Kotaro-chan and uncle Tadanari..."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "In time we will Ren-chan. I promise you."
+        }
+      ]
+    },
+    {
+      "id": "dialog5",
+      "dialog": [
+        {
+          "speaker": "Yukiko",
+          "text": "I think we can already put the two ingredients we have on the altars and see what happens..?"
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "\"To beat the forces of evil, the Powder of sacred flames is the only way. To create the flames of salvation, you must gather : Ashes of a Yokai's body part, and the life essence of a young and pure soul. Once the ingredients gathered, you must place them on the 3 sarcrificial altars. For the last ingredient, the-\""
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "I-,It can't be..."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "What is it nee-chan? You look so white..."
+        },
+        {
+          "speaker": "Yukiko",
+          "text": "This is madness..."
+        },
+        {
+          "speaker": "Renjiro",
+          "text": "Yuki-nee..? You're scaring me..."
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 {
     "facts": [
+        { "id": "GameStart",     "type": "bool", "initial": false,  "persistent": true},
         { "id": "ACT1",          "type": "int",  "initial": 0,      "persistent": true},
         { "id": "PickupL",       "type": "bool", "initial": false,  "persistent": true},
         { "id": "Dialog1",       "type": "bool", "initial": false,  "persistent": true},
@@ -42,6 +43,17 @@
         {
             "Name": "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",
             "goals": [
+                {
+                    "id":           "GameStart",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "GameStart",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       [""]
+                },
                 {
                     "id":           "ACT1",
                     "name":         "ACT 1 : 妖怪 - MONSTERS OF THE NIGHT",

@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace GameManager.Runtime {
     public class PlayingState : IGameState {
-        private Button toggleInventoryButton;
-
         public void Enter(GameManager game) {
             game.ShowUI(game.listUI[1]);
             Time.timeScale = 1.0f;
