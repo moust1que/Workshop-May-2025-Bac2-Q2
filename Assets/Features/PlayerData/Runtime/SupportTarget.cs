@@ -13,8 +13,7 @@ namespace PlayerData.Runtime
 
         bool occupied;
 
-        void OnMouseDown()
-        {
+        void OnMouseDown() {
             if (occupied) return;
 
             var inv = FindFirstObjectByType<InventoryCanvasManager>();

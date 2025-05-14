@@ -49,6 +49,8 @@ namespace UI.Runtime {
             } else {
                 Verbose($"Le prefab '{buttonPrefab.name}' ne contient ni TMP_Text ni UI.Text.", VerboseType.Warning);
             }
+            
+            btn.gameObject.tag = "Hoverable"; 
 
             // Callback clic
             btn.onClick.RemoveAllListeners();
