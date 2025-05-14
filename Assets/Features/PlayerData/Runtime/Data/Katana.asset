@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Katana
   description: 
   isSpecial: 0
-  icon: {fileID: -758973064, guid: 024b4ebd6c74ce24d8fb89c720f469df, type: 3}
-  worldPrefab: {fileID: 8312904105999577042, guid: 789957ec8fe44f743a8750c1e887bd53, type: 3}
+  icon: {fileID: -941725138, guid: a85af6091095b2045b80700eec929d55, type: 3}
+  worldPrefab: {fileID: 716805229721699266, guid: 7eea8bfdb2e307e4d8b0b3bb3185cd38, type: 3}
   maxStack: 1
   consumable: 1
