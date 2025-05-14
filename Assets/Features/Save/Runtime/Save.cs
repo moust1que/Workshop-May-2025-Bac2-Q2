@@ -30,8 +30,6 @@ namespace Save.Runtime {
 
             writer.Close();
             stream.Close();
-
-            factDictionary.Clear();
         }
 
         public static void LoadFromFile(string slotName) {
