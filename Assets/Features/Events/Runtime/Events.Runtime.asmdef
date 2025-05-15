@@ -1,0 +1,16 @@
+{
+    "name": "Events.Runtime",
+    "rootNamespace": "Events.Runtime",
+    "references": [
+        "GUID:30cdf1566a42b49449eae476e3a7ab6f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
