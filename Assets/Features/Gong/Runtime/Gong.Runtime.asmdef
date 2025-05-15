@@ -1,0 +1,17 @@
+{
+    "name": "Gong.Runtime",
+    "rootNamespace": "Gong.Runtime",
+    "references": [
+        "GUID:1f7b531d2ce7e1d4d83340b843df5215",
+        "GUID:957f314ce2439d24eb8ae2f2fea36ca3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

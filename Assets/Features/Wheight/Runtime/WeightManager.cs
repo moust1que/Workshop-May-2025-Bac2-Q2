@@ -2,25 +2,28 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Wheight.Runtime {
     using BBehaviour.Runtime;
     public class WeightManager : MonoBehaviour
     {
         public static WeightManager Instance { get; private set; }
 
-        [Header("Slots de plateau")]
         public List<Transform> leftSlots;
         public List<Transform> rightSlots;
 
-        [Header("Mesure")]
         public int initialWeight = 50;
         public int[] goodMeasurements = { 20, 40, 60, 90 };
 
-        // État interne
-        private List<WeightSelectable> leftWeights  = new();
+        public Transform needle;
+        public float minAngle = -35f;
+        public float midAngle = 0f;
+        public float maxAngle = +35f;
+        public int minValue = 20;
+        public int maxValue = 90;
+
+        private List<WeightSelectable> leftWeights = new();
         private List<WeightSelectable> rightWeights = new();
-        public  WeightSelectable SelectedWeight { get; private set; }
+        public WeightSelectable SelectedWeight { get; private set; }
 
         void Awake()
         {
@@ -28,11 +31,8 @@ namespace Wheight.Runtime {
             else Destroy(gameObject);
         }
 
-        /* ---------- Sélection ---------- */
-
         public void SelectWeight(WeightSelectable w)
         {
-            // déselectionne l’ancien
             if (SelectedWeight != null)
                 SelectedWeight.SetHighlight(false);
 
@@ -41,21 +41,18 @@ namespace Wheight.Runtime {
                 w.SetHighlight(true);
         }
 
-        /* ---------- Placement ---------- */
-
         public enum Side { Left, Right }
 
         public void PlaceSelectedOn(Side side)
         {
             if (SelectedWeight == null) return;
 
-            // retire d'abord de l'autre plateau si besoin
-            RemoveWeight(SelectedWeight, silent:true);
+            RemoveWeight(SelectedWeight, silent: true);
 
             if (side == Side.Left)
             {
                 int idx = leftWeights.Count;
-                if (idx >= leftSlots.Count) return;          // plateau plein
+                if (idx >= leftSlots.Count) return;
                 leftWeights.Add(SelectedWeight);
                 SelectedWeight.Teleport(leftSlots[idx]);
             }
@@ -68,7 +65,7 @@ namespace Wheight.Runtime {
             }
 
             UpdateMeasure();
-            SelectWeight(null);      // on laisse le poids posé, aucun poids sélectionné
+            SelectWeight(null);
         }
 
         public void RemoveWeight(WeightSelectable w, bool silent = false)
@@ -79,17 +76,27 @@ namespace Wheight.Runtime {
             }
         }
 
+        public bool IsOnPan(WeightSelectable w)
+        {
+            return leftWeights.Contains(w) || rightWeights.Contains(w);
+        }
+
         private void UpdateMeasure()
         {
             int sumL = leftWeights.Sum(w => w.weightValue);
             int sumR = rightWeights.Sum(w => w.weightValue);
-            int diff = sumL - sumR;
-            int measured = initialWeight + diff;
+            int measured = initialWeight + (sumR - sumL);
 
-            Debug.Log($"G:{sumL} | D:{sumR} | Δ:{diff} | Mesure :{measured}");
+            int clamped = Mathf.Clamp(measured, minValue, maxValue);
+            float t = (clamped - minValue) / (float)(maxValue - minValue);
+            float angle = Mathf.Lerp(minAngle, maxAngle, t);
+            needle.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+            Debug.Log($"G:{sumL} | D:{sumR}| Mesure :{measured}");
 
             if (goodMeasurements.Contains(measured))
-                Debug.Log($" Bonne mesure : {measured}");
+                Debug.Log($" Bonne mesure : {measured}");
         }
     }
 }
+

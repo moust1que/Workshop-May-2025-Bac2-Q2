@@ -7,13 +7,13 @@ namespace Shuriken.Runtime {
         public GameObject window;
         public Transform openWindow;
 
-        // private DelayManager delayManager;
         public float delayTime = 3f;
         public float baseDelayTime = 3f;
 
         Vector3 startPos;
 
-        float speed = 1f;
+        public float openSpeed = 1f;
+        public float closeSpeed = 1f;
 
         public bool IsOpen;
         public bool isAutoClose;
@@ -21,26 +21,33 @@ namespace Shuriken.Runtime {
         void Awake() {
             IsOpen = false;
             startPos = window.transform.position;
-
-            // delayManager = gameObject.AddComponent<DelayManager>();
         }
 
-        void OnMouseDown() {
+        void OnMouseDown()
+        {
+            ToggleWindow();
+        }
+
+         void ToggleWindow() {
             IsOpen = !IsOpen;
+
+            if (IsOpen && isAutoClose) {
+                DelayManager.instance.Delay(delayTime, () => IsOpen = false);
+            }
         }
 
         void Update() {
             Vector3 target = IsOpen ? openWindow.position : startPos;
+            float currentSpeed = IsOpen ? openSpeed : closeSpeed;
 
             if (window.transform.position != target)
             {
                 window.transform.position = Vector3.MoveTowards(
                     window.transform.position,
                     target,
-                    speed * Time.deltaTime
+                    currentSpeed * Time.deltaTime
                 );
             }
-            AutoClose();
         }
 
         void AutoClose() {
