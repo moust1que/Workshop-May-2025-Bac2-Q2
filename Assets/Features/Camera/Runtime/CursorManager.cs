@@ -27,7 +27,7 @@ namespace CameraManager.Runtime {
 
         private MaterialPropertyBlock propertyBlock;
         private Renderer instRenderer;
-        [SerializeField] private Shader shader;
+        [SerializeField] private Material hoverEffectMat;
 
         void Awake() {
             cam = Camera.main;
@@ -64,8 +64,6 @@ namespace CameraManager.Runtime {
                 if(hit.collider.CompareTag("Hoverable")) {
                     hoverNow = true;
                     detectedObject = hit.transform.gameObject;
-
-                    //! Shader, PRopertyBlock, Parent object, Scale parent * 1.1f, float -1 -> 1
                 }
             }
 
@@ -82,7 +80,8 @@ namespace CameraManager.Runtime {
                     instantiatedObject.GetComponent<BoxCollider>().enabled = false;
                     instantiatedObject.transform.localScale = hoverObject.transform.localScale * 1.05f;
 
-                    instRenderer = instantiatedObject.GetComponent<Renderer>();
+                    instRenderer = instantiatedObject.GetComponent<MeshRenderer>();
+                    instRenderer.material = hoverEffectMat;
                     
                     animateShader = true;
                     AnimateShaderValue();
@@ -109,16 +108,16 @@ namespace CameraManager.Runtime {
         }
 
         void AnimateShaderValue() {
-            if(!animateShader || instRenderer == null) return;
+            if(!animateShader || instRenderer == null || ShaderValue >= 1.0f) return;
 
             ShaderValue += 0.1f;
-            Mathf.Clamp(ShaderValue, -1f, 1f);
+            Mathf.Min(ShaderValue, 1f);
 
             instRenderer.GetPropertyBlock(propertyBlock);
-            propertyBlock.SetFloat("_ShaderValue", ShaderValue);
+            propertyBlock.SetFloat("_RadiationFactor", ShaderValue);
             instRenderer.SetPropertyBlock(propertyBlock);
 
-            DelayManager.instance.Delay(0.1f, AnimateShaderValue);
+            DelayManager.instance.Delay(0.01f, AnimateShaderValue);
         }
     }
 }

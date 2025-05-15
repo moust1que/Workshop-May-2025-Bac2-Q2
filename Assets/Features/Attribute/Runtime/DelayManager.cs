@@ -4,21 +4,27 @@ using UnityEngine;
 
 
 namespace Attribute.Runtime {
-    public class DelayManager : MonoBehaviour {
-        private class DelayedAction {
+    using BBehaviour.Runtime;
+    
+    public class DelayManager : BBehaviour
+    {
+        private class DelayedAction
+        {
             public float triggerTime;
             public Action callback;
         }
 
         private readonly List<DelayedAction> delayedActions = new List<DelayedAction>();
 
-        public static DelayManager instance { get; private set; }
+        public static DelayManager instance;
 
-        private void Awake() {
+        private void Awake()
+        {
             instance = this;
         }
 
-        public void Delay(float seconds, Action callback) {
+        public void Delay(float seconds, Action callback)
+        {
             delayedActions.Add(new DelayedAction
             {
                 triggerTime = Time.time + seconds,
@@ -26,11 +32,14 @@ namespace Attribute.Runtime {
             });
         }
 
-        private void Update() {
+        private void Update()
+        {
             float currentTime = Time.time;
 
-            for (int i = delayedActions.Count - 1; i >= 0; i--) {
-                if (currentTime >= delayedActions[i].triggerTime) {
+            for (int i = delayedActions.Count - 1; i >= 0; i--)
+            {
+                if (currentTime >= delayedActions[i].triggerTime)
+                {
                     delayedActions[i].callback?.Invoke();
                     delayedActions.RemoveAt(i);
                 }
