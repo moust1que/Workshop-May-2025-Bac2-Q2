@@ -5,8 +5,12 @@ using UnityEngine;
 namespace Dialog.Runtime {
     [Serializable] public class DialogJson {
         public string id;
-        public string[] speakers;
-        public string[] dialogs;
+        public DialogLine[] dialog;
+    }
+
+    [Serializable] public class DialogLine {
+        public string speaker;
+        public string text;
     }
 
     [Serializable] public class DialogFileWrapper {

@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace UI.Runtime {
     using BBehaviour.Runtime;
+    using Events.Runtime;
 
     public class LetterUIManager : BBehaviour {
         public void SelfDestroy() {
@@ -10,6 +11,10 @@ namespace UI.Runtime {
                 parentCanvas.transform.GetChild(i).gameObject.SetActive(true);
             }
             Destroy(gameObject);
+        }
+
+        public void OnLetterRead() {
+            GameEvents.OnLetterRead?.Invoke();
         }
     }
 }

@@ -24,12 +24,11 @@ namespace Shuriken.Runtime {
         void Update() {
             Vector3 target = IsOpen ? openWindow.position : startPos;
 
-            // On ne bouge que si on n’est pas déjà à la cible
             if (window.transform.position != target) {
                 window.transform.position = Vector3.MoveTowards(
-                    window.transform.position,  // <-- current position
-                    target,                      // <-- goal position
-                    speed * Time.deltaTime       // <-- step this frame
+                    window.transform.position,
+                    target, 
+                    speed * Time.deltaTime 
                 );
             }
         }

@@ -28,12 +28,14 @@ namespace Goals.Runtime {
                 { "GameStart", new GameStartGoalHandler() },
                 { "ACT1", new Act1GoalHandler() },
                 { "PickupLetter", new PickupLetterGoalHandler() },
+                { "LetterRead", new LetterReadGoalHandler() }
             };
 
             if(GoalsManager.instance != null) 
                 GoalsManager.instance.OnGoalCompleted += HandleGoalCompleted;
 
             GameEvents.OnItemPickedUp += OnItemPickedUp;
+            GameEvents.OnLetterRead += OnLetterRead;
         }
 
         private void OnDestroy() {
@@ -41,6 +43,7 @@ namespace Goals.Runtime {
                 GoalsManager.instance.OnGoalCompleted -= HandleGoalCompleted;
 
             GameEvents.OnItemPickedUp -= OnItemPickedUp;
+            GameEvents.OnLetterRead -= OnLetterRead;
         }
 
         private void HandleGoalCompleted(Goal goal) {
@@ -49,6 +52,14 @@ namespace Goals.Runtime {
             }else {
                 Verbose($"[Orchestrator] No handler for goal {goal.Id}", VerboseType.Warning);
             }
+        }
+
+        public void TriggerInitialState() {
+            Goal g = GoalsManager.instance.goals["GameStart"];
+            g.Progress.Value = true;
+            Goal g2 = GoalsManager.instance.goals["ACT1"];
+            g2.Progress.Value = (int)g2.Progress.Value + 1;
+            GoalsManager.instance.EvaluateAndPropagate();
         }
 
         public void OnItemPickedUp(ItemData item) {
@@ -62,11 +73,9 @@ namespace Goals.Runtime {
             }
         }
 
-        public void TriggerInitialState() {
-            Goal g = GoalsManager.instance.goals["GameStart"];
+        public void OnLetterRead() {
+            Goal g = GoalsManager.instance.goals["LetterRead"];
             g.Progress.Value = true;
-            Goal g2 = GoalsManager.instance.goals["ACT1"];
-            g2.Progress.Value = (int)g2.Progress.Value + 1;
             GoalsManager.instance.EvaluateAndPropagate();
         }
     }

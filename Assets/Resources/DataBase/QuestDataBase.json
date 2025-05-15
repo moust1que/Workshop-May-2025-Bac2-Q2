@@ -3,6 +3,7 @@
         { "id": "GameStart",     "type": "bool", "initial": false,  "persistent": true},
         { "id": "ACT1",          "type": "int",  "initial": 0,      "persistent": true},
         { "id": "PickupL",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "LetterRead",    "type": "bool", "initial": false,  "persistent": true},
         { "id": "Dialog1",       "type": "bool", "initial": false,  "persistent": true},
         { "id": "GrabB",         "type": "bool", "initial": false,  "persistent": true},
         { "id": "LeaveRoom",     "type": "bool", "initial": false,  "persistent": true},
@@ -17,27 +18,33 @@
         { "id": "LeaveD",        "type": "bool", "initial": false,  "persistent": true},
         
         { "id": "ACT2",          "type": "int",  "initial": 0,      "persistent": true},
-        { "id": "ClimbL",        "type": "bool", "initial": false,  "persistent": true},
         { "id": "Dialog5",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "ClimbL",        "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog6",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "FloorRambles",  "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog7",       "type": "bool", "initial": false,  "persistent": true},
         { "id": "SE2",           "type": "bool", "initial": false,  "persistent": true},
         { "id": "IE2",           "type": "int",  "initial": 0,      "persistent": true},
         { "id": "STR2",          "type": "int",  "initial": 0,      "persistent": true},
         { "id": "FukuroSpawn",   "type": "bool", "initial": false,  "persistent": true},
         { "id": "TalkTY",        "type": "bool", "initial": false,  "persistent": true},
-        { "id": "Dialog6",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog8",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "FeatherAdd",    "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog9",       "type": "bool", "initial": false,  "persistent": true},
         { "id": "FukuroDespawn", "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog10",      "type": "bool", "initial": false,  "persistent": true},
         
         { "id": "ACT3",          "type": "int",  "initial": 0,      "persistent": true},
         { "id": "AIM",           "type": "bool", "initial": false,  "persistent": true},
-        { "id": "Dialog7",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog11",      "type": "bool", "initial": false,  "persistent": true},
         { "id": "SE3",           "type": "bool", "initial": false,  "persistent": true},
         { "id": "IE3",           "type": "int",  "initial": 0,      "persistent": true},
         { "id": "STR3",          "type": "int",  "initial": 0,      "persistent": true},
-        { "id": "Dialog8",       "type": "bool", "initial": false,  "persistent": true},
+        { "id": "Dialog12",      "type": "bool", "initial": false,  "persistent": true},
         { "id": "PutIn",         "type": "bool", "initial": false,  "persistent": true},
         { "id": "BoxOpening",    "type": "bool", "initial": false,  "persistent": true},
         { "id": "RecipeOnScreen","type": "bool", "initial": false,  "persistent": true},
-        { "id": "Dialog9",       "type": "bool", "initial": false,  "persistent": true}
+        { "id": "Dialog13",      "type": "bool", "initial": false,  "persistent": true}
     ],
     "rooms": [
         {
@@ -61,7 +68,7 @@
                     "show":         true,
                     "progress":     "ACT1",
                     "comparison":   "==",
-                    "target":       "13",
+                    "target":       "15",
                     "prereq":       [""]
                 },
                 {
@@ -75,6 +82,16 @@
                     "prereq":       [""]
                 },
                 {
+                    "id":           "LetterRead",
+                    "name":         "Read the letter",
+                    "parentId":     "ACT1",
+                    "show":         false,
+                    "progress":     "LetterRead",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["PickupLetter"]
+                },
+                {
                     "id":           "Dialog1",
                     "name":         "",
                     "parentId":     "",
@@ -83,7 +100,7 @@
                     "progress":     "Dialog1",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["PickupLetter"]
+                    "prereq":       ["LetterRead"]
                 },
                 {
                     "id":           "GrabBook",
@@ -211,17 +228,7 @@
                     "show":         false,
                     "progress":     "ACT2",
                     "comparison":   "==",
-                    "target":       "9",
-                    "prereq":       ["LeaveDungeon"]
-                },
-                {
-                    "id":           "ClimbTheLadder",
-                    "name":         "Climb the ladder",
-                    "parentId":     "ACT2",
-                    "show":         false,
-                    "progress":     "ClimbL",
-                    "comparison":   "==",
-                    "target":       "true",
+                    "target":       "15",
                     "prereq":       ["LeaveDungeon"]
                 },
                 {
@@ -233,7 +240,50 @@
                     "progress":     "Dialog5",
                     "comparison":   "==",
                     "target":       "true",
+                    "prereq":       ["LeaveDungeon"]
+                },
+                {
+                    "id":           "ClimbTheLadder",
+                    "name":         "Climb the ladder",
+                    "parentId":     "ACT2",
+                    "show":         false,
+                    "progress":     "ClimbL",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog5"]
+                },
+                {
+                    "id":           "Dialog6",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog5",
+                    "comparison":   "==",
+                    "target":       "true",
                     "prereq":       ["ClimbTheLadder"]
+                },
+                {
+                    "id":           "FloorRambles",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "FloorRambles",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog6"]
+                },
+                {
+                    "id":           "Dialog7",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog7",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["FloorRambles"]
                 },
                 {
                     "id":           "SolveEnigma2",
@@ -243,7 +293,7 @@
                     "progress":     "SE2",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["Dialog5"]
+                    "prereq":       ["Dialog7"]
                 },
                 {
                     "id":           "IdentifyEffects2",
@@ -253,7 +303,7 @@
                     "progress":     "IE2",
                     "comparison":   "==",
                     "target":       "3",
-                    "prereq":       ["Dialog5"]
+                    "prereq":       ["Dialog7"]
                 },
                 {
                     "id":           "SearchTheRoom2",
@@ -263,7 +313,7 @@
                     "progress":     "STR2",
                     "comparison":   "==",
                     "target":       "1",
-                    "prereq":       ["Dialog5"]
+                    "prereq":       ["Dialog7"]
                 },
                 {
                     "id":           "FukuroSpawn",
@@ -287,15 +337,37 @@
                     "prereq":       ["FukuroSpawn"]
                 },
                 {
-                    "id":           "Dialog6",
+                    "id":           "Dialog8",
                     "name":         "",
                     "parentId":     "",
                     "show":         false,
                     "alwaysHidden": true,
-                    "progress":     "Dialog6",
+                    "progress":     "Dialog8",
                     "comparison":   "==",
                     "target":       "true",
                     "prereq":       ["TalkToYokai"]
+                },
+                {
+                    "id":           "FeatherAdd",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "FeatherAdd",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["Dialog8"]
+                },
+                {
+                    "id":           "Dialog9",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog9",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["FeatherAdd"]
                 },
                 {
                     "id":           "FukuroDespawn",
@@ -306,7 +378,18 @@
                     "progress":     "FukuroDespawn",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["Dialog6"]
+                    "prereq":       ["Dialog9"]
+                },
+                {
+                    "id":           "Dialog10",
+                    "name":         "",
+                    "parentId":     "",
+                    "show":         false,
+                    "alwaysHidden": true,
+                    "progress":     "Dialog10",
+                    "comparison":   "==",
+                    "target":       "true",
+                    "prereq":       ["FukuroDespawn"]
                 }
             ]
         },
@@ -321,7 +404,7 @@
                     "progress":     "ACT3",
                     "comparison":   "==",
                     "target":       "10",
-                    "prereq":       ["FukuroDespawn"]
+                    "prereq":       ["Dialog10"]
                 },
                 {
                     "id":           "AppearInMausoleum",
@@ -332,15 +415,15 @@
                     "progress":     "AIM",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["FukuroDespawn"]
+                    "prereq":       ["Dialog10"]
                 },
                 {
-                    "id":           "Dialog7",
+                    "id":           "Dialog11",
                     "name":         "",
                     "parentId":     "",
                     "show":         false,
                     "alwaysHidden": true,
-                    "progress":     "Dialog7",
+                    "progress":     "Dialog11",
                     "comparison":   "==",
                     "target":       "true",
                     "prereq":       ["AppearInMausoleum"]
@@ -353,7 +436,7 @@
                     "progress":     "SE3",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["Dialog7"]
+                    "prereq":       ["Dialog11"]
                 },
                 {
                     "id":           "IdentifyEffects3",
@@ -363,7 +446,7 @@
                     "progress":     "IE3",
                     "comparison":   "==",
                     "target":       "3",
-                    "prereq":       ["Dialog7"]
+                    "prereq":       ["Dialog11"]
                 },
                 {
                     "id":           "SearchTheRoom3",
@@ -373,15 +456,15 @@
                     "progress":     "STR3",
                     "comparison":   "==",
                     "target":       "1",
-                    "prereq":       ["Dialog7"]
+                    "prereq":       ["Dialog11"]
                 },
                 {
-                    "id":           "Dialog8",
+                    "id":           "Dialog12",
                     "name":         "",
                     "parentId":     "",
                     "show":         false,
                     "alwaysHidden": true,
-                    "progress":     "Dialog8",
+                    "progress":     "Dialog12",
                     "comparison":   "==",
                     "target":       "true",
                     "prereq":       ["SolveEnigma3"]
@@ -394,7 +477,7 @@
                     "progress":     "PutIn",
                     "comparison":   "==",
                     "target":       "true",
-                    "prereq":       ["Dialog8"]
+                    "prereq":       ["Dialog12"]
                 },
                 {
                     "id":           "BoxOpening",
@@ -419,12 +502,12 @@
                     "prereq":       ["BoxOpening"]
                 },
                 {
-                    "id":           "Dialog9",
+                    "id":           "Dialog13",
                     "name":         "",
                     "parentId":     "",
                     "show":         false,
                     "alwaysHidden": true,
-                    "progress":     "Dialog9",
+                    "progress":     "Dialog13",
                     "comparison":   "==",
                     "target":       "true",
                     "prereq":       ["RecipeOnScreen"]
