@@ -12,7 +12,7 @@ namespace CameraManager.Runtime
         Vector3 _origin;
         float _shakeTimer;
         float _nextShakeTime;
-        bool _isShaking;
+        public bool _isShaking;
 
         void Start() {
             _origin = transform.localPosition;
