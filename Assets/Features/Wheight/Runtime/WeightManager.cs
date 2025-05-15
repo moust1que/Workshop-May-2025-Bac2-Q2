@@ -9,80 +9,87 @@ namespace Wheight.Runtime {
     {
         public static WeightManager Instance { get; private set; }
 
-        [Header("Plateaux")]
-        public Transform leftPan;
-        public Transform rightPan;
-
-        [Header("Emplacements (slots)")]
+        [Header("Slots de plateau")]
         public List<Transform> leftSlots;
         public List<Transform> rightSlots;
 
-        [Header("Configuration")]
-        [Tooltip("Distance max pour snap")]
-        public float snapThreshold = 1f;
-        [Tooltip("Poids initial au centre")]
+        [Header("Mesure")]
         public int initialWeight = 50;
+        public int[] goodMeasurements = { 20, 40, 60, 90 };
 
-        private List<WeightDragDrop> leftWeights = new List<WeightDragDrop>();
-        private List<WeightDragDrop> rightWeights = new List<WeightDragDrop>();
+        // État interne
+        private List<WeightSelectable> leftWeights  = new();
+        private List<WeightSelectable> rightWeights = new();
+        public  WeightSelectable SelectedWeight { get; private set; }
 
-        private void Awake()
+        void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
         }
 
+        /* ---------- Sélection ---------- */
+
+        public void SelectWeight(WeightSelectable w)
+        {
+            // déselectionne l’ancien
+            if (SelectedWeight != null)
+                SelectedWeight.SetHighlight(false);
+
+            SelectedWeight = w;
+            if (w != null)
+                w.SetHighlight(true);
+        }
+
+        /* ---------- Placement ---------- */
+
         public enum Side { Left, Right }
 
-        public void TryPlaceWeight(WeightDragDrop weight)
+        public void PlaceSelectedOn(Side side)
         {
-            float dLeft = Vector3.Distance(weight.transform.position, leftPan.position);
-            float dRight = Vector3.Distance(weight.transform.position, rightPan.position);
+            if (SelectedWeight == null) return;
 
-            if (dLeft <= snapThreshold) PlaceWeight(weight, Side.Left);
-            else if (dRight <= snapThreshold) PlaceWeight(weight, Side.Right);
-            else RemoveWeight(weight);
-        }
-        
-        public void PlaceWeight(WeightDragDrop weight, Side side)
-        {
-            RemoveWeight(weight);
+            // retire d'abord de l'autre plateau si besoin
+            RemoveWeight(SelectedWeight, silent:true);
 
             if (side == Side.Left)
             {
-                leftWeights.Add(weight);
-                int idx = leftWeights.Count - 1;
-                weight.transform.position = leftSlots[idx].position;
+                int idx = leftWeights.Count;
+                if (idx >= leftSlots.Count) return;          // plateau plein
+                leftWeights.Add(SelectedWeight);
+                SelectedWeight.Teleport(leftSlots[idx]);
             }
             else
             {
-                rightWeights.Add(weight);
-                int idx = rightWeights.Count - 1;
-                weight.transform.position = rightSlots[idx].position;
+                int idx = rightWeights.Count;
+                if (idx >= rightSlots.Count) return;
+                rightWeights.Add(SelectedWeight);
+                SelectedWeight.Teleport(rightSlots[idx]);
             }
 
-            UpdateMeasurement();
+            UpdateMeasure();
+            SelectWeight(null);      // on laisse le poids posé, aucun poids sélectionné
         }
 
-        public void RemoveWeight(WeightDragDrop weight)
+        public void RemoveWeight(WeightSelectable w, bool silent = false)
         {
-            if (leftWeights.Remove(weight) || rightWeights.Remove(weight))
-                UpdateMeasurement();
-            weight.ResetToInitialPosition();
+            if (leftWeights.Remove(w) || rightWeights.Remove(w))
+            {
+                if (!silent) UpdateMeasure();
+            }
         }
 
-        private void UpdateMeasurement()
+        private void UpdateMeasure()
         {
             int sumL = leftWeights.Sum(w => w.weightValue);
             int sumR = rightWeights.Sum(w => w.weightValue);
-            int diff = sumL - sumR;                   
-            int measured = initialWeight + diff;           
+            int diff = sumL - sumR;
+            int measured = initialWeight + diff;
 
-            Debug.Log($"Gauche : {sumL} | Droite : {sumR} | Différence : {diff} | Mesure : {measured}");
+            Debug.Log($"G:{sumL} | D:{sumR} | Δ:{diff} | Mesure :{measured}");
 
-            int[] good = { 20, 40, 60, 90 };
-            if (good.Contains(measured))
-                Debug.Log($"✅ Bonne mesure : {measured}");
+            if (goodMeasurements.Contains(measured))
+                Debug.Log($" Bonne mesure : {measured}");
         }
     }
 }

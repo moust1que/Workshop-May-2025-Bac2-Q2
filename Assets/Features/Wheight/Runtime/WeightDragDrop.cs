@@ -4,46 +4,62 @@ namespace Wheight.Runtime
 {
     public class WeightDragDrop : MonoBehaviour
     {
-        public int weightValue = 5;
+        // public Transform pickupSlot;
 
-        private Vector3 initialPos;
-        private Quaternion initialRot;
+        // [Header("Valeur du poids")]
+        // public int weightValue = 5;
 
-        private Camera cam;
-        private bool isDragging = false;
-        private Vector3 offset;
+        // // État interne
+        // private Vector3 sceneStartPos;
+        // private Quaternion sceneStartRot;
+        // private bool isCollected = false;
+        // private bool isDragging = false;
+        // private Vector3 offset;
+        // private Camera cam;
 
-        private void Start()
-        {
-            cam = Camera.main;
-            initialPos = transform.position;
-            initialRot = transform.rotation;
-        }
+        // void Start()
+        // {
+        //     cam = Camera.main;
+        //     sceneStartPos = transform.position;
+        //     sceneStartRot = transform.rotation;
+        // }
 
-        private void OnMouseDown()
-        {
-            Vector3 worldMouse = cam.ScreenToWorldPoint(Input.mousePosition);
-            offset = transform.position - new Vector3(worldMouse.x, worldMouse.y, transform.position.z);
-            isDragging = true;
-        }
+        // void OnMouseDown()
+        // {
+        //     if (!isCollected)
+        //     {
+        //         isCollected = true;
+        //         transform.position = pickupSlot.position;
+        //         transform.rotation = pickupSlot.rotation;
+        //         sceneStartPos = pickupSlot.position;
+        //         sceneStartRot = pickupSlot.rotation;
+        //         return;
+        //     }
 
-        private void OnMouseDrag()
-        {
-            if (!isDragging) return;
-            Vector3 worldMouse = cam.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(worldMouse.x, worldMouse.y, transform.position.z) + offset;
-        }
+        //     Vector3 worldMouse = cam.ScreenToWorldPoint(Input.mousePosition);
+        //     offset = transform.position - new Vector3(worldMouse.x, worldMouse.y, transform.position.z);
+        //     isDragging = true;
+        // }
 
-        private void OnMouseUp()
-        {
-            isDragging = false;
-            WeightManager.Instance.TryPlaceWeight(this);
-        }
+        // void OnMouseDrag()
+        // {
+        //     if (!isDragging) return;
+        //     Vector3 worldMouse = cam.ScreenToWorldPoint(Input.mousePosition);
+        //     transform.position = new Vector3(worldMouse.x, worldMouse.y, transform.position.z) + offset;
+        // }
 
-        public void ResetToInitialPosition()
-        {
-            transform.position = initialPos;
-            transform.rotation = initialRot;
-        }
+        // void OnMouseUp()
+        // {
+        //     if (!isDragging) return;
+        //     isDragging = false;
+        //     WeightManager.Instance.TryPlaceWeight(this);
+        // }
+
+        // public void ResetToInitialPosition()
+        // {
+        //     transform.position = sceneStartPos;
+        //     transform.rotation = sceneStartRot;
+        // }
     }
 }
+
