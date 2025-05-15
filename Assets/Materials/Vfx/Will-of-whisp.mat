@@ -29,7 +29,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
@@ -61,9 +61,11 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Smoothness: 0.05
     - _TempMax: 9000
     - _TempMin: 1900
-    - _TimeFactor: 0.3
+    - _ThresholdSmooth: 0.5
+    - _TimeFactor: 1
     - _Wind_Strength: 0.1
     m_Colors:
     - _PerlinTilling: {r: 1, g: 1, b: 0, a: 0}

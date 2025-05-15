@@ -24,6 +24,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Paper:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextBack:
+        m_Texture: {fileID: 2800000, guid: 6c2965266201a5147873bcb1f87fd94b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextFront:
+        m_Texture: {fileID: 2800000, guid: e553ce0a928c5d649abc51b624838eb2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -40,9 +52,10 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Turn: 1
+    - _Turn: 0
     m_Colors:
     - _Color: {r: 0.35831246, g: 0.46566093, b: 0.690566, a: 0}
+    - _Color_1: {r: 0.30196077, g: 0.54509807, b: 0.5254902, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6347724995105993651

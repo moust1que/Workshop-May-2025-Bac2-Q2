@@ -7,31 +7,28 @@ public class MalaiseV2 : ScriptableRendererFeature
 {
    
 
-    CustomRenderPass pass;
-    public Material material;
+    CustomRenderPass myPass;
+    public Material materialMalaise;
 
   
     public override void Create()
     {
-        pass = new CustomRenderPass();
-        pass.material = material;
+        myPass = new CustomRenderPass();
+        myPass.materialMalaise = materialMalaise;
        
-        pass.renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
+        myPass.renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
     }
 
  
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
         if (renderingData.cameraData.cameraType == CameraType.Game || renderingData.cameraData.cameraType == CameraType.SceneView)
-            renderer.EnqueuePass(pass);
+            renderer.EnqueuePass(myPass);
     }
 }
 class CustomRenderPass : ScriptableRenderPass
 {
-    public Material material;
-
-    public static Vector3 center;
-    public static float radius;
+    public Material materialMalaise;
     private class PassData
     {
         public Material material;
@@ -50,7 +47,7 @@ class CustomRenderPass : ScriptableRenderPass
             if (passData.mpb == null)
                 passData.mpb = new MaterialPropertyBlock();
 
-            passData.material = material;
+            passData.material = materialMalaise;
             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
             builder.SetRenderAttachment(resourceData.activeColorTexture, 0);
 
