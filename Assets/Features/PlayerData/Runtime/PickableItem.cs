@@ -13,6 +13,7 @@ namespace PlayerData.Runtime {
         public bool isPickable = true;
 
         void OnMouseDown() {
+            Verbose("OnMouseDown");
             if(EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
             if(!isPickable) return;
 
@@ -20,6 +21,7 @@ namespace PlayerData.Runtime {
 
             var inv = FindFirstObjectByType<InventoryCanvasManager>();
             if(inv) inv.AddItem(type);
+            Verbose("Item picked up");
 
             GameEvents.OnItemPickedUp?.Invoke(type);
 

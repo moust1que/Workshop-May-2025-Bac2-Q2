@@ -1,4 +1,5 @@
 using UnityEngine;
+using PlayerData.Runtime;
 
 namespace Shuriken.Runtime {
     using BBehaviour.Runtime;
@@ -6,6 +7,8 @@ namespace Shuriken.Runtime {
 
         public RotateCylinder[] cylinders;
         public bool allCorrect = false;
+
+        [SerializeField] private KatanaTracker katanaTracker;
 
         bool canResolve = false;
 
@@ -38,9 +41,14 @@ namespace Shuriken.Runtime {
         }
 
         void Update() {
-            if(window.IsOpen){
+            if(!canResolve && window.IsOpen && katanaTracker.IsKatanaPlaced) {
                 kanji.SetActive(true);
                 canResolve = true;
+                CheckPuzzle();
+            }
+            if(canResolve&& !window.IsOpen){
+                canResolve = false;
+                kanji.SetActive(false);
             }
         }
     }

@@ -8,6 +8,7 @@ namespace Shuriken.Runtime {
         public ShurikenEnigma manager;
 
         void OnMouseDown() {
+            if (manager.allCorrect) return;
             transform.Rotate(0f, 0f, step);
             manager.CheckPuzzle();
         }
