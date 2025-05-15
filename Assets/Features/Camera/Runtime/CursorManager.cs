@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace CameraManager.Runtime {
-    public class CursorManager : MonoBehaviour {
+    using BBehaviour.Runtime;
+
+    public class CursorManager : BBehaviour {
         [Header("Textures")]
         public Texture2D defaultCursor;
         public Texture2D hoverCursor;
@@ -11,7 +13,7 @@ namespace CameraManager.Runtime {
         public CursorMode cursorMode = CursorMode.Auto;
 
         [Header("LayerMask des objets cliquables")]
-        public LayerMask hoverMask = ~0;
+        public LayerMask hoverMask = ~(1 << 3);
 
         Camera cam;
         bool isHovering;
@@ -45,6 +47,7 @@ namespace CameraManager.Runtime {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if(Physics.Raycast(ray, out RaycastHit hit, 100f, hoverMask)) {
+                Verbose($"Raycast hit {hit.collider.name}", VerboseType.Log);
                 if(hit.collider.CompareTag("Hoverable"))
                     hoverNow = true;
             }

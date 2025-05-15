@@ -13,13 +13,11 @@ namespace Dialog.Runtime {
 
 
         private Dictionary<string, DialogJson> dialogs = new();
-
-        public static DialogsManager instance { get; private set; }
-
-        private string[] currentDialog;
-        private string[] currentSpeakers;
+        private DialogLine[] currentLines;
         private int currentDialogIndex = 0;
         private bool displaying = false;
+
+        public static DialogsManager instance { get; private set; }
 
         private void Awake() {
             instance = this;
@@ -34,62 +32,43 @@ namespace Dialog.Runtime {
             DialogFileWrapper wrapper = JsonUtility.FromJson<DialogFileWrapper>(dialogsFile.text);
 
             foreach(DialogJson dialogJson in wrapper.dialogs) {
+                Verbose($"DialogsManager : loaded dialog {dialogJson.id} with {dialogJson.dialog.Length} lines.", VerboseType.Log);
                 dialogs[dialogJson.id] = dialogJson;
             }
         }
 
         private void Update() {
-            if(displaying) {
-                dialogBox.SetActive(true);
-            }else if(dialogBox.activeSelf) {
-                dialogBox.SetActive(false);
-            }
-        }
-
-        private string[] GetDialogs(string id) {
-            if(!dialogs.TryGetValue(id, out var dialog)) {
-                Verbose($"DialogsManager : dialog {id} not found!", VerboseType.Warning);
-                return null;
-            }
-
-            return dialog.dialogs;
-        }
-
-        private string[] GetSpeakers(string id) {
-            if(!dialogs.TryGetValue(id, out var dialog)) {
-                Verbose($"DialogsManager : dialog {id} not found!", VerboseType.Warning);
-                return null;
-            }
-
-            return dialog.speakers;
+            dialogBox.SetActive(displaying);
         }
 
         public void DisplayDialog(string id) {
-            string[] dialog = GetDialogs(id);
-            string[] speakers = GetSpeakers(id);
-
-            if(dialog == null || speakers == null || dialog.Length == 0 || speakers.Length != dialog.Length) {
-                Verbose($"DialogsManager : invalid dialog or speakers for id {id}!", VerboseType.Error);
+            if(!dialogs.TryGetValue(id, out var dialog)) {
+                Verbose($"DialogsManager : dialog ID '{id}' not found.", VerboseType.Warning);
                 return;
             }
 
-            currentDialog = dialog;
-            currentSpeakers = speakers;
+            var lines = dialog.dialog;
+            if(lines == null || lines.Length == 0) {
+                Verbose($"DialogsManager : dialog '{id}' has no lines.", VerboseType.Warning);
+                return;
+            }
+
+            currentLines = dialog.dialog;
             currentDialogIndex = 0;
             displaying = true;
 
-            DisplayCurDialog(currentDialogIndex);
+            DisplayCurrentLine();
         }
 
         public void ShowNextLine() {
             currentDialogIndex++;
 
-            if(currentDialogIndex >= currentDialog.Length) {
+            if(currentDialogIndex >= currentLines.Length) {
                 EndDialog();
                 return;
             }
 
-            DisplayCurDialog(currentDialogIndex);
+            DisplayCurrentLine();
         }
 
         private void EndDialog() {
@@ -98,9 +77,10 @@ namespace Dialog.Runtime {
             speakerName.SetText("");
         }
 
-        private void DisplayCurDialog(int id) {
-            speakerName.SetText(currentSpeakers[id]);
-            text.SetText(currentDialog[id]);
+        private void DisplayCurrentLine() {
+            DialogLine line = currentLines[currentDialogIndex];
+            speakerName.SetText(line.speaker);
+            text.SetText(line.text);
         }
     }
 }
