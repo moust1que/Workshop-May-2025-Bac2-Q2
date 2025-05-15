@@ -6,7 +6,8 @@ namespace ScriptableObjectArchitecture.Runtime {
         special,
         consumable,
         displayable,
-        usable
+        usable,
+        book
     }
 
     [CreateAssetMenu(fileName = "ItemData", menuName = "Scriptable Objects/ItemData")]
@@ -22,5 +23,7 @@ namespace ScriptableObjectArchitecture.Runtime {
         public ItemType type;
         [ShowIf("type", ItemType.displayable)] public GameObject uiPrefab;
         [ShowIf("type", ItemType.displayable)] public bool DisplayOnPickup = false;
+
+        [ShowIf("type", ItemType.book)] public GameObject bookUIPrefab;
     }
 }
