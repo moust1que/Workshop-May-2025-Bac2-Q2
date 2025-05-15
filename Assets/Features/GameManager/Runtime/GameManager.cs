@@ -25,8 +25,8 @@ namespace GameManager.Runtime {
             ChangeState(new MenuState());
 
             mainCamera = Camera.main;
-            // mainCamera.transform.position = spawnPoint.position;
-            // mainCamera.transform.rotation = spawnPoint.rotation;
+            mainCamera.transform.position = spawnPoint.position;
+            mainCamera.transform.rotation = spawnPoint.rotation;
         }
 
         void Update() {

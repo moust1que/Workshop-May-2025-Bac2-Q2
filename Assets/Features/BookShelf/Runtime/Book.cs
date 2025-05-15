@@ -24,12 +24,12 @@ namespace BookShelf {
         }
 
         void OnMouseDown() {
-            if((bool)GoalsManager.instance.goals["ExitDoorClosed"].Progress.Value == true){
+            // if((bool)GoalsManager.instance.goals["ExitDoorClosed"].Progress.Value == true){
                 if(bookShelf.allCorrect) return;
                 if(isDecoy) return;
                 isMoving = true;
                 bookShelf.OnBookPlaced(this);
-            }   
+            // }   
         }
 
         void Update() {

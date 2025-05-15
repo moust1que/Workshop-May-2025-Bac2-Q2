@@ -16,16 +16,20 @@ namespace BookShelf {
         public bool allCorrect = false;
 
         private List<int> placedOrder = new List<int>();
+
+        public ShamisenShelf shamisenShelf;
         
 
 
-        public void OnBookPlaced(Book b) {
-            if (!canResolve || allCorrect) 
+        public void OnBookPlaced(Book b)
+        {
+            if (!canResolve || allCorrect)
                 return;
 
             placedOrder.Add(b.orderIndex);
 
-            if (placedOrder.Count == correctOrder.Length) {
+            if (placedOrder.Count == correctOrder.Length)
+            {
                 CheckPuzzle();
             }
         }
@@ -40,12 +44,15 @@ namespace BookShelf {
                 }
             }
 
-            if (solved) {
+            if (solved)
+            {
                 allCorrect = true;
                 Verbose("Code correct, énigme ouverte");
+                shamisenShelf.IsOpen = true;
                 //here 
             }
-            else {
+            else
+            {
                 Verbose("Code incorrect");
                 ResetAll();
             }

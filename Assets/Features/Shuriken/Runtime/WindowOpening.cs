@@ -19,21 +19,18 @@ namespace Shuriken.Runtime {
         public bool IsOpen;
         public bool isAutoClose;
 
-        void Awake()
-        {
+        void Awake() {
             IsOpen = false;
             startPos = window.transform.position;
 
             delayManager = gameObject.AddComponent<DelayManager>();
         }
 
-        void OnMouseDown()
-        {
+        void OnMouseDown() {
             IsOpen = !IsOpen;
         }
 
-        void Update()
-        {
+        void Update() {
             Vector3 target = IsOpen ? openWindow.position : startPos;
 
             if (window.transform.position != target)
