@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ScriptableObjectArchitecture.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
+using UI.Runtime;
 
 namespace PlayerData.Runtime {
     using BBehaviour.Runtime;
@@ -55,11 +56,17 @@ namespace PlayerData.Runtime {
             // 1) slots spéciaux déjà pleins ?
             var pool = datas.type == ItemType.special ? specialSlots : gridParent.GetComponentsInChildren<SlotUi>();
 
+            if(datas.type == ItemType.book) {
+                UIInGameManager.instance.AddItemToSpecialUI("BookButton");
+                return;
+            }
+
             if(datas.type == ItemType.displayable && datas.uiPrefab != null && datas.DisplayOnPickup) {
                 GameObject parentCanvas = GameObject.Find("UIInGame");
-                for(int i = 0; i < parentCanvas.transform.childCount; i++) {
-                    parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
-                }
+                // for(int i = 0; i < parentCanvas.transform.childCount; i++) {
+                //     parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
+                // }
+                UIInGameManager.instance.HideAllChild();
                 Instantiate(datas.uiPrefab, parentCanvas.transform);
             }
 
@@ -91,9 +98,10 @@ namespace PlayerData.Runtime {
 
             if(SelectedItem.type == ItemType.displayable) {
                 GameObject parentCanvas = GameObject.Find("UIInGame");
-                for(int i = 0; i < parentCanvas.transform.childCount; i++) {
-                    parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
-                }
+                // for(int i = 0; i < parentCanvas.transform.childCount; i++) {
+                //     parentCanvas.transform.GetChild(i).gameObject.SetActive(false);
+                // }
+                UIInGameManager.instance.HideAllChild();
                 Instantiate(SelectedItem.uiPrefab, parentCanvas.transform);
             }
         } 

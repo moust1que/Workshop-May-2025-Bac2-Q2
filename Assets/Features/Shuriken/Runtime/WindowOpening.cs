@@ -8,7 +8,7 @@ namespace Shuriken.Runtime {
         public GameObject window;
         public Transform openWindow;
 
-        private DelayManager delayManager;
+        // private DelayManager delayManager;
         public float delayTime = 3f;
         public float baseDelayTime = 3f;
 
@@ -23,7 +23,7 @@ namespace Shuriken.Runtime {
             IsOpen = false;
             startPos = window.transform.position;
 
-            delayManager = gameObject.AddComponent<DelayManager>();
+            // delayManager = gameObject.AddComponent<DelayManager>();
         }
 
         void OnMouseDown() {
@@ -46,7 +46,7 @@ namespace Shuriken.Runtime {
 
         void AutoClose() {
             if(isAutoClose == false) return;
-            delayManager.Delay(delayTime, () => IsOpen = false);
+            DelayManager.instance.Delay(delayTime, () => IsOpen = false);
             delayTime = baseDelayTime;
         }
     }

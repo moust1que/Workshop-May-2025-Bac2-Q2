@@ -12,6 +12,12 @@ namespace Attribute.Runtime {
 
         private readonly List<DelayedAction> delayedActions = new List<DelayedAction>();
 
+        public static DelayManager instance { get; private set; }
+
+        private void Awake() {
+            instance = this;
+        }
+
         public void Delay(float seconds, Action callback) {
             delayedActions.Add(new DelayedAction
             {
