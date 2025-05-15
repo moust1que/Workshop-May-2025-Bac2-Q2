@@ -57,7 +57,7 @@ namespace PlayerData.Runtime {
             var pool = datas.type == ItemType.special ? specialSlots : gridParent.GetComponentsInChildren<SlotUi>();
 
             if(datas.type == ItemType.book) {
-                UIInGameManager.instance.AddItemToSpecialUI("BookButton");
+                UIInGameManager.instance.EnableUI(2);
                 return;
             }
 

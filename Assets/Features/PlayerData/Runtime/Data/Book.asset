@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43799a55af066414aa54cbabaac286a8, type: 3}
   m_Name: Book
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Book
   description: 
   icon: {fileID: -758973064, guid: 024b4ebd6c74ce24d8fb89c720f469df, type: 3}
   worldPrefab: {fileID: 8127117583937564620, guid: 8595d3a8830528745ad15b1304765763, type: 3}
@@ -20,4 +20,4 @@ MonoBehaviour:
   type: 4
   uiPrefab: {fileID: 0}
   DisplayOnPickup: 0
-  bookUIPrefab: {fileID: 0}
+  uiName: BookButtons

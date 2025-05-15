@@ -24,6 +24,6 @@ namespace ScriptableObjectArchitecture.Runtime {
         [ShowIf("type", ItemType.displayable)] public GameObject uiPrefab;
         [ShowIf("type", ItemType.displayable)] public bool DisplayOnPickup = false;
 
-        [ShowIf("type", ItemType.book)] public GameObject bookUIPrefab;
+        [ShowIf("type", ItemType.book)] public string uiName;
     }
 }

@@ -3,7 +3,8 @@
     "rootNamespace": "CameraManager.Runtime",
     "references": [
         "GUID:1f7b531d2ce7e1d4d83340b843df5215",
-        "GUID:a003f5c319807c64db6de97b493e8ca7"
+        "GUID:a003f5c319807c64db6de97b493e8ca7",
+        "GUID:adef8a1560c66934c972f9ea2aad2536"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

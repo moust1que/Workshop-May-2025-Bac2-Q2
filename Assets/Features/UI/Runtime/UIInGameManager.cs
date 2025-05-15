@@ -6,8 +6,10 @@ namespace UI.Runtime {
     using BBehaviour.Runtime;
 
     public class UIInGameManager : BBehaviour {
-        [Serializable] public class SpecialUI {
+        [Serializable]
+        public class SpecialUI {
             public GameObject ui;
+            public bool Enabled;
         }
 
         [SerializeField] private List<SpecialUI> specialUIs = new();
@@ -26,14 +28,14 @@ namespace UI.Runtime {
 
         public void ShowAllChildSpecial() {
             foreach(SpecialUI ui in specialUIs) {
+                if(!ui.Enabled) continue;
                 ui.ui.SetActive(true);
             }
         }
 
-        public void AddItemToSpecialUI(string name) {
-            GameObject bookUI = GameObject.Find(name);
-            specialUIs.Add(new SpecialUI { ui = bookUI });
-            bookUI.SetActive(true);
+        public void EnableUI(int id) {
+            specialUIs[id].Enabled = true;
+            specialUIs[id].ui.SetActive(true);
         }
     }
 }

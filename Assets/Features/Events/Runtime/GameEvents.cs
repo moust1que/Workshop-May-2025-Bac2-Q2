@@ -7,5 +7,6 @@ namespace Events.Runtime {
         public static Action<ItemData> OnItemUsed;
         public static Action OnLetterRead;
         public static Action<string> OnDialogEnded;
+        public static Action<string> OnTeleport;
     }
 }
