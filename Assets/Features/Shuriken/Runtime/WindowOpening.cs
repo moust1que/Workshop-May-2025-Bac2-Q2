@@ -2,35 +2,55 @@ using NUnit.Framework;
 using UnityEngine;
 
 namespace Shuriken.Runtime {
-    public class WindowOpening : MonoBehaviour {
-       public GameObject window;
-       public Transform openWindow;
+    using Attribute.Runtime;
+    public class WindowOpening : MonoBehaviour
+    {
+        public GameObject window;
+        public Transform openWindow;
 
-       Vector3 startPos;
+        private DelayManager delayManager;
+        public float delayTime = 3f;
+        public float baseDelayTime = 3f;
 
-       float speed = 1f;
+        Vector3 startPos;
 
-       public bool IsOpen;
+        float speed = 1f;
 
-        void Awake() {
+        public bool IsOpen;
+        public bool isAutoClose;
+
+        void Awake()
+        {
             IsOpen = false;
             startPos = window.transform.position;
+
+            delayManager = gameObject.AddComponent<DelayManager>();
         }
 
-        void OnMouseDown() {
+        void OnMouseDown()
+        {
             IsOpen = !IsOpen;
         }
 
-        void Update() {
+        void Update()
+        {
             Vector3 target = IsOpen ? openWindow.position : startPos;
 
-            if (window.transform.position != target) {
+            if (window.transform.position != target)
+            {
                 window.transform.position = Vector3.MoveTowards(
                     window.transform.position,
-                    target, 
-                    speed * Time.deltaTime 
+                    target,
+                    speed * Time.deltaTime
                 );
             }
+            AutoClose();
+        }
+
+        void AutoClose() {
+            if(isAutoClose == false) return;
+            delayManager.Delay(delayTime, () => IsOpen = false);
+            delayTime = baseDelayTime;
         }
     }
 }
