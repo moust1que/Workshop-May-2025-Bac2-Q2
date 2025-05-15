@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Events.Runtime;
 
 namespace Dialog.Runtime {
     using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Dialog.Runtime {
         private DialogLine[] currentLines;
         private int currentDialogIndex = 0;
         private bool displaying = false;
+        private string currentDialogId;
 
         public static DialogsManager instance { get; private set; }
 
@@ -53,6 +55,7 @@ namespace Dialog.Runtime {
                 return;
             }
 
+            currentDialogId = id;
             currentLines = dialog.dialog;
             currentDialogIndex = 0;
             displaying = true;
@@ -75,6 +78,7 @@ namespace Dialog.Runtime {
             displaying = false;
             text.SetText("");
             speakerName.SetText("");
+            GameEvents.OnDialogEnded?.Invoke(currentDialogId);
         }
 
         private void DisplayCurrentLine() {

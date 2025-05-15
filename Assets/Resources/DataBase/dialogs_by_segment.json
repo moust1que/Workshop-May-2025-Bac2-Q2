@@ -1,7 +1,7 @@
 {
     "dialogs": [
         {
-            "id": "dialog1",
+            "id": "Dialog1",
             "dialog": [
                 {
                     "speaker": "Yukiko",
@@ -10,7 +10,7 @@
             ]
         },
         {
-            "id": "dialog2",
+            "id": "Dialog2",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -47,7 +47,7 @@
             ]
         },
         {
-            "id": "dialog3",
+            "id": "Dialog3",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -60,7 +60,7 @@
             ]
         },
         {
-            "id": "dialog4",
+            "id": "Dialog4",
             "dialog": [
                 {
                     "speaker": "Yukiko",
@@ -85,7 +85,7 @@
             ]
         },
         {
-            "id": "dialog5",
+            "id": "Dialog5",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -98,7 +98,7 @@
             ]
         },
         {
-            "id": "dialog6",
+            "id": "Dialog6",
             "dialog": [
                 {
                     "speaker": "Yukiko",
@@ -107,7 +107,7 @@
             ]
         },
         {
-            "id": "dialog7",
+            "id": "Dialog7",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -124,7 +124,7 @@
             ]
         },
         {
-            "id": "dialog8",
+            "id": "Dialog8",
             "dialog": [
                 {
                     "speaker": "Fukurō",
@@ -157,7 +157,7 @@
             ]
         },
         {
-            "id": "dialog9",
+            "id": "Dialog9",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -214,7 +214,7 @@
             ]
         },
         {
-            "id": "dialog10",
+            "id": "Dialog10",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -227,7 +227,7 @@
             ]
         },
         {
-            "id": "dialog11",
+            "id": "Dialog11",
             "dialog": [
                 {
                     "speaker": "Renjiro",
@@ -248,7 +248,7 @@
             ]
         },
         {
-            "id": "dialog12",
+            "id": "Dialog12",
             "dialog": [
                 {
                     "speaker": "Yukiko",
@@ -257,7 +257,7 @@
             ]
         },
         {
-            "id": "dialog13",
+            "id": "Dialog13",
             "dialog": [
                 {
                     "speaker": "Yukiko",

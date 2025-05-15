@@ -28,7 +28,8 @@ namespace Goals.Runtime {
                 { "GameStart", new GameStartGoalHandler() },
                 { "ACT1", new Act1GoalHandler() },
                 { "PickupLetter", new PickupLetterGoalHandler() },
-                { "LetterRead", new LetterReadGoalHandler() }
+                { "LetterRead", new LetterReadGoalHandler() },
+                { "Dialog1", new Dialog1GoalHandler() }
             };
 
             if(GoalsManager.instance != null) 
@@ -36,6 +37,7 @@ namespace Goals.Runtime {
 
             GameEvents.OnItemPickedUp += OnItemPickedUp;
             GameEvents.OnLetterRead += OnLetterRead;
+            GameEvents.OnDialogEnded += OnDialogEnded;
         }
 
         private void OnDestroy() {
@@ -44,6 +46,7 @@ namespace Goals.Runtime {
 
             GameEvents.OnItemPickedUp -= OnItemPickedUp;
             GameEvents.OnLetterRead -= OnLetterRead;
+            GameEvents.OnDialogEnded -= OnDialogEnded;
         }
 
         private void HandleGoalCompleted(Goal goal) {
@@ -71,10 +74,21 @@ namespace Goals.Runtime {
                 act.Progress.Value = (int)act.Progress.Value + 1;
                 GoalsManager.instance.EvaluateAndPropagate();
             }
+            if(item.name == "Book") {
+                Goal g = GoalsManager.instance.goals["GrabBook"];
+                g.Progress.Value = true;
+                GoalsManager.instance.EvaluateAndPropagate();
+            }
         }
 
         public void OnLetterRead() {
             Goal g = GoalsManager.instance.goals["LetterRead"];
+            g.Progress.Value = true;
+            GoalsManager.instance.EvaluateAndPropagate();
+        }
+
+        public void OnDialogEnded(string id) {
+            Goal g = GoalsManager.instance.goals[id];
             g.Progress.Value = true;
             GoalsManager.instance.EvaluateAndPropagate();
         }
