@@ -1,5 +1,5 @@
 using UnityEngine;
-using Attribute.Editor;
+using Attribute.Runtime;
 
 namespace ScriptableObjectArchitecture.Runtime {
     public enum ItemType {

@@ -1,6 +1,9 @@
 using System.Reflection;
-using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
 using UnityEngine;
+using Attribute.Runtime;
 
 namespace Attribute.Editor {
     [CustomPropertyDrawer(typeof(ShowIfAttribute))]

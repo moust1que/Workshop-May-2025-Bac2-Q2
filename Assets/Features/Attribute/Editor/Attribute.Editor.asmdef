@@ -1,7 +1,9 @@
 {
     "name": "Attribute.Editor",
     "rootNamespace": "Attribute.Editor",
-    "references": [],
+    "references": [
+        "GUID:a003f5c319807c64db6de97b493e8ca7"
+    ],
     "includePlatforms": [
         "Editor"
     ],

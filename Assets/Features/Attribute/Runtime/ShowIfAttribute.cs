@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace Attribute.Editor {
+namespace Attribute.Runtime {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
     public class ShowIfAttribute : PropertyAttribute {
         public string conditionFieldName { get; private set; }
