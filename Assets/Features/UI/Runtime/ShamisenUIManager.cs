@@ -59,10 +59,9 @@ namespace UI.Runtime {
                 Verbose($"[ShamisenUI] Partition introuvable pour l’ID « {id} »", VerboseType.Warning);
             }
             
-            Verbose($"{(int)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == 0}", VerboseType.Log);
             if (id == "3" && (int)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == 0)
             {
-                DelayManager.instance.Delay(11.0f, () =>
+                DelayManager.instance.Delay(9.0f, () =>
                 {
                     Verbose("[ShamisenUI] Yokai scream", VerboseType.Log);
                     _audioSource.PlayOneShot(yokaiScream);

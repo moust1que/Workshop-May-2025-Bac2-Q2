@@ -32,11 +32,15 @@ namespace Goals.Runtime {
         [SerializeField] private Transform room1Center;
         [SerializeField] private ParticleSystem breath;
         #endregion
-        
 
-        #region 
-        [SerializeField] private GameObject yokaiAshes;
+        #region Dialog3
+        [SerializeField] private GameObject ashes;
         #endregion
+
+        #region Dialog4
+        [SerializeField] private Transform room2Start;
+        #endregion
+
         #region 
         [SerializeField] private GameObject blur;
         #endregion
@@ -62,9 +66,9 @@ namespace Goals.Runtime {
                 { "SolveEnigma", new SolveEnigmaGoalHandler(breath) },
                 { "IdentifyEffects1", new IdentifyEffects1GoalHandler() },
                 { "SearchTheRoom1", new SearchTheRoom1GoalHandler() },
-                { "Dialog3", new Dialog3GoalHandler() },
-                { "PickupIngredient", new PickupIngredientGoalHandler(yokaiAshes) },
-                { "Dialog4", new Dialog4GoalHandler() },
+                { "Dialog3", new Dialog3GoalHandler(ashes) },
+                { "PickupIngredient", new PickupIngredientGoalHandler() },
+                { "Dialog4", new Dialog4GoalHandler(room2Start) },
                 { "LeaveDungeon", new LeaveDungeonGoalHandler() },
 
                 { "ACT2", new Act2GoalHandler() },
@@ -151,6 +155,12 @@ namespace Goals.Runtime {
             if (item.name == "Book")
             {
                 Goal g = GoalsManager.instance.goals["GrabBook"];
+                g.Progress.Value = true;
+                GoalsManager.instance.EvaluateAndPropagate();
+            }
+            if (item.name == "Ashes")
+            {
+                Goal g = GoalsManager.instance.goals["PickupIngredient"];
                 g.Progress.Value = true;
                 GoalsManager.instance.EvaluateAndPropagate();
             }
