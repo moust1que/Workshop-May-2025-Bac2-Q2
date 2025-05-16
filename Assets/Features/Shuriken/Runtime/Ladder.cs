@@ -10,15 +10,15 @@ namespace Shuriken.Runtime
 
         public void Start()
         {
-            ladder.enabled = false;
+            ladder.enabled = true;
         }
 
         public void Update()
         {
-            if (enigma.allCorrect)
-            {
-                ladder.enabled = true;
-            }
+            // if (enigma.allCorrect)
+            // {
+            //     ladder.enabled = true;
+            // }
         }
     }
 }

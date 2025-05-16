@@ -54,13 +54,15 @@ namespace Shuriken.Runtime {
 
         void Update()
         {
+            Verbose($"canResolve={canResolve} window.IsOpen={window.IsOpen} katanaPlaced={katanaTracker.IsKatanaPlaced}");
+
             if (!canResolve && window.IsOpen && katanaTracker.IsKatanaPlaced)
             {
                 kanji.SetActive(true);
                 canResolve = true;
                 CheckPuzzle();
             }
-            if (canResolve && !window.IsOpen)
+            else if (!canResolve && !window.IsOpen)   // <-- else if, pas if
             {
                 canResolve = false;
                 kanji.SetActive(false);
