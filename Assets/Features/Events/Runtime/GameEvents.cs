@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using ScriptableObjectArchitecture.Runtime;
 
+
 namespace Events.Runtime {
     public static class GameEvents
     {
@@ -16,6 +17,9 @@ namespace Events.Runtime {
         public static Action OnYokaiScream;
         public static Action OnEnableFeature;
         public static Action OnDisableFeature;
+
+        public static Action OnTurnPageLeft;
+        public static Action OnTurnPageRight;
 
     }
 }

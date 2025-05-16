@@ -1,14 +1,19 @@
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-namespace Book.Runtime {
-    using BBehaviour.Runtime;
+//namespace Book.Runtime
+//{
+//    using BBehaviour.Runtime;
 
-    public class BookManager : BBehaviour
+
+    public class BookManager : MonoBehaviour
     {
         [SerializeField] private GameObject openBookButton;
         [SerializeField] private GameObject closeBookButton;
         [SerializeField] private GameObject leftButton;
         [SerializeField] private GameObject rightButton;
+
+       
 
         private int curPage = 0;
 
@@ -18,6 +23,7 @@ namespace Book.Runtime {
             closeBookButton.SetActive(true);
             curPage = 0;
             UpdateButtonDisplay();
+
         }
 
         public void CloseBook()
@@ -32,18 +38,19 @@ namespace Book.Runtime {
         {
             curPage = Mathf.Max(0, curPage - 1);
             UpdateButtonDisplay();
+
         }
 
         public void TurnPageRight()
         {
-            curPage = Mathf.Min(3, curPage + 1);
+            curPage = Mathf.Min(8, curPage + 1);
             UpdateButtonDisplay();
         }
 
         private void UpdateButtonDisplay()
         {
             leftButton.SetActive(curPage > 0);
-            rightButton.SetActive(curPage < 3);
+            rightButton.SetActive(curPage < 8);
         }
     }
-}
+//}
