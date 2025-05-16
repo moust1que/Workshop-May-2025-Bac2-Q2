@@ -5,8 +5,6 @@ namespace Book.Runtime {
 
     public class BookManager : BBehaviour
     {
-        // private bool isOpen = false;
-
         [SerializeField] private GameObject openBookButton;
         [SerializeField] private GameObject closeBookButton;
         [SerializeField] private GameObject leftButton;
@@ -16,7 +14,6 @@ namespace Book.Runtime {
 
         public void OpenBook()
         {
-            // isOpen = true;
             openBookButton.SetActive(false);
             closeBookButton.SetActive(true);
             curPage = 0;
@@ -25,7 +22,6 @@ namespace Book.Runtime {
 
         public void CloseBook()
         {
-            // isOpen = false;
             openBookButton.SetActive(true);
             closeBookButton.SetActive(false);
             leftButton.SetActive(false);

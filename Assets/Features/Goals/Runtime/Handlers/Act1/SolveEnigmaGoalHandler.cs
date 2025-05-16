@@ -1,4 +1,5 @@
 using UnityEngine;
+using Dialog.Runtime;
 
 namespace Goals.Runtime
 {
@@ -19,6 +20,8 @@ namespace Goals.Runtime
             GoalsManager.instance.EvaluateAndPropagate();
             
             breath.Stop();
+
+            DialogsManager.instance.DisplayDialog("Dialog3");
         }
     }
 }
