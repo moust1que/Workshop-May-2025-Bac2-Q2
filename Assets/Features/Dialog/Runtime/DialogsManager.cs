@@ -79,7 +79,7 @@ namespace Dialog.Runtime {
             text.SetText("");
             speakerName.SetText("");
 
-            PortraitController.instance.HideSpeaker();
+            // PortraitController.instance.HideSpeaker();
             GameEvents.OnDialogEnded?.Invoke(currentDialogId);
         }
 
@@ -89,7 +89,7 @@ namespace Dialog.Runtime {
             speakerName.SetText(line.speaker);
             text.SetText(line.text);
             
-            PortraitController.instance.ShowSpeaker(line.speaker);
+            // PortraitController.instance.ShowSpeaker(line.speaker);
         }
     }
 }
