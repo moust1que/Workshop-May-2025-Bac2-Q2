@@ -66,7 +66,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.2
-    - _Turn: 0
+    - _Turn: 0.856
     m_Colors:
     - _Color: {r: 0.35831246, g: 0.46566093, b: 0.690566, a: 0}
     - _Color_1: {r: 0.30196077, g: 0.54509807, b: 0.5254902, a: 0}
