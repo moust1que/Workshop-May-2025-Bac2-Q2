@@ -1,0 +1,17 @@
+{
+    "name": "PlayerMovement.Runtime",
+    "rootNamespace": "PlayerMovement.Runtime",
+    "references": [
+        "GUID:1f7b531d2ce7e1d4d83340b843df5215",
+        "GUID:646c0f88b5e95224bb5fd184384c89a9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

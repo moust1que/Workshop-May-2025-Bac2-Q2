@@ -13,19 +13,23 @@ namespace Goals.Runtime {
         private Dictionary<string, IGoalHandler> goalHandlers;
 
         #region GameStart
-            [SerializeField] private GameObject LetterToPickup;
+        [SerializeField] private GameObject LetterToPickup;
         #endregion
 
         #region Dialog1
-            [SerializeField] private GameObject book;
+        [SerializeField] private GameObject book;
         #endregion
 
         #region GrabBook
-            [SerializeField] private GameObject doorAfterGrabBook;
+        [SerializeField] private GameObject doorAfterGrabBook;
         #endregion
 
         #region Dialog2
-            [SerializeField] private GameObject doorToClose;
+        [SerializeField] private GameObject doorToClose;
+        #endregion
+
+        #region ExitDoorClosed
+        [SerializeField] private Transform room1Center;
         #endregion
 
         private void Start()
@@ -41,7 +45,7 @@ namespace Goals.Runtime {
                 { "GrabBook", new GrabBookGoalHandler(doorAfterGrabBook) },
                 { "LeaveTheRoom", new LeaveTheRoomGoalHandler() },
                 { "Dialog2", new Dialog2GoalHandler(doorToClose) },
-                { "ExitDoorClosed", new ExitDoorClosedGoalHandler() },
+                { "ExitDoorClosed", new ExitDoorClosedGoalHandler(room1Center) },
                 // { "SolveEnigma", new SolveEnigmaGoalHandler() },
                 // { "IdentifyEffects1", new IdentifyEffects1GoalHandler() },
                 // { "SearchTheRoom1", new SearchTheRoom1GoalHandler() },
@@ -86,6 +90,7 @@ namespace Goals.Runtime {
             GameEvents.OnLetterRead += OnLetterRead;
             GameEvents.OnDialogEnded += OnDialogEnded;
             GameEvents.OnTeleport += OnTeleport;
+            GameEvents.OnDoorClosed += OnDoorClosed;
         }
 
         private void OnDestroy()
@@ -97,6 +102,7 @@ namespace Goals.Runtime {
             GameEvents.OnLetterRead -= OnLetterRead;
             GameEvents.OnDialogEnded -= OnDialogEnded;
             GameEvents.OnTeleport -= OnTeleport;
+            GameEvents.OnDoorClosed -= OnDoorClosed;
         }
 
         private void HandleGoalCompleted(Goal goal)
@@ -147,8 +153,15 @@ namespace Goals.Runtime {
             g.Progress.Value = true;
             GoalsManager.instance.EvaluateAndPropagate();
         }
-        
+
         public void OnTeleport(string id)
+        {
+            Goal g = GoalsManager.instance.goals[id];
+            g.Progress.Value = true;
+            GoalsManager.instance.EvaluateAndPropagate();
+        }
+        
+        public void OnDoorClosed(string id)
         {
             Goal g = GoalsManager.instance.goals[id];
             g.Progress.Value = true;

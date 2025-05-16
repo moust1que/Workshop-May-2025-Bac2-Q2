@@ -1,4 +1,5 @@
 using UnityEngine;
+using Events.Runtime;
 
 namespace Door.Runtime {
     using BBehaviour.Runtime;
@@ -10,6 +11,8 @@ namespace Door.Runtime {
 
         [SerializeField] private float moveSpeed = 1f;
         [SerializeField] private AudioSource closeSound;
+
+        [SerializeField] private string targetGoalId;
 
         private bool isClosing = false;
         private bool hasPlayedSound = false;
@@ -34,6 +37,7 @@ namespace Door.Runtime {
                 isClosing = false;
                 closeSound.PlayOneShot(closeSound.clip);
                 hasPlayedSound = true;
+                GameEvents.OnDoorClosed?.Invoke(targetGoalId);
             }
         }
     }

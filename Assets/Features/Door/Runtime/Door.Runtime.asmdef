@@ -2,7 +2,8 @@
     "name": "Door.Runtime",
     "rootNamespace": "Door.Runtime",
     "references": [
-        "GUID:1f7b531d2ce7e1d4d83340b843df5215"
+        "GUID:1f7b531d2ce7e1d4d83340b843df5215",
+        "GUID:adef8a1560c66934c972f9ea2aad2536"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
