@@ -5,34 +5,32 @@ using UnityEngine.Rendering.RenderGraphModule;
 
 public class MalaiseV2 : ScriptableRendererFeature
 {
-    public EnableRenderFeature enable;
-    public bool isEnable = false;
-    CustomRenderPass myPass;
-    public Material materialMalaise;
+
+    CustomRenderPass pass;
+    public Material material;
 
 
     public override void Create()
     {
-        myPass = new CustomRenderPass();
-        myPass.materialMalaise = materialMalaise;
+        pass = new CustomRenderPass();
+        pass.material = material;
 
-        myPass.renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
+        pass.renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     }
 
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        if (enable.isEnable)
-        {
-            if (renderingData.cameraData.cameraType == CameraType.Game || renderingData.cameraData.cameraType == CameraType.SceneView)
-                renderer.EnqueuePass(myPass);
-        }
-       
+        if (renderingData.cameraData.cameraType == CameraType.Game || renderingData.cameraData.cameraType == CameraType.SceneView)
+            renderer.EnqueuePass(pass);
     }
 }
 class CustomRenderPass : ScriptableRenderPass
 {
-    public Material materialMalaise;
+    public Material material;
+
+    public static Vector3 center;
+    public static float radius;
     private class PassData
     {
         public Material material;
@@ -51,7 +49,7 @@ class CustomRenderPass : ScriptableRenderPass
             if (passData.mpb == null)
                 passData.mpb = new MaterialPropertyBlock();
 
-            passData.material = materialMalaise;
+            passData.material = material;
             UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
             builder.SetRenderAttachment(resourceData.activeColorTexture, 0);
 

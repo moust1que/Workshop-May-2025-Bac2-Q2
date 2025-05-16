@@ -18,7 +18,8 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -43,16 +44,21 @@ Material:
     m_Floats:
     - _AmplitudeDeformation: 4.11
     - _DeformationScale: 0.1
+    - _Float: 1.7
+    - _Fullscreen_DepthWrite: 0
     - _Intensity: 0.01
+    - _IsActive: 1
     - _LerpFactor: 0
     - _PanningSpeed: 1
     - _Power: 2.27
     - _PulseSpeed: 0.2
     - _PulseStrenght: 0.5
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _TimeFactor: 0.36659318
     - _VignetteStrength: 0.2
-    - _WobleIntensity: 0.01
+    - _WobleIntensity: 0.7
     m_Colors:
-    - _VignetteColor: {r: 3.5471697, g: 2.0627866, b: 1.3943274, a: 0}
+    - _VignetteColor: {r: 3.976243, g: 1.6441551, b: 0.5814317, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
