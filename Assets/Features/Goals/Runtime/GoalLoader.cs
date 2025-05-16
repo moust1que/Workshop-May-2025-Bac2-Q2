@@ -9,7 +9,6 @@ namespace Goals.Runtime {
     [AddComponentMenu("Goals/Goal Loader")]
     public class GoalLoader : BBehaviour {
         [SerializeField] private TextAsset jsonFile;
-        // [SerializeField] private GoalWindow windowPrefab;
         [SerializeField] private DictionaryVariable dictionary;
 
         private readonly Dictionary<string, IFact> factTable = new();

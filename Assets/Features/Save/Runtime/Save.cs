@@ -32,19 +32,21 @@ namespace Save.Runtime {
             stream.Close();
         }
 
-        public static void LoadFromFile(string slotName) {
+        public static void LoadFromFile(string slotName)
+        {
             string fileName = Path.Combine(directoryPath, slotName);
 
-            if(!File.Exists(fileName)) return;
+            if (!File.Exists(fileName)) return;
 
             StreamReader reader = new StreamReader(fileName);
             string data = reader.ReadToEnd();
             List<string> lines = new List<string>(data.Split('\n'));
             List<StringFact> entries = new List<StringFact>();
 
-            foreach(string line in lines) {
+            foreach (string line in lines)
+            {
                 if (string.IsNullOrWhiteSpace(line)) continue;
-                
+
                 string[] parts = line.Split(':');
                 string[] values = parts[1].Split(',');
                 Debug.Log(values[0] + ", " + values[1] + ", " + values[2]);
@@ -55,7 +57,8 @@ namespace Save.Runtime {
 
             reader.Close();
 
-            foreach(KeyValuePair<string, IFact> pair in factDictionary.facts) {
+            foreach (KeyValuePair<string, IFact> pair in factDictionary.facts)
+            {
                 Debug.Log(pair.Key + ": " + pair.Value.type + ", " + pair.Value.Value + ", " + pair.Value.IsPersistent);
             }
         }

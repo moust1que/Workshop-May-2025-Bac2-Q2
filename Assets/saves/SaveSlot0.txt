@@ -1,9 +1,9 @@
 GameStart:Boolean,True,True
-ACT1:Int32,1,True
-PickupL:Boolean,False,True
-LetterRead:Boolean,False,True
-Dialog1:Boolean,False,True
-GrabB:Boolean,False,True
+ACT1:Int32,5,True
+PickupL:Boolean,True,True
+LetterRead:Boolean,True,True
+Dialog1:Boolean,True,True
+GrabB:Boolean,True,True
 LeaveRoom:Boolean,False,True
 Dialog2:Boolean,False,True
 EDoorClosed:Boolean,False,True

@@ -13,11 +13,19 @@ namespace Goals.Runtime {
         private Dictionary<string, IGoalHandler> goalHandlers;
 
         #region GameStart
-        [SerializeField] private GameObject LetterToPickup;
+            [SerializeField] private GameObject LetterToPickup;
+        #endregion
+
+        #region Dialog1
+            [SerializeField] private GameObject book;
         #endregion
 
         #region GrabBook
-        [SerializeField] private GameObject doorAfterGrabBook;
+            [SerializeField] private GameObject doorAfterGrabBook;
+        #endregion
+
+        #region Dialog2
+            [SerializeField] private GameObject doorToClose;
         #endregion
 
         private void Start()
@@ -29,10 +37,10 @@ namespace Goals.Runtime {
                 { "ACT1", new Act1GoalHandler() },
                 { "PickupLetter", new PickupLetterGoalHandler() },
                 { "LetterRead", new LetterReadGoalHandler() },
-                { "Dialog1", new Dialog1GoalHandler() },
+                { "Dialog1", new Dialog1GoalHandler(book) },
                 { "GrabBook", new GrabBookGoalHandler(doorAfterGrabBook) },
                 { "LeaveTheRoom", new LeaveTheRoomGoalHandler() },
-                { "Dialog2", new Dialog2GoalHandler() },
+                { "Dialog2", new Dialog2GoalHandler(doorToClose) },
                 { "ExitDoorClosed", new ExitDoorClosedGoalHandler() },
                 // { "SolveEnigma", new SolveEnigmaGoalHandler() },
                 // { "IdentifyEffects1", new IdentifyEffects1GoalHandler() },
