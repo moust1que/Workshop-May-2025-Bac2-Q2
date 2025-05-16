@@ -27,6 +27,8 @@ namespace Goals.Runtime {
             Camera.main.transform.position = RoomCenter.position;
             PlayerMovementManager.instance.CurrentNavigationPoint = RoomCenter.GetComponent<NavigationPoint>();
             PlayerMovementManager.instance.DisplayUI();
+
+            // Mets ici
         }
     }
 }
