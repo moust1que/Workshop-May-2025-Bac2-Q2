@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace CameraManager.Runtime {
-    public class NavigationPoint : MonoBehaviour
+    using BBehaviour.Runtime;
+
+    public class NavigationPoint : BBehaviour
     {
         [System.Serializable]
         public class NavEntry
@@ -12,6 +14,8 @@ namespace CameraManager.Runtime {
         }
 
         public List<NavEntry> navigationData = new();
+
+        public List<GameObject> objectsToEnableOnArrival = new();
 
         public bool HasDirection(Directions direction)
         {

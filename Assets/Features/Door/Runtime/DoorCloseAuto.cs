@@ -15,14 +15,12 @@ namespace Door.Runtime {
         [SerializeField] private string targetGoalId;
 
         private bool isClosing = false;
-        private bool hasPlayedSound = false;
 
         public void TriggerClose()
         {
             if (door == null || targetPivot == null) return;
 
             isClosing = true;
-            hasPlayedSound = false;
         }
 
         void Update()
@@ -36,7 +34,6 @@ namespace Door.Runtime {
                 door.position = targetPivot.position;
                 isClosing = false;
                 closeSound.PlayOneShot(closeSound.clip);
-                hasPlayedSound = true;
                 GameEvents.OnDoorClosed?.Invoke(targetGoalId);
             }
         }

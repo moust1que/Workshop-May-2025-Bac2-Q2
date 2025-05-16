@@ -98,6 +98,7 @@ namespace Tools.Editor {
 
                     SerializedObject serializedNavPoint = new SerializedObject(navPoint);
                     SerializedProperty navigationDataProperty = serializedNavPoint.FindProperty("navigationData");
+                    SerializedProperty objectsToEnableProperty = serializedNavPoint.FindProperty("objectsToEnableOnArrival");
 
                     serializedNavPoint.Update();
 
@@ -119,8 +120,24 @@ namespace Tools.Editor {
 
                     if(GUILayout.Button($"Add Entry to {child.name}")) {
                         navigationDataProperty.InsertArrayElementAtIndex(navigationDataProperty.arraySize);
+                    }
 
-                        SerializedProperty newElement = navigationDataProperty.GetArrayElementAtIndex(navigationDataProperty.arraySize - 1);
+                    EditorGUILayout.Space(8);
+                    EditorGUILayout.LabelField($"Objects to Enable On Arrival: {child.name}", EditorStyles.boldLabel);
+
+                    for (int k = 0; k < objectsToEnableProperty.arraySize; k++)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        SerializedProperty element = objectsToEnableProperty.GetArrayElementAtIndex(k);
+                        EditorGUILayout.PropertyField(element, GUIContent.none);
+                        if (GUILayout.Button("X", GUILayout.Width(20.0f))) {
+                            objectsToEnableProperty.DeleteArrayElementAtIndex(k);
+                        }
+                        EditorGUILayout.EndHorizontal();
+                    }
+
+                    if(GUILayout.Button($"Add Object to Enable for {child.name}")) {
+                        objectsToEnableProperty.InsertArrayElementAtIndex(objectsToEnableProperty.arraySize);
                     }
 
                     serializedNavPoint.ApplyModifiedProperties();

@@ -160,7 +160,7 @@ namespace Goals.Runtime {
             g.Progress.Value = true;
             GoalsManager.instance.EvaluateAndPropagate();
         }
-        
+
         public void OnDoorClosed(string id)
         {
             Goal g = GoalsManager.instance.goals[id];

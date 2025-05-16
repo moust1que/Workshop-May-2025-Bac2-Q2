@@ -8,6 +8,7 @@ namespace CameraManager.Runtime {
     {
         [SerializeField] private Transform destinationSocket;
         [SerializeField] private string goalDestinationId;
+        [SerializeField] private bool isPlayerMovement = false;
 
         private void OnMouseDown()
         {
@@ -15,7 +16,13 @@ namespace CameraManager.Runtime {
             if (CameraController.Instance != null)
             {
                 CameraController.Instance.MoveTo(destinationSocket != null ? destinationSocket : transform);
-                GameEvents.OnTeleport?.Invoke(goalDestinationId);
+                if (goalDestinationId != "")
+                    GameEvents.OnTeleport?.Invoke(goalDestinationId);
+
+                if (isPlayerMovement)
+                {
+                    GameEvents.OnPlayerMoved?.Invoke(destinationSocket);
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using CameraManager.Runtime;
+using Events.Runtime;
 
 namespace PlayerMovement.Runtime
 {
@@ -17,6 +18,7 @@ namespace PlayerMovement.Runtime
 
         public NavigationPoint CurrentNavigationPoint;
         private List<NavigationPoint.NavEntry> curNavEntries = new();
+        private NavigationPoint lastNavigationPoint;
 
         public static PlayerMovementManager instance;
 
@@ -25,10 +27,51 @@ namespace PlayerMovement.Runtime
             instance = this;
         }
 
+        private void Start()
+        {
+            GameEvents.OnPlayerMoved += OnPlayerMoved;
+        }
+
+        private void OnDestroy()
+        {
+            GameEvents.OnPlayerMoved -= OnPlayerMoved;
+        }
+
         public void DisplayUI()
         {
             ui.SetActive(true);
             UpdateDisplacementAvailable();
+
+            if (lastNavigationPoint != null && lastNavigationPoint != CurrentNavigationPoint && lastNavigationPoint.objectsToEnableOnArrival != null)
+            {
+                foreach (GameObject obj in lastNavigationPoint.objectsToEnableOnArrival)
+                {
+                    if (obj != null)
+                    {
+                        BoxCollider col = obj.GetComponent<BoxCollider>();
+                        if (col != null)
+                            col.enabled = false;
+                        else
+                            Verbose($"No BoxCollider found on {obj.name}", VerboseType.Warning);
+                    }
+                }
+            }
+
+            if (CurrentNavigationPoint != null && CurrentNavigationPoint.objectsToEnableOnArrival != null)
+            {
+                foreach (GameObject obj in CurrentNavigationPoint.objectsToEnableOnArrival)
+                {
+                    if (obj != null)
+                    {
+                        BoxCollider col = obj.GetComponent<BoxCollider>();
+                        if (col != null)
+                            col.enabled = true;
+                        else
+                            Verbose($"No BoxCollider found on {obj.name}", VerboseType.Warning);
+                    }
+                }
+                lastNavigationPoint = CurrentNavigationPoint;
+            }
         }
 
         public void HideUI()
@@ -65,25 +108,109 @@ namespace PlayerMovement.Runtime
             TryTeleport(Directions.Right);
         }
 
-        private void TryTeleport(Directions direction)
+        public void TryTeleport(Directions direction)
         {
             var navEntry = curNavEntries.Find(x => x.key == direction);
-            if(navEntry.value != null)
+            if (navEntry.value != null)
             {
                 TeleportToPosition(navEntry);
-            }else {
+            }
+            else
+            {
                 Verbose($"No navigation entry found for direction {direction}", VerboseType.Warning);
             }
         }
 
         public void TeleportToPosition(NavigationPoint.NavEntry navEntry)
         {
+            NavigationPoint previousNavPoint = CurrentNavigationPoint;
+
+            CurrentNavigationPoint = navEntry.value.GetComponent<NavigationPoint>();
+
+            if (previousNavPoint != null && previousNavPoint.objectsToEnableOnArrival != null)
+            {
+                foreach (GameObject obj in previousNavPoint.objectsToEnableOnArrival)
+                {
+                    if (obj != null)
+                    {
+                        BoxCollider col = obj.GetComponent<BoxCollider>();
+                        if (col != null)
+                            col.enabled = false;
+                        else
+                            Verbose($"No BoxCollider found on {obj.name}", VerboseType.Warning);
+                    }
+                }
+            }
+
             Verbose($"Teleporting to {navEntry.value.name}");
             mainCamera.transform.position = curNavEntries.Find(x => x.key == navEntry.key).value.position;
             mainCamera.transform.rotation = curNavEntries.Find(x => x.key == navEntry.key).value.rotation;
 
-            CurrentNavigationPoint = navEntry.value.GetComponent<NavigationPoint>();
+            if (CurrentNavigationPoint != null && CurrentNavigationPoint.objectsToEnableOnArrival != null)
+            {
+                foreach (GameObject obj in CurrentNavigationPoint.objectsToEnableOnArrival)
+                {
+                    if (obj != null)
+                    {
+                        BoxCollider col = obj.GetComponent<BoxCollider>();
+                        if (col != null)
+                            col.enabled = true;
+                        else
+                            Verbose($"No BoxCollider found on {obj.name}", VerboseType.Warning);
+                    }
+                }
+            }
+
             UpdateDisplacementAvailable();
+            lastNavigationPoint = CurrentNavigationPoint;
+        }
+
+
+        public void OnPlayerMoved(Transform transform)
+        {
+            NavigationPoint newNavPoint = transform.GetComponent<NavigationPoint>();
+            if (newNavPoint == null)
+            {
+                Verbose("OnPlayerMoved: No NavigationPoint found on transform", VerboseType.Warning);
+                return;
+            }
+
+            if (CurrentNavigationPoint != null && CurrentNavigationPoint.objectsToEnableOnArrival != null)
+            {
+                foreach (GameObject obj in CurrentNavigationPoint.objectsToEnableOnArrival)
+                {
+                    if (obj != null)
+                    {
+                        BoxCollider col = obj.GetComponent<BoxCollider>();
+                        if (col != null)
+                            col.enabled = false;
+                        else
+                            Verbose($"No BoxCollider found on {obj.name}", VerboseType.Warning);
+                    }
+                }
+            }
+
+            CurrentNavigationPoint = newNavPoint;
+
+            if (CurrentNavigationPoint.objectsToEnableOnArrival != null)
+            {
+                foreach (GameObject obj in CurrentNavigationPoint.objectsToEnableOnArrival)
+                {
+                    if (obj != null)
+                    {
+                        BoxCollider col = obj.GetComponent<BoxCollider>();
+                        if (col != null)
+                            col.enabled = true;
+                        else
+                            Verbose($"No BoxCollider found on {obj.name}", VerboseType.Warning);
+                    }
+                }
+            }
+
+            lastNavigationPoint = CurrentNavigationPoint;
+            UpdateDisplacementAvailable();
+            ui.SetActive(true);
+            Verbose("OnPlayerMoved: UI and colliders updated.");
         }
     }
 }
