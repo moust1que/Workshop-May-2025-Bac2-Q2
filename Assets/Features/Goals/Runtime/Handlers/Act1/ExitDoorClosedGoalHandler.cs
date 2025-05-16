@@ -31,7 +31,6 @@ namespace Goals.Runtime {
             PlayerMovementManager.instance.DisplayUI();
 
             breath.Play();
-            // Mets ici
         }
     }
 }

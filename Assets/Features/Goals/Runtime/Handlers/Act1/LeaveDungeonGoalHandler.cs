@@ -1,3 +1,5 @@
+using PlayerMovement.Runtime;
+
 namespace Goals.Runtime
 {
     public class LeaveDungeonGoalHandler : IGoalHandler
@@ -7,6 +9,9 @@ namespace Goals.Runtime
             Goal act = GoalsManager.instance.goals["ACT1"];
             act.Progress.Value = (int)act.Progress.Value + 1;
             GoalsManager.instance.EvaluateAndPropagate();
+
+
+            PlayerMovementManager.instance.HideUI();
         }
     }
 }

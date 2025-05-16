@@ -57,7 +57,7 @@ Material:
     - _QueueOffset: 0
     - _TimeFactor: 0.36659318
     - _VignetteStrength: 9
-    - _WobleIntensity: 0.05
+    - _WobleIntensity: 0.01
     m_Colors:
     - _VignetteColor: {r: 3.976243, g: 1.6441551, b: 0.5814317, a: 0}
   m_BuildTextureStacks: []

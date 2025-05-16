@@ -1,6 +1,4 @@
-using Events.Runtime;
-using JetBrains.Annotations;
-// using Attribute.Runtime;
+using Attribute.Runtime;
 using PlayerMovement.Runtime;
 using CameraManager.Runtime;
 using UnityEngine;
@@ -19,8 +17,11 @@ namespace Goals.Runtime
         }
         public void OnGoalCompleted(Goal goal)
         {
-            GoalsManager.instance.goals["ACT2"].Progress.Value = (int)GoalsManager.instance.goals["ACT2"].Progress.Value + 1;
+            Goal act = GoalsManager.instance.goals["ACT2"];
+            act.Progress.Value = (int)act.Progress.Value + 1;
             GoalsManager.instance.EvaluateAndPropagate();
+
+            DelayManager.instance.Delay(0.2f, AfterDelay);
 
             myEffect.SetActive(true);
         }
@@ -29,6 +30,7 @@ namespace Goals.Runtime
         {
             Camera.main.transform.position = Room2Center.position;
             PlayerMovementManager.instance.CurrentNavigationPoint = Room2Center.GetComponent<NavigationPoint>();
+            Debug.Log("Current Navigation Point: " + PlayerMovementManager.instance.CurrentNavigationPoint.name);
             PlayerMovementManager.instance.DisplayUI();
         }
     }
