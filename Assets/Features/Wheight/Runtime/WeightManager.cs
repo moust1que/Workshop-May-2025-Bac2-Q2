@@ -12,7 +12,7 @@ namespace Wheight.Runtime {
         public List<Transform> rightSlots;
 
         public int initialWeight = 50;
-        public int[] goodMeasurements = { 20, 40, 60, 90 };
+        public int[] goodMeasurements = { 20, 40, 60, 70 ,90 };
 
         public Transform needle;
         public float minAngle = -35f;
@@ -24,6 +24,8 @@ namespace Wheight.Runtime {
         private List<WeightSelectable> leftWeights = new();
         private List<WeightSelectable> rightWeights = new();
         public WeightSelectable SelectedWeight { get; private set; }
+
+        public CylinderRotator cylinderRotator;
 
         void Awake()
         {
@@ -90,7 +92,15 @@ namespace Wheight.Runtime {
             int clamped = Mathf.Clamp(measured, minValue, maxValue);
             float t = (clamped - minValue) / (float)(maxValue - minValue);
             float angle = Mathf.Lerp(minAngle, maxAngle, t);
-            needle.localRotation = Quaternion.Euler(0f, 0f, angle);
+            needle.localRotation = Quaternion.Euler(-angle, 0f, 0f);
+
+            int faceIndex = System.Array.IndexOf(goodMeasurements, measured);
+            if (faceIndex >= 0)
+            {
+                // Bonne mesure → on tourne le cylindre
+                cylinderRotator.RotateToFace(faceIndex);
+                Debug.Log($"Bonne mesure : {measured}  |  Rotation face #{faceIndex}");
+            }
 
             Debug.Log($"G:{sumL} | D:{sumR}| Mesure :{measured}");
 

@@ -4,23 +4,26 @@ using System.Linq;
 using UnityEngine;
 
 namespace UI.Runtime {
+    using Events.Runtime;
     using BBehaviour.Runtime;
 
-    public class ShamisenUIManager : BBehaviour {
+    public class ShamisenUIManager : BBehaviour
+    {
         [Serializable]
         public class Partition
         {
             public string id;
             public AudioClip clip;
         }
-        
+
         [SerializeField]
         private List<Partition> partitions;
 
         private Dictionary<string, AudioClip> _partitionDict;
         private AudioSource _audioSource;
 
-        private void Awake() {
+        private void Awake()
+        {
             _audioSource = GetComponent<AudioSource>();
             if (_audioSource == null)
                 _audioSource = gameObject.AddComponent<AudioSource>();
@@ -28,6 +31,16 @@ namespace UI.Runtime {
             _partitionDict = partitions
                 .Where(p => !string.IsNullOrEmpty(p.id) && p.clip != null)
                 .ToDictionary(p => p.id, p => p.clip);
+        }
+
+        private void Start()
+        {
+            GameEvents.OnLetterRead += OnLetterRead;
+        }
+
+        private void OnDestroy()
+        {
+            GameEvents.OnLetterRead -= OnLetterRead;
         }
 
         public void PlayPartition(string id)
@@ -42,6 +55,19 @@ namespace UI.Runtime {
             {
                 Verbose($"[ShamisenUI] Partition introuvable pour l’ID « {id} »", VerboseType.Warning);
             }
+        }
+        
+        public void SelfDestroy() {
+            // GameObject parentCanvas = GameObject.Find("UIInGame");
+            // for(int i = 0; i < parentCanvas.transform.childCount; i++) {
+            //     parentCanvas.transform.GetChild(i).gameObject.SetActive(true);
+            // }
+            UIInGameManager.instance.ShowAllChildSpecial();
+            Destroy(gameObject);
+        }
+
+        public void OnLetterRead() {
+            GameEvents.OnShamisenPlayed?.Invoke();
         }
     }
 }
