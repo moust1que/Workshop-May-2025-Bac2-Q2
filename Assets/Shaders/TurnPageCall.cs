@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Events.Runtime;
 public class TurnPageCall : MonoBehaviour
 {
     [SerializeField] private BookTurnPage call;

@@ -1,4 +1,5 @@
 using Attribute.Runtime;
+using Events.Runtime;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class BookTurnPage : MonoBehaviour
     {
         propertyBlock = new MaterialPropertyBlock();
         ResetPages();
+        GameEvents.OnTurnPageLeft += TurnPageLeft;
+        GameEvents.OnDisableFeature += TurnPageRight;
     }
 
     public void TurnPageLeft()
@@ -123,5 +126,10 @@ public class BookTurnPage : MonoBehaviour
             block.SetFloat("_Turn", 0.001f * pageId);
             renderer.SetPropertyBlock(block);
         }
+    }
+    private void OnDestroy()
+    {
+        GameEvents.OnTurnPageLeft -= TurnPageLeft;
+        GameEvents.OnDisableFeature -= TurnPageRight;
     }
 }
