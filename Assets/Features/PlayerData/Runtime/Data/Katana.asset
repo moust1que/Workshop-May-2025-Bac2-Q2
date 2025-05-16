@@ -15,6 +15,9 @@ MonoBehaviour:
   itemName: Katana
   description: 
   icon: {fileID: -941725138, guid: a85af6091095b2045b80700eec929d55, type: 3}
-  worldPrefab: {fileID: 716805229721699266, guid: 7eea8bfdb2e307e4d8b0b3bb3185cd38, type: 3}
+  worldPrefab: {fileID: 8771112341479288810, guid: d26822c09e8aff341b7977e3d849c0c9, type: 3}
   maxStack: 1
   type: 1
+  uiPrefab: {fileID: 0}
+  DisplayOnPickup: 0
+  uiName: 
