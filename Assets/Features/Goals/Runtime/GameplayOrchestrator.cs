@@ -180,7 +180,7 @@ namespace Goals.Runtime {
         public void OnYokaiScream()
         {
             Goal g = GoalsManager.instance.goals["SearchTheRoom1"];
-            g.Progress.Value = true;
+            g.Progress.Value = 1;
             GoalsManager.instance.EvaluateAndPropagate();
         }
     }

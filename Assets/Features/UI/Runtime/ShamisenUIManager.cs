@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Goals.Runtime;
+using Attribute.Runtime;
 
 namespace UI.Runtime {
     using Events.Runtime;
@@ -57,11 +58,16 @@ namespace UI.Runtime {
             {
                 Verbose($"[ShamisenUI] Partition introuvable pour l’ID « {id} »", VerboseType.Warning);
             }
-
-            if (id == "3" && (bool)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == false)
+            
+            Verbose($"{(int)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == 0}", VerboseType.Log);
+            if (id == "3" && (int)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == 0)
             {
-                _audioSource.PlayOneShot(yokaiScream);
-                GameEvents.OnYokaiScream?.Invoke();
+                DelayManager.instance.Delay(11.0f, () =>
+                {
+                    Verbose("[ShamisenUI] Yokai scream", VerboseType.Log);
+                    _audioSource.PlayOneShot(yokaiScream);
+                    GameEvents.OnYokaiScream?.Invoke();
+                });
             }
         }
         
