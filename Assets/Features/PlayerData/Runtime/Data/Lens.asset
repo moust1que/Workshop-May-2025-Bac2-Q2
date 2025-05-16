@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 280708835, guid: 1f32c0af805e7ac4985c4c238ed8b8a8, type: 3}
   worldPrefab: {fileID: 7533618289794490170, guid: bd6c012518aa5304a8342edd15b7c6db, type: 3}
   maxStack: 1
-  type: 0
+  type: 3
   uiPrefab: {fileID: 0}
   DisplayOnPickup: 0
   uiName: 
