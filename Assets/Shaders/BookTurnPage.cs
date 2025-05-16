@@ -5,70 +5,112 @@ using UnityEngine;
 
 public class BookTurnPage : MonoBehaviour
 {
-    public static List<GameObject> pages = new();
-    private static int currentPageIndex = 0;
-    private static float ShaderValue = 0f;
-    private static Renderer instRenderer;
-    private static MaterialPropertyBlock propertyBlock;
-    public static void TurnPageLeft()
+    public List<GameObject> pages = new();
+    private int currentPageIndex = 0;
+
+
+    private bool isAnimating = false;
+    private float shaderValue = 0f;
+    private float animationStep = 0.1f;
+
+    private MaterialPropertyBlock propertyBlock;
+    private Renderer currentRenderer;
+    private float animationTarget;
+    private float animationStart;
+
+    private void Start()
     {
-
-        if (currentPageIndex > 0)
-        {
-            Renderer renderer = pages[currentPageIndex].GetComponent<Renderer>();
-            AnimateShader(renderer, 1f, 0f); // Lerp from 1 to 0
-
-            //pages[currentPageIndex].SetActive(false);
-            currentPageIndex++;
-            //pages[currentPageIndex].SetActive(true);
-
-        }
-    }
-    public static void TurnPageRight()
-    {
-        if (currentPageIndex < pages.Count - 1)
-        {
-            Renderer renderer = pages[currentPageIndex].GetComponent<Renderer>();
-            AnimateShader(renderer, 0f, 1f); // Lerp from 1 to 0
-
-            //pages[currentPageIndex].SetActive(false);
-            currentPageIndex--;
-            //pages[currentPageIndex].SetActive(true);
-
-        }
-
-
+        propertyBlock = new MaterialPropertyBlock();
+        ResetPages();
     }
 
 
-    private static void AnimateShader(Renderer renderer, float startValue, float endValue)
+    public void TurnPageLeft()
     {
-        if (propertyBlock == null)
-            propertyBlock = new MaterialPropertyBlock();
+        if (isAnimating) return;
+        if (currentPageIndex >= pages.Count - 1) return;
 
-        float step = 0.1f;
-        float currentValue = startValue;
+        currentRenderer = pages[currentPageIndex].GetComponent<Renderer>();
+        if (currentRenderer == null) return;
 
-        void StepAnimation()
+        animationStart = 0f;
+        animationTarget = 1f;
+        shaderValue = animationStart;
+        isAnimating = true;
+
+        AnimateShaderValue();
+        currentPageIndex++;
+    }
+
+
+    public void TurnPageRight()
+    {
+        if (isAnimating) return;
+        if (currentPageIndex <= 0) return;
+
+        currentRenderer = pages[currentPageIndex - 1].GetComponent<Renderer>();
+        if (currentRenderer == null) return;
+
+        animationStart = 1f;
+        animationTarget = 0f;
+        shaderValue = animationStart;
+        isAnimating = true;
+
+        AnimateShaderValue();
+        currentPageIndex--;
+    }
+
+    public void AnimateShaderValue()
+    {
+        if (!isAnimating || currentRenderer == null)
+            return;
+
+        if (DelayManager.instance == null)
         {
-            
-            if ((startValue > endValue && currentValue <= endValue) ||
-                (startValue < endValue && currentValue >= endValue))
-            {
-                currentValue = endValue;
-            }
-            else
-            {
-                currentValue += (endValue > startValue ? step : -step);
-                currentValue = Mathf.Clamp01(currentValue);
-                DelayManager.instance.Delay(0.01f, StepAnimation);
-            }
-
-            renderer.GetPropertyBlock(propertyBlock);
-            propertyBlock.SetFloat("_Fold", currentValue); 
-            renderer.SetPropertyBlock(propertyBlock);
+            Debug.LogWarning("DelayManager.instance is null! Cannot animate.");
+            isAnimating = false;
+            return;
         }
 
-        StepAnimation(); 
+        if ((animationStart < animationTarget && shaderValue >= animationTarget) ||
+            (animationStart > animationTarget && shaderValue <= animationTarget))
+        {
+            shaderValue = animationTarget;
+            ApplyShaderValue(shaderValue);
+            isAnimating = false;
+            return;
+        }
+        else
+        {
+            shaderValue += (animationTarget > animationStart ? animationStep : -animationStep);
+            shaderValue = Mathf.Clamp01(shaderValue);
+            ApplyShaderValue(shaderValue);
+
+            DelayManager.instance.Delay(0.01f, AnimateShaderValue);
+        }
+    }
+
+    private void ApplyShaderValue(float value)
+    {
+        currentRenderer.GetPropertyBlock(propertyBlock);
+        propertyBlock.SetFloat("_Turn", value);
+        currentRenderer.SetPropertyBlock(propertyBlock);
+    }
+
+
+    public void ResetPages()
+    {
+        currentPageIndex = 0;
+
+        foreach (var page in pages)
+        {
+            var renderer = page.GetComponent<Renderer>();
+            if (renderer == null) continue;
+
+            var block = new MaterialPropertyBlock();
+            renderer.GetPropertyBlock(block);
+            block.SetFloat("_Turn", 0f);
+            renderer.SetPropertyBlock(block);
+        }
     }
 }

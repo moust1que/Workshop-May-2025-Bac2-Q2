@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class TurnPageCall : MonoBehaviour
 {
-
+    [SerializeField] private BookTurnPage call;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            BookTurnPage.TurnPageLeft();
+            call.TurnPageLeft();
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            BookTurnPage.TurnPageRight();
+            call.TurnPageRight();
         }
     }
 
