@@ -15,9 +15,9 @@ MonoBehaviour:
   itemName: 
   description: 
   icon: {fileID: -411514782, guid: af0941f9096b9ed4ca9a6eeb2ae3eb6b, type: 3}
-  worldPrefab: {fileID: 5004542345255608973, guid: db6f6da6b73421e4593ff3dc3e09c6e3, type: 3}
+  worldPrefab: {fileID: 6364691439630444161, guid: f119fd797b4758640b8f23391f48c701, type: 3}
   maxStack: 1
   type: 2
-  uiPrefab: {fileID: 0}
+  uiPrefab: {fileID: 2435299604957156388, guid: f401186b3ee53aa4588f7cc4bdf1e9c1, type: 3}
   DisplayOnPickup: 1
-  bookUIPrefab: {fileID: 0}
+  uiName: 
