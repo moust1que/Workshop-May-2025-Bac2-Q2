@@ -34,6 +34,10 @@ namespace Goals.Runtime {
         #endregion
         
 
+        #region 
+        [SerializeField] private GameObject yokaiAshes;
+        #endregion
+
         private void Start()
         {
             instance = this;
@@ -52,7 +56,7 @@ namespace Goals.Runtime {
                 { "IdentifyEffects1", new IdentifyEffects1GoalHandler() },
                 { "SearchTheRoom1", new SearchTheRoom1GoalHandler() },
                 { "Dialog3", new Dialog3GoalHandler() },
-                { "PickupIngredient", new PickupIngredientGoalHandler() },
+                { "PickupIngredient", new PickupIngredientGoalHandler(yokaiAshes) },
                 { "Dialog4", new Dialog4GoalHandler() },
                 { "LeaveDungeon", new LeaveDungeonGoalHandler() },
 

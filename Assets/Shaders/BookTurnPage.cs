@@ -6,8 +6,8 @@ using UnityEngine;
 public class BookTurnPage : MonoBehaviour
 {
 
-    //! les pages en partant de l'index 0 lorsqu'elles sont à droites doivent avoir la valeur la plus éloigné de 1 (donc page 0 à une float de 0.8 et toute les index qui suivent aurront une float égal 0.8 += 0.01)
-    //! les pages en partant de l'index 0 lorsqu'elles sont à gauche doivent avoir la valeur la plus proche de 0 (donc page 0 à une float de 0.1 et toute les index qui suivent aurront une float égal 0.1 += 0.01)
+    //! les pages en partant de l'index 0 lorsqu'elles sont Ã  droites doivent avoir la valeur la plus Ã©loignÃ© de 1 (donc page 0 est une float de 0.8 et toute les index qui suivent aurront une float Ã©gal 0.8 += 0.01)
+    //! les pages en partant de l'index 0 lorsqu'elles sont Ã  gauche doivent avoir la valeur la plus proche de 0 (donc page 0 est une float de 0.1 et toute les index qui suivent aurront une float Ã©gal 0.1 += 0.01)
     public List<GameObject> pages = new();
     private int currentPageIndex = 0;
 
@@ -27,7 +27,6 @@ public class BookTurnPage : MonoBehaviour
         ResetPages();
     }
 
-
     public void TurnPageLeft()
     {
         if (isAnimating) return;
@@ -36,8 +35,8 @@ public class BookTurnPage : MonoBehaviour
         currentRenderer = pages[currentPageIndex].GetComponent<Renderer>();
         if (currentRenderer == null) return;
 
-        animationStart = 0f;
-        animationTarget = 1f;
+        animationStart = GetValue(currentPageIndex);
+        animationTarget = animationStart + 0.993f;
         shaderValue = animationStart;
         isAnimating = true;
 
@@ -54,13 +53,20 @@ public class BookTurnPage : MonoBehaviour
         currentRenderer = pages[currentPageIndex - 1].GetComponent<Renderer>();
         if (currentRenderer == null) return;
 
-        animationStart = 1f;
-        animationTarget = 0f;
+        animationStart = GetValue(currentPageIndex - 1);
+        animationTarget = animationStart - 0.993f;
         shaderValue = animationStart;
         isAnimating = true;
 
         AnimateShaderValue();
         currentPageIndex--;
+    }
+
+    private float GetValue(int index)
+    {
+        MaterialPropertyBlock block = new();
+        pages[index].GetComponent<Renderer>().GetPropertyBlock(block);
+        return block.GetFloat("_Turn");
     }
 
     public void AnimateShaderValue()
@@ -104,15 +110,17 @@ public class BookTurnPage : MonoBehaviour
     public void ResetPages()
     {
         currentPageIndex = 0;
+        int pageId = 7;
 
         foreach (var page in pages)
         {
+            pageId--;
             var renderer = page.GetComponent<Renderer>();
             if (renderer == null) continue;
 
             var block = new MaterialPropertyBlock();
             renderer.GetPropertyBlock(block);
-            block.SetFloat("_Turn", 0f);
+            block.SetFloat("_Turn", 0.001f * pageId);
             renderer.SetPropertyBlock(block);
         }
     }
