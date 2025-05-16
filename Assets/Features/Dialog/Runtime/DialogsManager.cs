@@ -78,13 +78,18 @@ namespace Dialog.Runtime {
             displaying = false;
             text.SetText("");
             speakerName.SetText("");
+
+            PortraitController.instance.HideSpeaker();
             GameEvents.OnDialogEnded?.Invoke(currentDialogId);
         }
 
-        private void DisplayCurrentLine() {
+        private void DisplayCurrentLine()
+        {
             DialogLine line = currentLines[currentDialogIndex];
             speakerName.SetText(line.speaker);
             text.SetText(line.text);
+            
+            PortraitController.instance.ShowSpeaker(line.speaker);
         }
     }
 }
