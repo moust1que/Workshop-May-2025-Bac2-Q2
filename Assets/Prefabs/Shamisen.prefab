@@ -348,6 +348,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c3a8767da1fb7514da8b397fb87c5cd9, type: 3}
   - id: 3
     clip: {fileID: 8300000, guid: c638c9f3605d0534cbfd2806cc979546, type: 3}
+  yokaiScream: {fileID: 8300000, guid: e62f60a5486e7694da9b1c99ea20cce1, type: 3}
 --- !u!222 &4045645355422385785
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -92,6 +92,7 @@ namespace Goals.Runtime {
             GameEvents.OnDialogEnded += OnDialogEnded;
             GameEvents.OnTeleport += OnTeleport;
             GameEvents.OnDoorClosed += OnDoorClosed;
+            GameEvents.OnYokaiScream += OnYokaiScream;
         }
 
         private void OnDestroy()
@@ -104,6 +105,7 @@ namespace Goals.Runtime {
             GameEvents.OnDialogEnded -= OnDialogEnded;
             GameEvents.OnTeleport -= OnTeleport;
             GameEvents.OnDoorClosed -= OnDoorClosed;
+            GameEvents.OnYokaiScream -= OnYokaiScream;
         }
 
         private void HandleGoalCompleted(Goal goal)
@@ -165,6 +167,13 @@ namespace Goals.Runtime {
         public void OnDoorClosed(string id)
         {
             Goal g = GoalsManager.instance.goals[id];
+            g.Progress.Value = true;
+            GoalsManager.instance.EvaluateAndPropagate();
+        }
+
+        public void OnYokaiScream()
+        {
+            Goal g = GoalsManager.instance.goals["SearchTheRoom1"];
             g.Progress.Value = true;
             GoalsManager.instance.EvaluateAndPropagate();
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Goals.Runtime;
 
 namespace UI.Runtime {
     using Events.Runtime;
@@ -18,6 +19,7 @@ namespace UI.Runtime {
 
         [SerializeField]
         private List<Partition> partitions;
+        [SerializeField] private AudioClip yokaiScream;
 
         private Dictionary<string, AudioClip> _partitionDict;
         private AudioSource _audioSource;
@@ -54,6 +56,12 @@ namespace UI.Runtime {
             else
             {
                 Verbose($"[ShamisenUI] Partition introuvable pour l’ID « {id} »", VerboseType.Warning);
+            }
+
+            if (id == "3" && (bool)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == false)
+            {
+                _audioSource.PlayOneShot(yokaiScream);
+                GameEvents.OnYokaiScream?.Invoke();
             }
         }
         

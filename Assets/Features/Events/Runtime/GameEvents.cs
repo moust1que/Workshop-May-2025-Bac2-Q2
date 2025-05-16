@@ -13,5 +13,6 @@ namespace Events.Runtime {
         public static Action<string> OnDoorClosed;
         public static Action<Transform> OnPlayerMoved;
         public static Action OnShamisenPlayed;
+        public static Action OnYokaiScream;
     }
 }
