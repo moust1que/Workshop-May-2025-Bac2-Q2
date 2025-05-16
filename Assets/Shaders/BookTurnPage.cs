@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class BookTurnPage : MonoBehaviour
 {
+
+    //! les pages en partant de l'index 0 lorsqu'elles sont à droites doivent avoir la valeur la plus éloigné de 1 (donc page 0 à une float de 0.8 et toute les index qui suivent aurront une float égal 0.8 += 0.01)
+    //! les pages en partant de l'index 0 lorsqu'elles sont à gauche doivent avoir la valeur la plus proche de 0 (donc page 0 à une float de 0.1 et toute les index qui suivent aurront une float égal 0.1 += 0.01)
     public List<GameObject> pages = new();
     private int currentPageIndex = 0;
 
