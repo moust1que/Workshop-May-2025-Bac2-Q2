@@ -67,6 +67,7 @@ namespace UI.Runtime {
                     Verbose("[ShamisenUI] Yokai scream", VerboseType.Log);
                     _audioSource.PlayOneShot(yokaiScream);
                     GameEvents.OnYokaiScream?.Invoke();
+                    SelfDestroy();
                 });
             }
         }
