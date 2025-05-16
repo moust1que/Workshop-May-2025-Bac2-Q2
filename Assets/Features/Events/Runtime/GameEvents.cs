@@ -14,5 +14,8 @@ namespace Events.Runtime {
         public static Action<Transform> OnPlayerMoved;
         public static Action OnShamisenPlayed;
         public static Action OnYokaiScream;
+        public static Action OnEnableFeature;
+        public static Action OnDisableFeature;
+
     }
 }

@@ -30,7 +30,9 @@ namespace Goals.Runtime {
 
         #region ExitDoorClosed
         [SerializeField] private Transform room1Center;
+        [SerializeField] private ParticleSystem breath;
         #endregion
+        
 
         private void Start()
         {
@@ -45,8 +47,8 @@ namespace Goals.Runtime {
                 { "GrabBook", new GrabBookGoalHandler(doorAfterGrabBook) },
                 { "LeaveTheRoom", new LeaveTheRoomGoalHandler() },
                 { "Dialog2", new Dialog2GoalHandler(doorToClose) },
-                { "ExitDoorClosed", new ExitDoorClosedGoalHandler(room1Center) },
-                { "SolveEnigma", new SolveEnigmaGoalHandler() },
+                { "ExitDoorClosed", new ExitDoorClosedGoalHandler(room1Center, breath) },
+                { "SolveEnigma", new SolveEnigmaGoalHandler(breath) },
                 { "IdentifyEffects1", new IdentifyEffects1GoalHandler() },
                 { "SearchTheRoom1", new SearchTheRoom1GoalHandler() },
                 { "Dialog3", new Dialog3GoalHandler() },

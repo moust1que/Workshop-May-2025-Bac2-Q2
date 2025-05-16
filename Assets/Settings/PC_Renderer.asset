@@ -67,7 +67,9 @@ MonoBehaviour:
   m_Name: MalaiseV2
   m_EditorClassIdentifier: 
   m_Active: 0
-  materialMalaise: {fileID: 2100000, guid: c2762d1a49f5c4f4081df3c51cc05522, type: 2}
+  enable: {fileID: 0}
+  isEnable: 0
+  materialMalaise: {fileID: -876546973899608171, guid: 4c79dd37c59f0d14e9c990e814ebf143, type: 3}
 --- !u!114 &7833122117494664109
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,25 +5,29 @@ using UnityEngine.Rendering.RenderGraphModule;
 
 public class MalaiseV2 : ScriptableRendererFeature
 {
-   
-
+    public EnableRenderFeature enable;
+    public bool isEnable = false;
     CustomRenderPass myPass;
     public Material materialMalaise;
 
-  
+
     public override void Create()
     {
         myPass = new CustomRenderPass();
         myPass.materialMalaise = materialMalaise;
-       
+
         myPass.renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
     }
 
- 
+
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-        if (renderingData.cameraData.cameraType == CameraType.Game || renderingData.cameraData.cameraType == CameraType.SceneView)
-            renderer.EnqueuePass(myPass);
+        if (enable.isEnable)
+        {
+            if (renderingData.cameraData.cameraType == CameraType.Game || renderingData.cameraData.cameraType == CameraType.SceneView)
+                renderer.EnqueuePass(myPass);
+        }
+       
     }
 }
 class CustomRenderPass : ScriptableRenderPass
@@ -35,7 +39,7 @@ class CustomRenderPass : ScriptableRenderPass
         public MaterialPropertyBlock mpb;
     }
 
-    
+
 
     public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
     {
