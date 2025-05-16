@@ -62,6 +62,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.05
+    - _Start: 1
     - _TempMax: 9000
     - _TempMin: 1900
     - _ThresholdSmooth: 0.5
