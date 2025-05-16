@@ -6,68 +6,72 @@ namespace Wheight.Runtime {
     using BBehaviour.Runtime;
     public class WeightManager : MonoBehaviour
     {
+       /* ---------- Singleton ---------- */
         public static WeightManager Instance { get; private set; }
 
+        /* ---------- Références scène ---------- */
+        [Header("Slots de plateau")]
         public List<Transform> leftSlots;
         public List<Transform> rightSlots;
 
-        public int initialWeight = 50;
-        public int[] goodMeasurements = { 20, 40, 60, 70 ,90 };
+        [Header("Aiguille")]
+        public Transform needle;               // pivot de l’aiguille
+        public float minAngle = -35f;          // angle pour la valeur minValue
+        public float maxAngle =  35f;          // angle pour la valeur maxValue
+        public int   minValue = 20;            // borne basse de la jauge
+        public int   maxValue = 90;            // borne haute  de la jauge
 
-        public Transform needle;
-        public float minAngle = -35f;
-        public float midAngle = 0f;
-        public float maxAngle = +35f;
-        public int minValue = 20;
-        public int maxValue = 90;
+        [Header("Mesure")]
+        public int   initialWeight    = 50;    // point milieu
+        public int[] goodMeasurements = { 20, 40, 60, 70, 90 };
 
-        private List<WeightSelectable> leftWeights = new();
-        private List<WeightSelectable> rightWeights = new();
-        public WeightSelectable SelectedWeight { get; private set; }
-
+        [Header("Cylindre à tourner")]
         public CylinderRotator cylinderRotator;
 
-        void Awake()
+        /* ---------- État interne ---------- */
+        private readonly List<WeightSelectable> leftWeights  = new();
+        private readonly List<WeightSelectable> rightWeights = new();
+        public  WeightSelectable SelectedWeight { get; private set; }
+
+        /* ---------- Cycle vie ---------- */
+        private void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
         }
 
-        public void SelectWeight(WeightSelectable w)
+        /* ---------- Sélection ---------- */
+        public void SelectWeight(WeightSelectable weight)
         {
-            if (SelectedWeight != null)
-                SelectedWeight.SetHighlight(false);
-
-            SelectedWeight = w;
-            if (w != null)
-                w.SetHighlight(true);
+            // On se contente de mémoriser la sélection
+            SelectedWeight = weight;
         }
 
+        /* ---------- Placement / retrait ---------- */
         public enum Side { Left, Right }
 
         public void PlaceSelectedOn(Side side)
         {
             if (SelectedWeight == null) return;
 
+            // le poids ne doit appartenir à aucun plateau avant placement
             RemoveWeight(SelectedWeight, silent: true);
 
             if (side == Side.Left)
             {
-                int idx = leftWeights.Count;
-                if (idx >= leftSlots.Count) return;
+                if (leftWeights.Count >= leftSlots.Count) return;   // plateau plein
                 leftWeights.Add(SelectedWeight);
-                SelectedWeight.Teleport(leftSlots[idx]);
+                SelectedWeight.Teleport(leftSlots[leftWeights.Count - 1]);
             }
             else
             {
-                int idx = rightWeights.Count;
-                if (idx >= rightSlots.Count) return;
+                if (rightWeights.Count >= rightSlots.Count) return;
                 rightWeights.Add(SelectedWeight);
-                SelectedWeight.Teleport(rightSlots[idx]);
+                SelectedWeight.Teleport(rightSlots[rightWeights.Count - 1]);
             }
 
             UpdateMeasure();
-            SelectWeight(null);
+            SelectWeight(null);   // on libère la sélection
         }
 
         public void RemoveWeight(WeightSelectable w, bool silent = false)
@@ -79,33 +83,30 @@ namespace Wheight.Runtime {
         }
 
         public bool IsOnPan(WeightSelectable w)
-        {
-            return leftWeights.Contains(w) || rightWeights.Contains(w);
-        }
+            => leftWeights.Contains(w) || rightWeights.Contains(w);
 
+        /* ---------- Mesure & affichage ---------- */
         private void UpdateMeasure()
         {
-            int sumL = leftWeights.Sum(w => w.weightValue);
-            int sumR = rightWeights.Sum(w => w.weightValue);
-            int measured = initialWeight + (sumR - sumL);
+            int sumL     = leftWeights.Sum(w => w.weightValue);
+            int sumR     = rightWeights.Sum(w => w.weightValue);
+            int measured = initialWeight + (sumR - sumL);           // droite +, gauche -
 
-            int clamped = Mathf.Clamp(measured, minValue, maxValue);
-            float t = (clamped - minValue) / (float)(maxValue - minValue);
-            float angle = Mathf.Lerp(minAngle, maxAngle, t);
+            /* --- aiguille --- */
+            int   clamped = Mathf.Clamp(measured, minValue, maxValue);
+            float t       = (clamped - minValue) / (float)(maxValue - minValue);
+            float angle   = Mathf.Lerp(minAngle, maxAngle, t);
             needle.localRotation = Quaternion.Euler(-angle, 0f, 0f);
 
+            /* --- cylindre (faces) --- */
             int faceIndex = System.Array.IndexOf(goodMeasurements, measured);
             if (faceIndex >= 0)
             {
-                // Bonne mesure → on tourne le cylindre
                 cylinderRotator.RotateToFace(faceIndex);
-                Debug.Log($"Bonne mesure : {measured}  |  Rotation face #{faceIndex}");
+                Debug.Log($"Bonne mesure : {measured}  |  Face #{faceIndex}");
             }
 
-            Debug.Log($"G:{sumL} | D:{sumR}| Mesure :{measured}");
-
-            if (goodMeasurements.Contains(measured))
-                Debug.Log($" Bonne mesure : {measured}");
+            Debug.Log($"G:{sumL} | D:{sumR} | Mesure : {measured}");
         }
     }
 }

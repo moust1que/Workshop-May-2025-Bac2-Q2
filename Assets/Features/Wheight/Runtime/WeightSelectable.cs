@@ -15,12 +15,12 @@ namespace Wheight.Runtime
         /* ----- état interne ----- */
         private bool isCollected = false;
         private Renderer rend;
-        private Color   baseColor;
+        // private Color   baseColor;
 
         void Start()
         {
-            rend      = GetComponent<Renderer>();
-            baseColor = rend.material.color;
+            // rend      = GetComponent<Renderer>();
+            // baseColor = rend.material.color;
         }
 
          void OnMouseOver()
@@ -71,9 +71,9 @@ namespace Wheight.Runtime
             transform.rotation = target.rotation;
         }
 
-        public void SetHighlight(bool on)
-        {
-            rend.material.color = on ? Color.yellow : baseColor;
-        }
+        // public void SetHighlight(bool on)
+        // {
+        //     rend.material.color = on ? Color.yellow : baseColor;
+        // }
     }
 }

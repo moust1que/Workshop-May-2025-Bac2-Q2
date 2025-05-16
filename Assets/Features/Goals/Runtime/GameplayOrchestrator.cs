@@ -40,6 +40,11 @@ namespace Goals.Runtime {
         #region 
         [SerializeField] private GameObject blur;
         #endregion
+
+        #region Dialog7
+        [SerializeField] private Transform room2Center;
+        #endregion
+
         private void Start()
         {
             instance = this;
@@ -67,7 +72,7 @@ namespace Goals.Runtime {
                 { "ClimbTheLadder", new ClimbTheLadderGoalHandler() },
                 { "Dialog6", new Dialog6GoalHandler() },
                 { "FloorRambles", new FloorRamblesGoalHandler() },
-                { "Dialog7", new Dialog7GoalHandler(blur) },
+                { "Dialog7", new Dialog7GoalHandler(blur, room2Center) },
                 { "SolveEnigma2", new SolveEnigma2GoalHandler(blur) },
                 { "IdentifyEffects2", new IdentifyEffects2GoalHandler() },
                 { "SearchTheRoom2", new SearchTheRoom2GoalHandler() },
