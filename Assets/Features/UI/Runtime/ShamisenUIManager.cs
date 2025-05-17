@@ -8,6 +8,7 @@ using Attribute.Runtime;
 namespace UI.Runtime {
     using Events.Runtime;
     using BBehaviour.Runtime;
+    using UnityEngine.UI;
 
     public class ShamisenUIManager : BBehaviour
     {
@@ -25,8 +26,11 @@ namespace UI.Runtime {
         private Dictionary<string, AudioClip> _partitionDict;
         private AudioSource _audioSource;
 
+        public Button destroy;
+
         private void Awake()
         {
+
             _audioSource = GetComponent<AudioSource>();
             if (_audioSource == null)
                 _audioSource = gameObject.AddComponent<AudioSource>();
@@ -34,6 +38,8 @@ namespace UI.Runtime {
             _partitionDict = partitions
                 .Where(p => !string.IsNullOrEmpty(p.id) && p.clip != null)
                 .ToDictionary(p => p.id, p => p.clip);
+                
+            destroy?.gameObject.SetActive(false);
         }
 
         private void Start()
@@ -58,7 +64,7 @@ namespace UI.Runtime {
             {
                 Verbose($"[ShamisenUI] Partition introuvable pour l’ID « {id} »", VerboseType.Warning);
             }
-            
+
             if (id == "3" && (int)GoalsManager.instance.goals["SearchTheRoom1"].Progress.Value == 0)
             {
                 DelayManager.instance.Delay(9.0f, () =>
@@ -68,6 +74,7 @@ namespace UI.Runtime {
                     GameEvents.OnYokaiScream?.Invoke();
                     SelfDestroy();
                 });
+                destroy.gameObject.SetActive(true);
             }
         }
         
