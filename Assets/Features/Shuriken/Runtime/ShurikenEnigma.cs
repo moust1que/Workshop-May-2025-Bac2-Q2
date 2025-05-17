@@ -54,7 +54,7 @@ namespace Shuriken.Runtime {
 
         void Update()
         {
-            Verbose($"canResolve={canResolve} window.IsOpen={window.IsOpen} katanaPlaced={katanaTracker.IsKatanaPlaced}");
+            // Verbose($"canResolve={canResolve} window.IsOpen={window.IsOpen} katanaPlaced={katanaTracker.IsKatanaPlaced}");
 
             if (!canResolve && window.IsOpen && katanaTracker.IsKatanaPlaced)
             {

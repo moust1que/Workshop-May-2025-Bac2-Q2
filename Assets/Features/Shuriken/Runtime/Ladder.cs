@@ -10,15 +10,24 @@ namespace Shuriken.Runtime
 
         public void Start()
         {
-            ladder.enabled = true;
+            // ladder.enabled = true;
         }
 
         public void Update()
         {
-            // if (enigma.allCorrect)
-            // {
-            //     ladder.enabled = true;
-            // }
+            if (enigma.allCorrect)
+            {
+                ladder.enabled = true;
+            }
+        }
+
+        public void Hoverable()
+        {
+            if (ladder.enabled == true)
+            {
+                gameObject.tag = "Hoverable";
+            }
+            
         }
     }
 }
