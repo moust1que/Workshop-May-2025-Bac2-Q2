@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Wheight.Runtime {
     using BBehaviour.Runtime;
-    public class WeightManager : MonoBehaviour
+    public class WeightManager : BBehaviour
     {
 
         public static WeightManager Instance { get; private set; }
@@ -13,28 +13,30 @@ namespace Wheight.Runtime {
         public List<Transform> rightSlots;
 
         [Header("Aiguille")]
-        public Transform needle;       
-        public float minAngle = -35f;     
-        public float maxAngle =  35f;      
-        public int   minValue = 20;     
-        public int   maxValue = 90;       
+        public Transform needle;
+        public float minAngle = -35f;
+        public float maxAngle = 35f;
+        public int minValue = 20;
+        public int maxValue = 90;
 
         [Header("Mesure")]
-        public int   initialWeight    = 50;    // point milieu
+        public int initialWeight = 50; 
         public int[] goodMeasurements = { 20, 40, 60, 70, 90 };
 
         [Header("Cylindre à tourner")]
         public CylinderRotator cylinderRotator;
 
-        private readonly List<WeightSelectable> leftWeights  = new();
+
+        private readonly List<WeightSelectable> leftWeights = new();
         private readonly List<WeightSelectable> rightWeights = new();
-        public  WeightSelectable SelectedWeight { get; private set; }
+        public WeightSelectable SelectedWeight { get; private set; }
 
         private void Awake()
         {
             if (Instance == null) Instance = this;
             else Destroy(gameObject);
         }
+
 
         public void SelectWeight(WeightSelectable weight)
         {
@@ -51,7 +53,7 @@ namespace Wheight.Runtime {
 
             if (side == Side.Left)
             {
-                if (leftWeights.Count >= leftSlots.Count) return;  
+                if (leftWeights.Count >= leftSlots.Count) return;
                 leftWeights.Add(SelectedWeight);
                 SelectedWeight.Teleport(leftSlots[leftWeights.Count - 1]);
             }
@@ -63,7 +65,7 @@ namespace Wheight.Runtime {
             }
 
             UpdateMeasure();
-            SelectWeight(null);  
+            SelectWeight(null);
         }
 
         public void RemoveWeight(WeightSelectable w, bool silent = false)
@@ -79,24 +81,25 @@ namespace Wheight.Runtime {
 
         private void UpdateMeasure()
         {
-            int sumL     = leftWeights.Sum(w => w.weightValue);
-            int sumR     = rightWeights.Sum(w => w.weightValue);
-            int measured = initialWeight + (sumR - sumL);       
+            int sumL = leftWeights.Sum(w => w.weightValue);
+            int sumR = rightWeights.Sum(w => w.weightValue);
+            int measured = initialWeight + (sumR - sumL);
 
-            int   clamped = Mathf.Clamp(measured, minValue, maxValue);
-            float t       = (clamped - minValue) / (float)(maxValue - minValue);
-            float angle   = Mathf.Lerp(minAngle, maxAngle, t);
+            int clamped = Mathf.Clamp(measured, minValue, maxValue);
+            float t = (clamped - minValue) / (float)(maxValue - minValue);
+            float angle = Mathf.Lerp(minAngle, maxAngle, t);
             needle.localRotation = Quaternion.Euler(-angle, 0f, 0f);
 
             int faceIndex = System.Array.IndexOf(goodMeasurements, measured);
             if (faceIndex >= 0)
             {
                 cylinderRotator.RotateToFace(faceIndex);
-                Debug.Log($"Bonne mesure : {measured}  |  Face #{faceIndex}");
+                Verbose($"Bonne mesure : {measured}  |  Face #{faceIndex}");
             }
 
-            Debug.Log($"G:{sumL} | D:{sumR} | Mesure : {measured}");
+            Verbose($"G:{sumL} | D:{sumR} | Mesure : {measured}");
         }
+    
     }
 }
 

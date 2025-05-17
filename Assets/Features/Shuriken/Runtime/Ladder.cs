@@ -10,7 +10,7 @@ namespace Shuriken.Runtime
 
         public void Start()
         {
-            // ladder.enabled = true;
+            ladder.enabled = false;
         }
 
         public void Update()

@@ -8,6 +8,8 @@ namespace BookShelf {
         public GameObject leftDoor;
         public GameObject rightDoor;
 
+        public Collider collide;
+
         public float doorSpeed = 2f;
 
 
@@ -18,6 +20,7 @@ namespace BookShelf {
             {
                 leftDoor.transform.localEulerAngles = Vector3.Lerp(leftDoor.transform.localEulerAngles, new Vector3(0, 120, 0), doorSpeed * Time.deltaTime);
                 rightDoor.transform.localEulerAngles = Vector3.Lerp(rightDoor.transform.localEulerAngles, new Vector3(0, 240, 0), doorSpeed * Time.deltaTime);
+                collide.enabled = false;
             }
         }
 

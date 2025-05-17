@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: Ashes
   description: 
   icon: {fileID: -486143526, guid: 10664867f7792ce47a0b2d8d87109874, type: 3}
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 7500172234341752239, guid: e6fb0e7af3175a146879ccf53fb2c8ee, type: 3}
   maxStack: 1
   type: 0
   uiPrefab: {fileID: 0}
