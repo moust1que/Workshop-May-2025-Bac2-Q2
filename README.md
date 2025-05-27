@@ -1,6 +1,6 @@
 # 🎮 Workshop May 2025 – Bac2 Q2
 
-🇫🇷 [Version française](#français-)
+🇫🇷 [Version française](#français-)  
 🇬🇧 [English version](#english-)
 
 ---
